@@ -14,7 +14,7 @@ export default function CategoryCard({ src, alt, text } : { src: string, alt: st
             quality={100}
           />
         </div>
-        <div className= "absolute bottom-0 top-25% left-0 w-[100%] bg-black bg-opacity-50 text-white text-center py-7 px-10 text-2xl text-nowrap font-mono">
+        <div className= "absolute bottom-[25%] top-25% left-0 w-[75%] bg-black bg-opacity-50 text-white text-center py-7 px-10 text-2xl text-nowrap font-mono">
           <p>{text}</p>
         </div>
 
