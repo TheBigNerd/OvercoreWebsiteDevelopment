@@ -1,21 +1,28 @@
 // components/CardSection.tsx
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Card as CardType } from '../data/customParts';
-import Card from './card';
+import Card from './Card';
 
-interface CardSectionProps {
+type CardSectionProps = {
   section: string;
   cards: CardType[];
   selectedCards: CardType | CardType[] | null;
   handleCardSelect: (section: string, card: CardType) => void;
-}
+};
 
-const CardSection: React.FC<CardSectionProps> = ({ section, cards, selectedCards, handleCardSelect }) => {
-  const isCardSelected = (card: CardType) => {
-    if (Array.isArray(selectedCards)) {
-      return selectedCards.some((selectedCard) => selectedCard.id === card.id);
-    }
-    return selectedCards?.id === card.id;
+const CardSection = ({ section, cards, selectedCards, handleCardSelect }: CardSectionProps) => {
+  const isCardSelected = useCallback(
+    (card: CardType) => {
+      if (Array.isArray(selectedCards)) {
+        return selectedCards.some((selectedCard) => selectedCard.id === card.id);
+      }
+      return selectedCards?.id === card.id;
+    },
+    [selectedCards]
+  );
+
+  const handleCardClick = (card: CardType) => {
+    handleCardSelect(section, card);
   };
 
   return (
@@ -27,7 +34,7 @@ const CardSection: React.FC<CardSectionProps> = ({ section, cards, selectedCards
             key={card.id}
             card={card}
             isSelected={isCardSelected(card)}
-            onClick={() => handleCardSelect(section, card)}
+            onClick={() => handleCardClick(card)}
           />
         ))}
       </div>
