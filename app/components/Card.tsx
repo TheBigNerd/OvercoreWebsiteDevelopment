@@ -1,17 +1,21 @@
 // components/Card.tsx
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Card as CardType } from '../data/customParts';
 
-interface CardProps {
+type CardProps = {
   card: CardType;
   isSelected: boolean;
   onClick: () => void;
-}
+};
 
-const Card: React.FC<CardProps> = ({ card, isSelected, onClick }) => {
+const Card = ({ card, isSelected, onClick }: CardProps) => {
+  const handleClick = useCallback(() => {
+    onClick();
+  }, [onClick]);
+
   return (
     <div
-      onClick={onClick}
+      onClick={handleClick}
       style={{
         border: isSelected ? '2px solid blue' : '1px solid gray',
         padding: '1rem',
