@@ -1,8 +1,9 @@
 "use server";
 import { z } from "zod";
 import fs from "fs/promises";
-import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+
 
 const fileSchema = z.instanceof(File, {message : "Required"})
 const imageSchema = fileSchema.refine(file => file.size === 0 || file.type.startsWith("image/"))
@@ -78,7 +79,6 @@ export async function updateProduct( id: string, prevState: unknown, formData: F
 
 
   await prisma.product.update({ where: {id}, data: {
-    isAvailable: false,
     name: data.name,
     description: data.description,
     priceInPence: data.priceInPence,
