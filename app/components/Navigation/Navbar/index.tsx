@@ -3,6 +3,8 @@ import Link from "next/link";
 import Logo from "./Logo";
 import {Basket} from "./button";
 import {Favourites} from "./button";
+import { LoginButton } from "../../auth/login-button";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (
@@ -18,6 +20,11 @@ const Navbar = () => {
                 className="w-3/4 p-2 border border-gray-300 rounded"
               />
             </div>
+            <LoginButton>
+              <Button>
+                Sign In
+              </Button>
+            </LoginButton>
             <Favourites />
             <Basket />
           </div>
