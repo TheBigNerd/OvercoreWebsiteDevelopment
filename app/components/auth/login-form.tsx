@@ -8,6 +8,9 @@ import { Input } from "@/components/ui/input"
 
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
+import { FormError } from "./form-error"
+import { FormSuccess } from "./form-success"
+import { login } from "./actions/login"
 
 export const LoginForm = () => {
     const form = useForm<z.infer<typeof LoginSchema>>({
@@ -16,11 +19,17 @@ export const LoginForm = () => {
             email: "",
             password: "",
         }
-    })
+    });
+
+    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+        login(values)
+        console.log(values)
+    }
+
     return(
         <CardWrapper headerLabel="Welcome Back" backButtonLabel="Dont have an account?" backButtonHref="/auth/register" showSocial>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(() => {})} className="space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <div className="space-y-4">
                         <FormField
                         control={form.control}
@@ -42,13 +51,15 @@ export const LoginForm = () => {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input {...field} placeholder="******" type="password" />
+                                    <Input {...field} placeholder="**********" type="password" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}      
                         />
                     </div>
+                    <FormError message="" />
+                    <FormSuccess message="" />
                     <Button type="submit" className="w-full">
                         Login
                     </Button>
