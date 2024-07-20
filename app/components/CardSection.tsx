@@ -1,13 +1,13 @@
 // components/CardSection.tsx
 import React, { useCallback } from 'react';
-import { Card as CardType } from '../data/customParts';
+import { Card as CardType, CustomParts } from '../data/customParts';
 import Card from './Card';
 
 type CardSectionProps = {
-  section: string;
+  section: keyof CustomParts;
   cards: CardType[];
   selectedCards: CardType | CardType[] | null;
-  handleCardSelect: (section: string, card: CardType) => void;
+  handleCardSelect: (section: keyof CustomParts, card: CardType) => void;
 };
 
 const CardSection = ({ section, cards, selectedCards, handleCardSelect }: CardSectionProps) => {
