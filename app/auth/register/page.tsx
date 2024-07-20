@@ -1,0 +1,12 @@
+
+import { RegisterForm } from "@/app/components/auth/register-form"
+
+const RegisterPage = () => {
+    return (
+        <div className="h-full flex items-center justify-center bg-slate-500">
+            <RegisterForm/>
+        </div>
+    )
+}
+
+export default RegisterPage
