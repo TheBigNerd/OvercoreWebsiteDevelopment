@@ -1,21 +1,18 @@
 // app/ccompleted/page.tsx
-"use client"
-
 import { useSearchParams } from 'next/navigation';
 import { Card as CardType } from '../data/customParts';
 
-const CompletedPage = () => {
-  const searchParams = useSearchParams();
-  const selectedComponents = JSON.parse(searchParams.get('selectedComponents') || '{}') as {
-    [key: string]: CardType | CardType[];
-  };
+type CompletedPageProps = {
+  selectedComponents: { [key: string]: CardType | CardType[] };
+};
 
+const CompletedPage = ({ selectedComponents }: CompletedPageProps) => {
   const getTotalPriceInPounds = () => {
     return Object.values(selectedComponents).reduce((total, card) => {
       if (Array.isArray(card)) {
         return total + card.reduce((subTotal, item) => subTotal + item.priceInPence, 0);
       }
-      return (card as CardType).priceInPence ? total + (card as CardType).priceInPence : total;
+      return card ? total + (card as CardType).priceInPence : total;
     }, 0) / 100;
   };
 
