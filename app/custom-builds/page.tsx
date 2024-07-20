@@ -1,11 +1,13 @@
+// app/custom-builds/page.tsx
 "use client"
-// pages/index.tsx
+
 import { useState } from 'react';
-import { Card as CardType, customParts } from '../data/customParts';
+import { useRouter } from 'next/navigation';
+import { Card as CardType, customParts, CustomParts } from '../data/customParts';
 import CardSection from '../components/CardSection';
 
 const HomePage = () => {
-  const [selectedCards, setSelectedCards] = useState<{ [key: string]: CardType | CardType[] | null }>({
+  const [selectedCards, setSelectedCards] = useState<{ [K in keyof CustomParts]: CardType | CardType[] | null }>({
     cases: null,
     cpus: null,
     gpus: null,
@@ -13,7 +15,9 @@ const HomePage = () => {
     secondaryStorage: [],
   });
 
-  const handleCardSelect = (section: string, card: CardType) => {
+  const router = useRouter();
+
+  const handleCardSelect = (section: keyof CustomParts, card: CardType) => {
     if (section === 'secondaryStorage') {
       setSelectedCards((prevSelectedCards) => {
         const currentSelection = prevSelectedCards[section] as CardType[];
@@ -46,21 +50,32 @@ const HomePage = () => {
     }, 0) / 100;
   };
 
+  const handleNextClick = () => {
+    const queryParams = new URLSearchParams({
+      selectedComponents: JSON.stringify(selectedCards),
+    });
+
+    router.push(`/ccompleted?${queryParams.toString()}`);
+  };
+
   return (
     <div>
       <h1>Select Your PC Components</h1>
       {Object.keys(customParts).map((section) => (
         <CardSection
           key={section}
-          section={section}
-          cards={customParts[section]}
-          selectedCards={selectedCards[section]}
+          section={section as keyof CustomParts}
+          cards={customParts[section as keyof CustomParts]}
+          selectedCards={selectedCards[section as keyof CustomParts]}
           handleCardSelect={handleCardSelect}
         />
       ))}
       <div style={{ marginTop: '2rem', fontSize: '1.5rem' }}>
         <strong>Total Price: £{getTotalPriceInPounds().toFixed(2)}</strong>
       </div>
+      <button onClick={handleNextClick} style={{ marginTop: '2rem', padding: '1rem', fontSize: '1rem' }}>
+        Next
+      </button>
     </div>
   );
 };
