@@ -20,13 +20,15 @@ const Navbar = () => {
                 className="w-3/4 p-2 border border-gray-300 rounded"
               />
             </div>
-            <LoginButton>
-              <Button>
-                Sign In
-              </Button>
-            </LoginButton>
-            <Favourites />
-            <Basket />
+            <div className="flex space-x-4">
+              <Favourites />
+              <Basket />
+              <LoginButton>
+                <Button>
+                  Sign In
+                </Button>
+              </LoginButton>
+            </div>
           </div>
           <div className="flex justify-center items-center mt-4">
             <ul className="w-full flex justify-between text-black">
