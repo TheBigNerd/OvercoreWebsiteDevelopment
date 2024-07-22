@@ -37,6 +37,11 @@ model Order {
   product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -44,6 +49,7 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  role          UserRole @default(USER)
   orders        Order[]
   accounts      Account[]
  
@@ -70,4 +76,23 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@id([provider, providerAccountId])
+}
+
+model VerificationToken {
+  id String @id @default(cuid())
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id String @id @default(cuid())
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+
 }
