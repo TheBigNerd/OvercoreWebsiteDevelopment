@@ -4,7 +4,10 @@
  */
 export const publicRoutes = [
     "/",
-    "/auth/new-verification"
+    "/auth/new-verification",
+    "/admin",
+    "/admin/products",
+    "/sign-in",
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings
