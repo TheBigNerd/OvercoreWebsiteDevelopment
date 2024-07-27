@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./lib/prisma"
 import { getUserById } from "./data/user"
 import { UserRole } from "@prisma/client"
+import { getTwoFactorConfirmationbyUserId } from "./data/two-factor-confirmation"
 
 export type ExtendedUser = DefaultSession["user"] & {
   role: UserRole;
@@ -39,7 +40,11 @@ export const {
       if (account?.provider !== "credentials") return true;
       const existingUser = await getUserById(user.id!);
       if (!existingUser?.emailVerified) return false;
-      // WIP ADD 2FA CHECK
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationbyUserId(existingUser.id);
+        if (!twoFactorConfirmation) return false;
+        await prisma.twoFactorConfirmation.delete({ where: { id: twoFactorConfirmation.id }})
+      }
       return true
 
     },

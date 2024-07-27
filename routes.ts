@@ -8,6 +8,8 @@ export const publicRoutes = [
     "/admin",
     "/admin/products",
     "/sign-in",
+    "/cusotom-builds",
+    "/ccompleted"
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings
