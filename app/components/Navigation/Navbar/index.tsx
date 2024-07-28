@@ -23,7 +23,7 @@ const Navbar = () => {
             <div className="flex space-x-4">
               <Favourites />
               <Basket />
-              <LoginButton>
+              <LoginButton mode="modal" asChild>
                 <Button>
                   Sign In
                 </Button>
