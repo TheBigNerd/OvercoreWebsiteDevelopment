@@ -5,10 +5,7 @@
 export const publicRoutes = [
     "/",
     "/auth/new-verification",
-    "/admin",
-    "/admin/products",
     "/sign-in",
-    "/cusotom-builds",
     "/ccompleted"
 ];
 /**
@@ -33,3 +30,8 @@ export const apiAuthPrefix = "/api/auth"
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/settings"
+
+export const adminRoutes = [
+    "/admin",
+    "/admin/products",
+]

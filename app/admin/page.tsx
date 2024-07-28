@@ -1,8 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
+import { CurrentRole} from "@/lib/auth";
 
 export default async function AdminDashboard() {
+    const role = await CurrentRole()
     const [salesData, userdata, productdata] = await Promise.all([
         getSalesData(),
         getUserData(),
