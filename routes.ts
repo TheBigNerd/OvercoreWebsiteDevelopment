@@ -6,7 +6,8 @@ export const publicRoutes = [
     "/",
     "/auth/new-verification",
     "/sign-in",
-    "/ccompleted"
+    "/ccompleted",
+    "/custom-builds"
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings
