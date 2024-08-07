@@ -12,8 +12,14 @@ import { FormError } from "./form-error"
 import { FormSuccess } from "./form-success"
 import { login } from "./actions/login"
 import { useState, useTransition } from "react"
+import { useSearchParams } from "next/navigation"
+import Link from "next/link"
 
 export const LoginForm = () => {
+    const [showTwoFactor, setShowTwoFactor] = useState(false)
+    const searchParams = useSearchParams();
+    const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different provider!" : "";
+    const callbackUrl = searchParams.get("callbackUrl");
     const [error, setError] = useState<string | undefined>("")
     const [success, setSuccess] = useState<string | undefined>("")
     const [isPending, startTransition] = useTransition()
@@ -29,11 +35,21 @@ export const LoginForm = () => {
         setError("")
         setSuccess("")
         startTransition(() => {
-            login(values)
+            login(values, callbackUrl!)
             .then((data) => {
-                setError(data.error);
-                setSuccess(data.success)
+                if (data?.error) {
+                    form.reset()
+                    setError(data.error)
+                }
+                if (data?.success) {
+                    form.reset()
+                    setSuccess(data.success)
+                }
+                if (data?.twoFactor) {
+                    setShowTwoFactor(true)
+                }
             })
+            .catch(() => setError("Somethign went wrong"))
         })
     }
 
@@ -42,6 +58,23 @@ export const LoginForm = () => {
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <div className="space-y-4">
+                    {showTwoFactor && (
+                        <FormField
+                            control={form.control}
+                            name="code"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Two Factor Code</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} disabled={isPending} placeholder="123456"/>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                    )}      
+                    />
+                    )}
+                    {!showTwoFactor && (
+                    <>
                         <FormField
                         control={form.control}
                         name="email"
@@ -64,15 +97,22 @@ export const LoginForm = () => {
                                 <FormControl>
                                     <Input {...field} disabled={isPending} placeholder="**********" type="password" />
                                 </FormControl>
+                                <Button size="sm" variant="link" asChild className="px-0 font-normal">
+                                    <Link href="/auth/reset">
+                                    Forgot Password?
+                                    </Link>
+                                </Button>
                                 <FormMessage />
                             </FormItem>
                         )}      
                         />
+                    </>
+                    )}
                     </div>
-                    <FormError message={error} />
+                    <FormError message={error || urlError} />
                     <FormSuccess message={success} />
                     <Button type="submit" disabled={isPending} className="w-full">
-                        Login
+                        {showTwoFactor ? "Confirm" : "Login"}
                     </Button>
                 </form>
             </Form>
