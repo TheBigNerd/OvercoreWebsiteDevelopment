@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import CategoryCard from './categorycards';
+import Link from 'next/link';
 
 const CategoryCardContainer: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -15,7 +16,7 @@ const CategoryCardContainer: React.FC = () => {
   };
 
   const cards = [
-    { src: '/images/OvercoreLite.jpeg', alt: 'Overcore Lite', text: 'Overcore Lite' },
+    { src: '/images/OvercoreLite.jpeg', alt: 'Overcore Lite', text: 'Overcore Lite', link: `/custom-builds`},
     { src: '/images/BrowseWorkstation.jpeg', alt: 'Browse Workstation', text: 'Browse Workstation' },
     { src: '/images/OvercoreBusiness.jpeg', alt: 'Overcore Business', text: 'Overcore Business' },
   ];
