@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import CategoryCard from './categorycards';
+import Link from 'next/link';
 
 const CategoryCardContainer: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
