@@ -3,9 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
-  { src: '/images/orange_desktop.jpg', text: 'Orange Desktop' },
-  { src: '/images/image2.jpg', text: 'Image 2 Description' },
-  { src: '/images/image3.jpg', text: 'Image 3 Description' },
+  { src: '/images/orange_desktop.jpg', text: 'Browse our New Builds' },
+  { src: '/images/image2.jpg', text: 'IDK what this finna be' },
+  { src: '/images/image3.jpg', text: 'Overcore for Small Businesses' },
 ];
 
 export default function HeroBanner() {
@@ -55,8 +55,8 @@ export default function HeroBanner() {
         >
           <img src={image.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
           {index === currentIndex && (
-            <div className="absolute bottom-10 left-10 bg-black bg-opacity-50 text-white p-4 rounded">
-              <h2 className="text-xl">{image.text}</h2>
+            <div className="absolute left-40 top-1/2 transform -translate-y-1/2 text-white font-bold text-4xl">
+              <h2>{image.text}</h2>
             </div>
           )}
         </div>
@@ -76,4 +76,3 @@ export default function HeroBanner() {
     </div>
   );
 }
-
