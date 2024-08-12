@@ -8,7 +8,8 @@ export const publicRoutes = [
     "/sign-in",
     "/ccompleted",
     "/custom-builds",
-    "/about-us"
+    "/about-us",
+    "/contact"
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings
