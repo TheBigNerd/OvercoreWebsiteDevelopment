@@ -8,6 +8,7 @@ export const publicRoutes = [
     "/sign-in",
     "/ccompleted",
     "/custom-builds",
+    "/pre-builds",
     "/about-us",
     "/contact"
 ];

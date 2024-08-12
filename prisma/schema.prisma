@@ -22,7 +22,6 @@ model Product {
   isAvailable Boolean @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  isFeatured Boolean @default(false)
   order Order[]
 }
 
@@ -117,4 +116,102 @@ model TwoFactorConfirmation {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+model CPU {
+  id String @id @default(uuid())
+  title String
+  imagePath String @map("image")
+  priceInPence Int
+  Wattage Int
+  Socket Socket
+  IntegratedGraphics Boolean
+  IntegratedCooler Boolean
+}
+
+enum Socket{
+  AM4
+  AM5
+  LGA1151
+  LGA1200
+  LGA1700
+}
+
+model cpuCooler{
+  id String @id @default(uuid())
+  title String
+  imagePath String @map("image")
+  priceInPence Int
+  AM4 Boolean
+  AM5 Boolean
+  LGA1151 Boolean
+  LGA1200 Boolean
+  LGA1700 Boolean
+}
+
+model Motherboard{
+  id String @id @default(uuid())
+  title String
+  imagePath String @map("image")
+  priceInPence Int
+  Wattage Int
+  Socket Socket
+  memorySlots Int
+  ATX Boolean
+  EATX Boolean
+  MicroATX Boolean
+  MiniITX Boolean
+  XLATX Boolean
+  memorySpeed String[]
+  wifi Boolean
+}
+
+model memory{
+  id String @id @default(uuid())
+  title String
+  imagePath String @map("image")
+  priceInPence Int
+  Wattage Int
+  numberOfSticks Int
+  speed Int
+  GB Int
+}
+model storage{
+  id String @id @default(uuid())
+  title String
+  imagePath String
+  priceInPence Int
+  connection String
+}
+enum connection{
+  sata
+  PCIE
+}
+
+model Gpu{
+    id String @id @default(uuid())
+  title String
+  imagePath String
+  priceInPence Int
+  Wattage Int
+  width Int
+}
+
+model Case {
+  id String @id @default(uuid())
+  title String
+  imagePath String
+  priceInPence Int
+  ATX Boolean
+  EATX Boolean
+  MicroATX Boolean
+  MiniITX Boolean
+  XLATX Boolean
+}
+
+model PSU{
+  id String @id @default(uuid())
+  title String
+  imagePath String
+  priceInPence Int
+  wattage Int
 }
