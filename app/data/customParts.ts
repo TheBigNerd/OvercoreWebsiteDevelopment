@@ -4,10 +4,13 @@ export type Card = {
   title: string;
   image: string;
   priceInPence: number;
+  sizes?: string[];
+  socketType?: string;
 };
 
 export type CustomParts = {
   cases: Card[];
+  motherboards: Card[];
   cpus: Card[];
   gpus: Card[];
   primaryStorage: Card[];
@@ -16,12 +19,17 @@ export type CustomParts = {
 
 export const customParts: CustomParts = {
   cases: [
-    { id: 'case1', title: 'Cooler Master Case', image: '/images/case1.jpg', priceInPence: 5000 },
-    { id: 'case2', title: 'NZXT Case', image: '/images/case2.jpg', priceInPence: 6999 },
+    { id: 'case1', title: 'Cooler Master Case', image: '/images/case1.jpg', priceInPence: 5000, sizes: ['ATX', 'MicroATX'] },
+    { id: 'case2', title: 'NZXT Case', image: '/images/case2.jpg', priceInPence: 6999, sizes: ['MicroATX'] },
+  ],
+  motherboards: [
+    { id: 'mb1', title: 'ASUS ROG Strix', image: '/images/mb1.jpg', priceInPence: 20000, sizes: ['ATX'], socketType: 'LGA1200' },
+    { id: 'mb2', title: 'MSI MPG Z490', image: '/images/mb2.jpg', priceInPence: 18000, sizes: ['MicroATX'], socketType: 'LGA1200' },
+    { id: 'mb3', title: 'Gigabyte B450M DS3H', image: '/images/mb3.jpg', priceInPence: 15000, sizes: ['MicroATX'], socketType: 'AM4' },
   ],
   cpus: [
-    { id: 'cpu1', title: 'Intel i9', image: '/images/cpu1.jpg', priceInPence: 34999 },
-    { id: 'cpu2', title: 'AMD Ryzen 9', image: '/images/cpu2.jpg', priceInPence: 30000 },
+    { id: 'cpu1', title: 'Intel i9', image: '/images/cpu1.jpg', priceInPence: 34999, socketType: 'LGA1200' },
+    { id: 'cpu2', title: 'AMD Ryzen 9', image: '/images/cpu2.jpg', priceInPence: 30000, socketType: 'AM4' },
   ],
   gpus: [
     { id: 'gpu1', title: 'NVIDIA RTX 3080', image: '/images/gpu1.jpg', priceInPence: 60000 },
@@ -36,3 +44,4 @@ export const customParts: CustomParts = {
     { id: 'storage4', title: 'Toshiba HDD 2TB', image: '/images/storage4.jpg', priceInPence: 7500 },
   ],
 };
+
