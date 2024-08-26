@@ -7,7 +7,7 @@ import { Card as CardType, CustomParts } from '../data/customParts';
 import CardSection from '../components/CardSection';
 import { setCookie } from 'nookies';
 
-const CustomBuildsClient = ({ customParts }) => {
+const CustomBuildsClient = ({ customParts }: { customParts: CustomParts }) => {
   const [selectedCards, setSelectedCards] = useState<{ [K in keyof CustomParts]: CardType | CardType[] | null }>({
       cases: null,
       motherboards: null,

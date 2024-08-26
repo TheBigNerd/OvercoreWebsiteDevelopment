@@ -11,21 +11,35 @@ const FormContact: React.FC = () => {
       <div className="relative w-full max-w-2xl p-8 bg-white rounded-lg shadow-lg z-10">
         <h2 className="text-3xl font-bold mb-8 text-center">Contact Us</h2>
         <form className="flex flex-col space-y-6">
-          <div>
-            <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
-              required
-            />
+          <div className="flex space-x-4">
+            <div className="w-1/2">
+              <label htmlFor="firstName" className="block text-gray-700 font-bold mb-2">
+                First Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
+                required
+              />
+            </div>
+            <div className="w-1/2">
+              <label htmlFor="lastName" className="block text-gray-700 font-bold mb-2">
+                Last Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
+                required
+              />
+            </div>
           </div>
           <div>
             <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-              Email Address
+              Email Address <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -37,7 +51,7 @@ const FormContact: React.FC = () => {
           </div>
           <div>
             <label htmlFor="message" className="block text-gray-700 font-bold mb-2">
-              Message
+              Message <span className="text-red-500">*</span>
             </label>
             <textarea
               id="message"
