@@ -10,7 +10,7 @@ const AboutUs = () => {
      <Navbar />
         <div className="text-light py-5">
           <div className="mb-5">
-            <h1 className="text-center text-5xl text-pink-400">About Us</h1>
+            <h1 className="text-center text-5xl ">About Us</h1>
             <p className="text-center text-xl text-gray-500">
               Discover our story and mission.
             </p>
