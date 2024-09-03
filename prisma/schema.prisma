@@ -146,6 +146,7 @@ model cpuCooler{
   LGA1151 Boolean
   LGA1200 Boolean
   LGA1700 Boolean
+  wattage Int
 }
 
 model Motherboard{
@@ -173,7 +174,7 @@ model memory{
   Wattage Int
   numberOfSticks Int
   speed Int
-  GB Int
+  capacity Int
 }
 model storage{
   id String @id @default(uuid())
@@ -181,6 +182,8 @@ model storage{
   imagePath String
   priceInPence Int
   connection String
+  capacity Int
+  wattage Int
 }
 enum connection{
   sata
