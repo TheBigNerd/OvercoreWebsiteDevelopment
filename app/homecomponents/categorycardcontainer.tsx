@@ -16,9 +16,9 @@ const CategoryCardContainer: React.FC = () => {
   };
 
   const cards = [
-    { src: '/images/OvercoreLite.jpeg', alt: 'Overcore Lite', text: 'Overcore Lite', link: `/custom-builds`},
-    { src: '/images/BrowseWorkstation.jpeg', alt: 'Browse Workstation', text: 'Browse Workstation' },
-    { src: '/images/OvercoreBusiness.jpeg', alt: 'Overcore Business', text: 'Overcore Business' },
+    { src: '/images/OvercoreLite.jpeg', alt: 'Overcore Lite', text: 'Overcore Lite', link: '/pre-builds' },
+    { src: '/images/BrowseWorkstation.jpeg', alt: 'Browse Workstation', text: 'Browse Workstation', link: '/contact' },
+    { src: '/images/OvercoreBusiness.jpeg', alt: 'Overcore Business', text: 'Overcore Business', link: '/custom-builds' },
   ];
 
   return (
@@ -29,6 +29,7 @@ const CategoryCardContainer: React.FC = () => {
           src={card.src}
           alt={card.alt}
           text={card.text}
+          link={card.link}
           isHovered={hoveredIndex === index}
           isDimmed={hoveredIndex !== null && hoveredIndex !== index}
           onMouseEnter={() => handleMouseEnter(index)}

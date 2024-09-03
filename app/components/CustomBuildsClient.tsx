@@ -1,7 +1,7 @@
 // components/CustomPartsDisplay.tsx
 "use client"
 import React, { useEffect, useState } from 'react';
-import { fetchCustomParts } from '../data/customPartsService.ts';
+import { fetchCustomParts } from '../data/customPartsService';
 import { CustomParts } from '../data/customParts';
 
 const CustomPartsDisplay: React.FC = () => {
