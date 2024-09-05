@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Navbar from '@/app/components/Navigation/Navbar';
 import missionImage from '@/public/images/Pawel.jpg';
-import BasketObject from "@/app/basket/components/basketObject";
+import BasketContainer from "@/app/basket/components/basketContainer"
 import { prisma } from '@/lib/prisma';
 
 async function getUserBasketIds(userId: string) {
@@ -22,12 +22,10 @@ async function getUserBasketIds(userId: string) {
   }
 
 }
-  
-
-const Basket = (
 
 
-) => {
+
+const Basket = () => {
   return (
     <>
       <Navbar />
@@ -40,9 +38,7 @@ const Basket = (
         </div>
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-center pt-3 space-y-4 md:space-y-0 md:space-x-4">
-            <div className="md:w-1/2 bg-white shadow-md rounded p-4">
-            <BasketObject productName="Test Product" priceInPence={100} imagePath={`/products/3f928022-347e-43ef-a248-5603bf22f483-Example Product Image.jpg`}/>
-            </div>
+            <BasketContainer />
             <div className="md:w-1/3 bg-white shadow-md rounded p-4">
               <h2 className="text-2xl font-semibold text-center mb-3">Order Summary</h2>
               <div className="flex justify-between">
