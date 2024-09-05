@@ -3,8 +3,31 @@ import Image from 'next/image';
 import Navbar from '@/app/components/Navigation/Navbar';
 import missionImage from '@/public/images/Pawel.jpg';
 import BasketObject from "@/app/basket/components/basketObject";
+import { prisma } from '@/lib/prisma';
 
-const Basket = () => {
+async function getUserBasketIds(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId
+    },
+    select: {
+      basket: true,
+    }
+  })
+  if (user == null) {
+    return null
+  }
+  else {
+    return user.basket
+  }
+
+}
+  
+
+const Basket = (
+
+
+) => {
   return (
     <>
       <Navbar />
@@ -34,7 +57,7 @@ const Basket = () => {
                 <p>Total:</p>
                 <p>$85.00</p>
               </div>
-              <button className="mt-6 w-full px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+              <button className="mt-6 w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-400">
                 Proceed to Checkout
               </button>
             </div>
