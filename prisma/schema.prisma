@@ -23,6 +23,7 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   order Order[]
+
 }
 
 model Order {
@@ -42,6 +43,7 @@ enum UserRole {
   USER
 }
 
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -54,6 +56,7 @@ model User {
   accounts      Account[]
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  basket String[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

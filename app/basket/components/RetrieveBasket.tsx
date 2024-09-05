@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext } from 'next';
 import { parseCookies } from 'nookies';
+import React from 'react';
 
 interface Props {
     userBasket: string;
