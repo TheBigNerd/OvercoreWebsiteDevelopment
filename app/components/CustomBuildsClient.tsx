@@ -24,7 +24,7 @@ const CustomPartsDisplay: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: string }>({});
 
   const handleExportToCookie = () => {
-    nookies.set(null, 'customProduct', JSON.stringify(customParts), {
+    nookies.set(null, 'customProduct', JSON.stringify(selectedItems), {
       maxAge: 30 * 24 * 60 * 60, // 30 days
       path: '/',
     });

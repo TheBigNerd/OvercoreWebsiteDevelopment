@@ -15,3 +15,22 @@ export default function getCookieIds(): string[] | null {
     // Return null if the cookie is not found
     return null;
 }
+
+export function getCookieIdsCustom(): Record<string, string> | null {
+    const cookies = parseCookies();
+    const cookieValue = cookies['customProduct'];
+
+    if (cookieValue) {
+        // Parse the cookie value as JSON and return the object
+        try {
+            const details = JSON.parse(cookieValue);
+            return details;
+        } catch (error) {
+            console.error('Failed to parse cookie value:', error);
+            return null;
+        }
+    }
+
+    // Return null if the cookie is not found
+    return null;
+}
