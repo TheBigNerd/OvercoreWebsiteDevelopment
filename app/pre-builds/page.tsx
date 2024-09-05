@@ -3,7 +3,7 @@ import React from "react";
 import ProductCard from "./components/product-card";
 import Navbar from "@/app/components/Navigation/Navbar";
 
-const prebuilds = async () => {
+export default async function Prebuilds() {
 	const defaultProducts = await getProductDefault()
 	return (
 		<>
@@ -30,9 +30,6 @@ const prebuilds = async () => {
 	)
 };
 
-export default prebuilds;
-
 async function getProductDefault() {
-	const defaultProducts = await prisma.product.findMany({where: {isAvailable: true}})
-	return defaultProducts;
+	return prisma.product.findMany({where: {isAvailable: true}});
 }
