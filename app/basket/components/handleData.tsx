@@ -1,6 +1,6 @@
 import { parseCookies } from 'nookies';
 
-function getCookieIds(): string[] | null {
+export default function getCookieIds(): string[] | null {
     const cookies = parseCookies();
     const cookieValue = cookies['productBasket'];
 
