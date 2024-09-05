@@ -9,7 +9,11 @@ export const publicRoutes = [
     "/ccompleted",
     "/custom-builds",
     "/pre-builds",
-    "/about-us"
+    "/about-us",
+    "/contact",
+    "/error",
+    "/favourites",
+    "/basket"
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings

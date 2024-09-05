@@ -1,85 +1,123 @@
-// components/CustomBuildsClient.tsx
-"use client";
+// components/CustomPartsDisplay.tsx
+"use client"
+import React, { useEffect, useState } from 'react';
+import { fetchCustomParts } from '../data/customPartsService';
+import { CustomParts } from '../data/customParts';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card as CardType, CustomParts } from '../data/customParts';
-import CardSection from '../components/CardSection';
-import { setCookie } from 'nookies';
+const CustomPartsDisplay: React.FC = () => {
+  const [customParts, setCustomParts] = useState<CustomParts | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-const CustomBuildsClient = ({ customParts }) => {
-  const [selectedCards, setSelectedCards] = useState<{ [K in keyof CustomParts]: CardType | CardType[] | null }>({
-    cases: null,
-    cpus: null,
-    gpus: null,
-    primaryStorage: null,
-    secondaryStorage: [],
-  });
-
-  const router = useRouter();
-
-  const handleCardSelect = (section: keyof CustomParts, card: CardType) => {
-    if (section === 'secondaryStorage') {
-      setSelectedCards((prevSelectedCards) => {
-        const currentSelection = prevSelectedCards[section] as CardType[];
-        const isSelected = currentSelection.some((selectedCard) => selectedCard.id === card.id);
-        if (isSelected) {
-          return {
-            ...prevSelectedCards,
-            [section]: currentSelection.filter((selectedCard) => selectedCard.id !== card.id),
-          };
+  useEffect(() => {
+    async function loadCustomParts() {
+      try {
+        const data = await fetchCustomParts();
+        setCustomParts(data);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred');
         }
-        return {
-          ...prevSelectedCards,
-          [section]: [...currentSelection, card],
-        };
-      });
-    } else {
-      setSelectedCards((prevSelectedCards) => ({
-        ...prevSelectedCards,
-        [section]: card,
-      }));
-    }
-  };
-
-  const getTotalPriceInPounds = () => {
-    return Object.values(selectedCards).reduce((total, card) => {
-      if (Array.isArray(card)) {
-        return total + card.reduce((subTotal, item) => subTotal + item.priceInPence, 0);
+      } finally {
+        setLoading(false);
       }
-      return card ? total + card.priceInPence : total;
-    }, 0) / 100;
-  };
+    }
 
-  const handleNextClick = () => {
-    setCookie(null, 'selectedComponents', JSON.stringify(selectedCards), {
-      maxAge: 30 * 24 * 60 * 60,
-      path: '/',
-    });
+    loadCustomParts();
+  }, []);
 
-    router.push('/ccompleted');
-  };
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <h1>Select Your PC Components</h1>
-      {Object.keys(customParts).map((section) => (
-        <CardSection
-          key={section}
-          section={section as keyof CustomParts}
-          cards={customParts[section as keyof CustomParts]}
-          selectedCards={selectedCards[section as keyof CustomParts]}
-          handleCardSelect={handleCardSelect}
-        />
-      ))}
-      <div style={{ marginTop: '2rem', fontSize: '1.5rem' }}>
-        <strong>Total Price: £{getTotalPriceInPounds().toFixed(2)}</strong>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
+      <div className="space-y-8">
+        <div className="flex space-x-4">
+          {customParts?.cases.map((caseItem) => (
+            <div key={caseItem.id} className="part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <img src={caseItem.image} alt={caseItem.title} className="w-full h-32 object-cover mb-4 rounded" />
+              <h2 className="text-xl font-semibold mb-2">{caseItem.title}</h2>
+              <p className="text-gray-700 mb-1">Price: £{(caseItem.priceInPence / 100).toFixed(2)}</p>
+              <p className="text-gray-500">{caseItem.id}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex space-x-4">
+          {customParts?.cpus.map((cpuItem) => (
+            <div key={cpuItem.id} className="part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <img src={cpuItem.image} alt={cpuItem.title} className="w-full h-32 object-cover mb-4 rounded" />
+              <h2 className="text-xl font-semibold mb-2">{cpuItem.title}</h2>
+              <p className="text-gray-700 mb-1">Price: £{(cpuItem.priceInPence / 100).toFixed(2)}</p>
+              <p className="text-gray-500">{cpuItem.id}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex space-x-4">
+          {customParts?.gpus.map((gpuItem) => (
+            <div key={gpuItem.id} className="part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <img src={gpuItem.image} alt={gpuItem.title} className="w-full h-32 object-cover mb-4 rounded" />
+              <h2 className="text-xl font-semibold mb-2">{gpuItem.title}</h2>
+              <p className="text-gray-700 mb-1">Price: £{(gpuItem.priceInPence / 100).toFixed(2)}</p>
+              <p className="text-gray-500">{gpuItem.id}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex space-x-4">
+          {customParts?.motherboards.map((motherboardItem) => (
+            <div key={motherboardItem.id} className="part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <img src={motherboardItem.image} alt={motherboardItem.title} className="w-full h-32 object-cover mb-4 rounded" />
+              <h2 className="text-xl font-semibold mb-2">{motherboardItem.title}</h2>
+              <p className="text-gray-700 mb-1">Price: £{(motherboardItem.priceInPence / 100).toFixed(2)}</p>
+              <p className="text-gray-500">{motherboardItem.id}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex space-x-4">
+          {customParts?.psu.map((powerSupplyItem) => (
+            <div key={powerSupplyItem.id} className="part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <img src={powerSupplyItem.image} alt={powerSupplyItem.title} className="w-full h-32 object-cover mb-4 rounded" />
+              <h2 className="text-xl font-semibold mb-2">{powerSupplyItem.title}</h2>
+              <p className="text-gray-700 mb-1">Price: £{(powerSupplyItem.priceInPence / 100).toFixed(2)}</p>
+              <p className="text-gray-500">{powerSupplyItem.id}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex space-x-4">
+          {customParts?.cpuCoolers.map((cpuCoolerItem) => (
+            <div key={cpuCoolerItem.id} className="part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <img src={cpuCoolerItem.image} alt={cpuCoolerItem.title} className="w-full h-32 object-cover mb-4 rounded" />
+              <h2 className="text-xl font-semibold mb-2">{cpuCoolerItem.title}</h2>
+              <p className="text-gray-700 mb-1">Price: £{(cpuCoolerItem.priceInPence / 100).toFixed(2)}</p>
+              <p className="text-gray-500">{cpuCoolerItem.id}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex space-x-4">
+          {customParts?.memory.map((memoryItem) => (
+            <div key={memoryItem.id} className="part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <img src={memoryItem.image} alt={memoryItem.title} className="w-full h-32 object-cover mb-4 rounded" />
+              <h2 className="text-xl font-semibold mb-2">{memoryItem.title}</h2>
+              <p className="text-gray-700 mb-1">Price: £{(memoryItem.priceInPence / 100).toFixed(2)}</p>
+              <p className="text-gray-500">{memoryItem.id}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex space-x-4">
+          {customParts?.storage.map((storageItem) => (
+            <div key={storageItem.id} className="part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <img src={storageItem.image} alt={storageItem.title} className="w-full h-32 object-cover mb-4 rounded" />
+              <h2 className="text-xl font-semibold mb-2">{storageItem.title}</h2>
+              <p className="text-gray-700 mb-1">Price: £{(storageItem.priceInPence / 100).toFixed(2)}</p>
+              <p className="text-gray-500">{storageItem.id}</p>
+            </div>
+          ))}
+        </div>
       </div>
-      <button onClick={handleNextClick} style={{ marginTop: '2rem', padding: '1rem', fontSize: '1rem' }}>
-        Next
-      </button>
     </div>
   );
-};
+}
 
-export default CustomBuildsClient;
+export default CustomPartsDisplay;

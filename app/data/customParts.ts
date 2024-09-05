@@ -1,38 +1,155 @@
 // data/customParts.ts
-export type Card = {
+"use server"
+import { prisma } from "@/lib/prisma"
+
+export type Case = {
   id: string;
   title: string;
   image: string;
   priceInPence: number;
 };
 
-export type CustomParts = {
-  cases: Card[];
-  cpus: Card[];
-  gpus: Card[];
-  primaryStorage: Card[];
-  secondaryStorage: Card[];
+export type Motherboard = {
+  id: string;
+  title: string;
+  image: string;
+  priceInPence: number;
+  socketType: string;
 };
 
-export const customParts: CustomParts = {
-  cases: [
-    { id: 'case1', title: 'Cooler Master Case', image: '/images/case1.jpg', priceInPence: 5000 },
-    { id: 'case2', title: 'NZXT Case', image: '/images/case2.jpg', priceInPence: 6999 },
-  ],
-  cpus: [
-    { id: 'cpu1', title: 'Intel i9', image: '/images/cpu1.jpg', priceInPence: 34999 },
-    { id: 'cpu2', title: 'AMD Ryzen 9', image: '/images/cpu2.jpg', priceInPence: 30000 },
-  ],
-  gpus: [
-    { id: 'gpu1', title: 'NVIDIA RTX 3080', image: '/images/gpu1.jpg', priceInPence: 60000 },
-    { id: 'gpu2', title: 'AMD Radeon RX 6800', image: '/images/gpu2.jpg', priceInPence: 55000 },
-  ],
-  primaryStorage: [
-    { id: 'storage1', title: 'Samsung SSD 1TB', image: '/images/storage1.jpg', priceInPence: 12000 },
-    { id: 'storage2', title: 'WD Black 1TB', image: '/images/storage2.jpg', priceInPence: 11000 },
-  ],
-  secondaryStorage: [
-    { id: 'storage3', title: 'Seagate HDD 2TB', image: '/images/storage3.jpg', priceInPence: 8000 },
-    { id: 'storage4', title: 'Toshiba HDD 2TB', image: '/images/storage4.jpg', priceInPence: 7500 },
-  ],
+export type CPU = {
+  id: string;
+  title: string;
+  image: string;
+  priceInPence: number;
+  wattage: number;
+  socketType: string;
 };
+
+export type GPU = {
+  id: string;
+  title: string;
+  image: string;
+  priceInPence: number;
+  wattage: number;
+};
+
+export type PSU = {
+  id: string;
+  title: string;
+  image: string;
+  priceInPence: number;
+  wattage: number;
+};
+
+export type CPUCooler = {
+  id: string;
+  title: string;
+  image: string;
+  priceInPence: number;
+  wattage: number;
+};
+
+export type Memory = {
+  id: string;
+  title: string;
+  image: string;
+  priceInPence: number;
+  capacity: number;
+};
+
+export type Storage = {
+  id: string;
+  title: string;
+  image: string;
+  priceInPence: number;
+  capacity: number;
+};
+
+export type CustomParts = {
+  cases: Case[];
+  motherboards: Motherboard[];
+  cpus: CPU[];
+  gpus: GPU[];
+  psu: PSU[];
+  cpuCoolers: CPUCooler[];
+  memory: Memory[];
+  storage: Storage[];
+};
+
+export async function getCustomParts(): Promise<CustomParts> {
+  const cases = (await prisma.case.findMany()).map(caseItem => ({
+    id: caseItem.id,
+    title: caseItem.title,
+    image: caseItem.imagePath,
+    priceInPence: caseItem.priceInPence,
+  }));
+
+  const motherboards = (await prisma.motherboard.findMany()).map(motherboardItem => ({
+    id: motherboardItem.id,
+    title: motherboardItem.title,
+    image: motherboardItem.imagePath,
+    priceInPence: motherboardItem.priceInPence,
+    socketType: motherboardItem.Socket,
+  }));
+
+  const cpus = (await prisma.cPU.findMany()).map(cpuItem => ({
+    id: cpuItem.id,
+    title: cpuItem.title,
+    image: cpuItem.imagePath,
+    priceInPence: cpuItem.priceInPence,
+    wattage: cpuItem.Wattage,
+    socketType: cpuItem.Socket,
+  }));
+
+  const gpus = (await prisma.gpu.findMany()).map(gpuItem => ({
+    id: gpuItem.id,
+    title: gpuItem.title,
+    image: gpuItem.imagePath,
+    priceInPence: gpuItem.priceInPence,
+    wattage: gpuItem.Wattage,
+  }));
+
+  const psu = (await prisma.pSU.findMany()).map(psuItem => ({
+    id: psuItem.id,
+    title: psuItem.title,
+    image: psuItem.imagePath,
+    priceInPence: psuItem.priceInPence,
+    wattage: psuItem.wattage,
+  }));
+
+  const cpuCoolers = (await prisma.cpuCooler.findMany()).map(cpuCoolerItem => ({
+    id: cpuCoolerItem.id,
+    title: cpuCoolerItem.title,
+    image: cpuCoolerItem.imagePath,
+    priceInPence: cpuCoolerItem.priceInPence,
+    wattage: cpuCoolerItem.wattage,
+  }));
+
+  const memory = (await prisma.memory.findMany()).map(memoryItem => ({
+    id: memoryItem.id,
+    title: memoryItem.title,
+    image: memoryItem.imagePath,
+    priceInPence: memoryItem.priceInPence,
+    capacity: memoryItem.capacity,
+  }));
+
+  const storage = (await prisma.storage.findMany()).map(storageItem => ({
+    id: storageItem.id,
+    title: storageItem.title,
+    image: storageItem.imagePath,
+    priceInPence: storageItem.priceInPence,
+    capacity: storageItem.capacity,
+  }));
+
+  return {
+    cases,
+    motherboards,
+    cpus,
+    gpus,
+    psu,
+    cpuCoolers,
+    memory,
+    storage,
+  };
+}

@@ -1,14 +1,15 @@
 // app/custom-builds/page.tsx
+import React from 'react';
+import CustomPartsDisplay from '../components/CustomBuildsClient';
 
-import { customParts } from '../data/customParts';
-import CustomBuildsClient from '../components/CustomBuildsClient';
 
-const HomePage = () => {
+const CustomBuildsPage: React.FC = () => {
   return (
     <div>
-      <CustomBuildsClient customParts={customParts} />
+      <h1>Custom Builds</h1>
+      <CustomPartsDisplay />
     </div>
   );
 };
 
-export default HomePage;
+export default CustomBuildsPage;

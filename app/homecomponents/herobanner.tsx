@@ -4,8 +4,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
   { src: '/images/orange_desktop.jpg', text: 'Browse our New Builds' },
-  { src: '/images/image2.jpg', text: 'IDK what this finna be' },
-  { src: '/images/image3.jpg', text: 'Overcore for Small Businesses' },
+  { src: '/images/image2.jpg', text: 'Overcore for business' },
+  { src: '/images/image3.jpg', text: 'Give us a custom request' },
 ];
 
 export default function HeroBanner() {
@@ -45,7 +45,7 @@ export default function HeroBanner() {
   };
 
   return (
-    <div className="relative w-[85%] h-[60vh] mx-auto overflow-hidden py-5">
+    <div className="relative w-[85%] h-[80vh] mx-auto overflow-hidden py-5">
       {images.map((image, index) => (
         <div
           key={index}
@@ -55,7 +55,7 @@ export default function HeroBanner() {
         >
           <img src={image.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
           {index === currentIndex && (
-            <div className="absolute left-40 top-1/2 transform -translate-y-1/2 text-white font-bold text-4xl">
+            <div className="absolute left-40 top-1/2 transform -translate-y-1/2 text-white font-extrabold text-5xl uppercase drop-shadow-xl">
               <h2>{image.text}</h2>
             </div>
           )}

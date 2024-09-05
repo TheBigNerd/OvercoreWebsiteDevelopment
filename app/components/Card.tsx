@@ -1,6 +1,8 @@
 // components/Card.tsx
 import React, { useCallback } from 'react';
-import { Card as CardType } from '../data/customParts';
+import { Case, Motherboard, CPU, GPU } from '../data/customParts';
+
+type CardType = Case | Motherboard | CPU | GPU;
 
 type CardProps = {
   card: CardType;
