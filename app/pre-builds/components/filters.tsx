@@ -43,16 +43,28 @@ export default function FiltersMenu({ products } : { products: Product[] }) {
 		router.push(pn + newSearchParams.replace("&", "?"));
 	}
 	
+	// Prevent the accordion from collapsing if there are checkboxes checked, to ensure they are not forgotten about
+	const preventCollapse = (e: React.MouseEvent) => {
+		if (e.target instanceof HTMLButtonElement && e.target.dataset.state === "open") {
+			const sibling = e.target.parentElement?.nextElementSibling;
+			if (!sibling) return;
+			
+			const checked = sibling.querySelectorAll<HTMLInputElement>('input:checked');
+			if (checked.length > 0) e.preventDefault(); // TODO: show a toast or something
+		}
+	}
+	
+	// defaultValue on Accordion stops checkboxes from being forgotten about too
 	return (
 		<>
 			<h2 className="text-2xl text-center">Filters</h2>
-			<Accordion type="multiple" className="mt-2">
+			<Accordion type="multiple" className="mt-2" defaultValue={Array.from(searchParams.keys())}>
 			{
 				Object.entries(filters).map(([filterName, filterValues]) => {
 					const niceName = fieldsToFilter.find(field => field.dbName === filterName)?.nice;
 					return (
 						<AccordionItem value={filterName} key={filterName} className="bg-gray-300 rounded px-4">
-							<AccordionTrigger>{niceName}</AccordionTrigger>
+							<AccordionTrigger onClick={preventCollapse}>{niceName}</AccordionTrigger>
 							<AccordionContent className="flex flex-col">
 								{
 									Array.from(filterValues).map(value => {
