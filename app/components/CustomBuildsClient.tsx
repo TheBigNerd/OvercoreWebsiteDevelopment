@@ -2,7 +2,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { fetchCustomParts } from '../data/customPartsService';
-import { CustomParts } from '../data/customParts';
+import { CustomParts} from '../data/customParts';
 import nookies from 'nookies';
 
 const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }> = ({ item, isSelected, onClick }) => (
@@ -22,7 +22,6 @@ const CustomPartsDisplay: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: string }>({});
-
   const handleExportToCookie = () => {
     nookies.set(null, 'customProduct', JSON.stringify(selectedItems), {
       maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -30,6 +29,7 @@ const CustomPartsDisplay: React.FC = () => {
     });
     alert('Custom product exported to cookie!');
   };
+
 
 
   useEffect(() => {
@@ -51,18 +51,35 @@ const CustomPartsDisplay: React.FC = () => {
     loadCustomParts();
   }, []);
 
-  const handleItemClick = (type: string, id: string) => {
+
+  const [price, setPrice] = useState(0);
+  const [itemPrices, setItemPrices] = useState<{ [key: string]: number }>({});
+  
+  const handleItemClick = (type: string, id: string, itemPrice: number) => {
     setSelectedItems((prevSelectedItems) => {
       if (prevSelectedItems[type] === id) {
         console.log(`Deselected item: ${id}`);
         const { [type]: _, ...rest } = prevSelectedItems;
+        setItemPrices((prevItemPrices) => {
+          const { [type]: __, ...restPrices } = prevItemPrices;
+          return restPrices;
+        });
         return rest;
       } else {
         console.log(`Selected item: ${id}`);
+        setItemPrices((prevItemPrices) => ({
+          ...prevItemPrices,
+          [type]: itemPrice,
+        }));
         return { ...prevSelectedItems, [type]: id };
       }
     });
   };
+  
+  useEffect(() => {
+    const totalPrice = Object.values(itemPrices).reduce((acc, curr) => acc + curr, 0);
+    setPrice(totalPrice);
+  }, [itemPrices]);
   
   const isSelected = (type: string, id: string) => selectedItems[type] === id;
   
@@ -76,7 +93,7 @@ const CustomPartsDisplay: React.FC = () => {
           key={item.id}
           item={item}
           isSelected={isSelected(type, item.id)}
-          onClick={() => handleItemClick(type, item.id)}
+          onClick={() => handleItemClick(type, item.id,item.priceInPence)}
         />
       ))}
     </div>
@@ -95,6 +112,7 @@ const CustomPartsDisplay: React.FC = () => {
         {customParts?.memory && renderPartItems('memory', customParts.memory)}
         {customParts?.storage && renderPartItems('storage', customParts.storage)}
       </div>
+      <div>Current Price: ${(price / 100).toFixed(2)}</div>
       <button 
         onClick={handleExportToCookie} 
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"

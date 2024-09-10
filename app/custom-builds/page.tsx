@@ -1,12 +1,12 @@
 // app/custom-builds/page.tsx
 import React from 'react';
 import CustomPartsDisplay from '../components/CustomBuildsClient';
+import Navbar from '../components/Navigation/Navbar';
 
 
 const CustomBuildsPage: React.FC = () => {
   return (
-    <div>
-      <h1>Custom Builds</h1>
+    <div><Navbar></Navbar>
       <CustomPartsDisplay />
     </div>
   );
