@@ -1,3 +1,4 @@
+import { prisma } from '@/lib/prisma';
 import { parseCookies, setCookie} from 'nookies';
 
 export default function getCookieIds(): string[] | null {
