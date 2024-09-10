@@ -3,33 +3,32 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { formatCurrency } from "@/lib/formatters"
 import Image from "next/image"
 
-interface ProductCardProps {
+interface CheckoutProductProps {
     name: string,
     priceInPence: number,
     imagePath: string,
 }
 
-const ProductCard = ({name, priceInPence, imagePath}: ProductCardProps) => {
+const CheckoutProduct = ({ name, priceInPence, imagePath }: CheckoutProductProps) => {
     return (
-        <Card className="flex flex-col items-center p-4 space-y-4 max-w-sm">
-          <div className="w-full items-center flex flex-col">
-            <Image src={imagePath} alt="Product Image" width={300} height={300} className="rounded-lg object-cover" />
-          </div>
-          <CardHeader className="text-center">
+      <Card className="flex flex-row items-center p-4 space-x-4 max-w-md">
+        <div className="flex-shrink-0">
+          <Image src={imagePath} alt="Product Image" width={150} height={150} className="rounded-lg object-cover" />
+        </div>
+        <div className="flex flex-col space-y-2">
+          <CardHeader>
             <CardTitle className="text-2xl font-semibold">{name}</CardTitle>
             <CardDescription className="text-xl font-bold">{formatCurrency(priceInPence / 100)}</CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-gray-500 text-center">
+          <CardContent className="text-sm text-gray-500">
             <p>CPU: Intel Core i9 14900K</p>
             <p>Graphics Card: NVIDIA RTX 4090</p>
             <p>Storage: 2TB SSD</p>
             <p>RAM: 64GB DDR5 5600MT/s</p>
           </CardContent>
-          <CardFooter className="w-full">
-            <Button className="w-full mt-4" size="lg">Add to Basket</Button>
-          </CardFooter>
-        </Card>
-      );
-    };          
-
-export default ProductCard
+        </div>
+      </Card>
+    );
+  };
+  
+  export default CheckoutProduct;
