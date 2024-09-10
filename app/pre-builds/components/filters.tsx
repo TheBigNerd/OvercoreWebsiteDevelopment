@@ -56,7 +56,7 @@ export default function FiltersMenu({ products } : { products: Product[] }) {
 						<AccordionContent className="flex flex-col">
 							{
 								Array.from(filterValues).map(value => (
-									<div key={value}>
+									<div key={filterName + "-" + value}>
 										<input type="checkbox" id={value} value={filterName + "-" + value} onChange={updateFilters} />
 										<label className="ml-1" htmlFor={value}>{value}</label>
 									</div>

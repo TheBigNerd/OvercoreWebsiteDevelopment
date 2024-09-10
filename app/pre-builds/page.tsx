@@ -24,9 +24,13 @@ export default async function Prebuilds({ searchParams } : { searchParams: any }
 };
 
 async function getProducts(searchParams: any) {
-	const filters: any = { isAvailable: true }
+	const filters: any = { isAvailable: true } // default filter
+	
+	// go through each search param, and add it to the filters object
 	Object.keys(searchParams).forEach(key => {
-		filters[key] = searchParams[key];
+		// if two or more options selected, use in (OR) filter
+		if (Array.isArray(searchParams[key])) filters[key] = { in: searchParams[key] };
+		else filters[key] = searchParams[key];
 	})
 	
 	return prisma.product.findMany({
