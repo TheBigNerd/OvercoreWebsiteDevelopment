@@ -53,9 +53,11 @@ export default function HeroBanner() {
             index === currentIndex ? "opacity-100" : "opacity-0"
           }`}
         >
+          {/* Add an overlay to dim the background */}
+          <div className="absolute inset-0 bg-black opacity-20"></div>
           <img src={image.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
           {index === currentIndex && (
-            <div className="absolute left-40 top-1/2 transform -translate-y-1/2 text-white font-extrabold text-5xl uppercase drop-shadow-xl">
+            <div className="absolute left-10 bottom-10 text-white font-extrabold text-5xl uppercase drop-shadow-xl">
               <h2>{image.text}</h2>
             </div>
           )}

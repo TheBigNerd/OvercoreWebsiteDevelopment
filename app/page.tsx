@@ -2,6 +2,7 @@ import CategoryCardContainer from './homecomponents/categorycardcontainer';
 import HeroBanner from './homecomponents/herobanner';
 import Navbar from './components/Navigation/Navbar';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import Footer from './components/footer/Page';
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
           <CarouselNext />
         </Carousel>
       </div>
+      <Footer></Footer>
     </>
   );
 }
