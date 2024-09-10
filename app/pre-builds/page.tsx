@@ -14,13 +14,16 @@ export default async function Prebuilds({ searchParams } : { searchParams: any }
 			<main className="my-4">
 				<section className="text-center">
 					<h1 className="text-4xl font-bold">Pre-built Computers</h1>
-					<p>Don&apos;t fancy building a computer by yourself? No worries, we&apos;ll do it for you, just browse our catalogue below.</p>
+					<p>Don&apos;t fancy building a computer by yourself? No worries, we&apos;ll do it for you, just
+						browse our catalogue below.</p>
 				</section>
-				<AllProducts all={allProducts} filtered={filteredProducts} />
+				<section className="flex my-4 mx-16 gap-4">
+					<AllProducts all={allProducts} filtered={filteredProducts} />
+				</section>
 			</main>
 		
 		</>
-	)
+)
 };
 
 async function getProducts(searchParams: any) {

@@ -1,7 +1,7 @@
+"use client";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 import type { Product } from "@prisma/client";
-import React from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 const fieldsToFilter = [
@@ -24,15 +24,13 @@ export default function FiltersMenu({ products } : { products: Product[] }) {
 	const filters: { [key: string] : Set<string> } = {};
 	products.forEach(product => {
 		fieldsToFilter.forEach(field => {
-			if (!filters[field.name]) {
-				filters[field.name] = new Set();
-			}
+			if (!filters[field.name]) filters[field.name] = new Set(); // Sets ensure no duplicates are added into the lists
 			
 			filters[field.name].add(product[field.field as keyof Product] as string); // :(
 		})
 	})
 	
-	const updateFilters = (ev: React.ChangeEvent) => {
+	const updateFilters = () => {
 		const checked = document.querySelectorAll<HTMLInputElement>('input:checked');
 		let newSearchParams = "";
 		
