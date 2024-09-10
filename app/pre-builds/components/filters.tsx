@@ -55,12 +55,15 @@ export default function FiltersMenu({ products } : { products: Product[] }) {
 							<AccordionTrigger>{niceName}</AccordionTrigger>
 							<AccordionContent className="flex flex-col">
 								{
-									Array.from(filterValues).map(value => (
-										<div key={filterName + "-" + value}>
-											<input type="checkbox" id={value} value={filterName + "-" + value} onChange={updateFilters} checked={searchParams.getAll(filterName).includes(value)} />
-											<label className="ml-1" htmlFor={value}>{value}</label>
-										</div>
-									))
+									Array.from(filterValues).map(value => {
+										const htmlId = filterName + "-" + value;
+										return (
+											<div key={htmlId}>
+												<input type="checkbox" id={htmlId} value={htmlId} onChange={updateFilters} checked={searchParams.getAll(filterName).includes(value)} />
+												<label className="ml-1" htmlFor={htmlId}>{value}</label>
+											</div>
+										)
+									})
 								}
 							</AccordionContent>
 						</AccordionItem>
