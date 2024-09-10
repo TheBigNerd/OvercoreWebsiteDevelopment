@@ -1,4 +1,4 @@
-import { parseCookies } from 'nookies';
+import { parseCookies, setCookie} from 'nookies';
 
 export default function getCookieIds(): string[] | null {
     const cookies = parseCookies();
@@ -33,4 +33,22 @@ export function getCookieIdsCustom(): Record<string, string> | null {
 
     // Return null if the cookie is not found
     return null;
+}
+
+export function removeCookieId(id: string): void {
+    const cookies = parseCookies();
+    const cookieValue = cookies['productBasket'];
+
+    if (cookieValue) {
+        // Parse the cookie value and extract the IDs
+        let ids = cookieValue.split(',');
+
+        // Remove the specified ID
+        ids = ids.filter(cookieId => cookieId !== id);
+
+        // Update the cookie with the new value
+        setCookie(null, 'productBasket', ids.join(','), {
+            path: '/',
+        });
+    }
 }
