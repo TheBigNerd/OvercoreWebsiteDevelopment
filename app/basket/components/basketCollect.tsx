@@ -1,13 +1,7 @@
-"use server"
+"use server";
 
 import { prisma } from "@/lib/prisma"
 import getCookieIds from "./handleData"
-import { getSession } from "next-auth/react";
-
-async function getUserId() {
-    const session  = await getSession();
-    return session ? session.user.id : null;
-}
 
 async function getUserBasketIds(userId: string) {
     const user = await prisma.user.findUnique({
@@ -17,9 +11,7 @@ async function getUserBasketIds(userId: string) {
     return user ? user.basket : null;
 }
 
-
-export default async function basketArray() {
-    const userId = await getUserId();
+export default async function basketArray(userId: string | undefined) {
     const accountIds = userId ? await getUserBasketIds(userId) : null; 
     const cookieIds = getCookieIds();
 

@@ -2,16 +2,22 @@
 
 import React, { useEffect, useState } from "react"
 import BasketObject from "../components/basketObject";
-import { useSession } from "next-auth/react";
-import getCookieIds from "@/app/basket/components/handleData"
 import basketArray from "./basketCollect";
+
+import { getSession } from "next-auth/react";
+
+async function getUserId() {
+	const session  = await getSession();
+	return session ? session.user.id : null;
+}
 
 const BasketContainer = () => {
     const [basketProducts, setBasketProducts] = useState([])
 
     useEffect(() => {
         async function fetchBasketProducts() {
-            const products = await basketArray()
+			const userId = await getUserId();
+            const products = await basketArray(userId ?? undefined)
             setBasketProducts(products)
         }
         fetchBasketProducts()
