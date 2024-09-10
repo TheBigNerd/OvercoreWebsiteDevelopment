@@ -5,7 +5,8 @@ import Navbar from "@/app/components/Navigation/Navbar";
 import AllProducts from "@/app/pre-builds/components/allProducts";
 
 export default async function Prebuilds({ searchParams } : { searchParams: any }) {
-	const availableProducts = await getProducts(searchParams);
+	const allProducts = await getProducts({});
+	const filteredProducts = await getProducts(searchParams);
 	
 	return (
 		<>
@@ -15,7 +16,7 @@ export default async function Prebuilds({ searchParams } : { searchParams: any }
 					<h1 className="text-4xl font-bold">Pre-built Computers</h1>
 					<p>Don&apos;t fancy building a computer by yourself? No worries, we&apos;ll do it for you, just browse our catalogue below.</p>
 				</section>
-				<AllProducts availableProducts={availableProducts} />
+				<AllProducts all={allProducts} filtered={filteredProducts} />
 			</main>
 		
 		</>
