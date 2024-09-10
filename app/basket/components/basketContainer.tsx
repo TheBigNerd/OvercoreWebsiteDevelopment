@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import BasketObject from "../components/basketObject";
 import basketArray from "./basketCollect";
+import type { Product } from "@prisma/client"
 
 import { getSession } from "next-auth/react";
 
@@ -12,7 +13,7 @@ async function getUserId() {
 }
 
 const BasketContainer = () => {
-    const [basketProducts, setBasketProducts] = useState([])
+    const [basketProducts, setBasketProducts] = useState<Product[]>();
 
     useEffect(() => {
         async function fetchBasketProducts() {
@@ -26,7 +27,7 @@ const BasketContainer = () => {
     return (
         <>
             <div className="md:w-1/2 bg-white shadow-md rounded p-4">
-                {basketProducts.length > 0 ? (
+                { basketProducts && basketProducts.length > 0 ? (
                     basketProducts.map(product => (
                         <BasketObject
                             key={product.id}
