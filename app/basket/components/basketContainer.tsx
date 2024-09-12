@@ -34,13 +34,24 @@ const BasketContainer = () => {
                             productName={product.name}
                             priceInPence={product.priceInPence}
                             imagePath={product.imagePath}
+                            brand={product.brand}
+                            cpuModel={product.cpuModel}
+                            gpuModel={product.gpuModel}
+                            memorySize={product.memorySize}
+                            memoryType={product.memoryType}
+                            caseSize={product.caseSize}
+                            colour={product.colour}
+                            storageType={product.storageType}
+                            totalStorage={product.totalStorage}
+                            connectivity={product.connectivity}
+                            coolingMethod={product.coolingMethod}
                         />
                     ))
                 ) : (
                     <p>No items in the basket</p>
                 )}
             </div>
-            <div className="md:w-1/3 bg-white shadow-md rounded p-4">
+            <div className="md:w-1/3 bg-white shadow-md rounded p-4" style={{ maxHeight:'230px'}}>
                 <h2 className="text-2xl font-semibold text-center mb-3">Order Summary</h2>
                 <div className="flex justify-between">
                     <p className="text-lg">Subtotal:</p>

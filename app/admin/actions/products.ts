@@ -12,12 +12,35 @@ const addSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
   priceInPence: z.coerce.number().int().min(1),
-  image: imageSchema.refine(file => file.size > 0, "Required")
+  image: imageSchema.refine(file => file.size > 0, "Required"),
+  brand: z.string().min(1),
+  isFeatured: z.boolean(),
+  cpuModel: z.string().min(1),
+  gpuModel: z.string().min(1),
+  colour: z.string().min(1),
+  caseSize: z.string().min(1),
+  memorySize: z.string().min(1),
+  memoryType: z.string().min(1),
+  storageType: z.string().min(1),
+  totalStorage: z.string().min(1),
+  connectivity: z.string().min(1),
+  coolingMethod: z.string().min(1),
 })
 
 export async function addProduct(prevState: unknown, formData: FormData){
-  const result = addSchema.safeParse(Object.fromEntries(formData.entries()))
+  const formEntries = Object.fromEntries(formData.entries());
+
+  const validationEntries = {
+    ...formEntries,
+    isFeatured: formEntries.isFeatured === "on"
+  };
+  
+  console.log('Form data entries:', Object.fromEntries(formData.entries()));
+  const result = addSchema.safeParse(validationEntries)
+  console.log('Parsing result:', result);
+  console.log(result)
   if (result.success === false) {
+    console.error('Validation failed:', result.error.formErrors.fieldErrors);
     return result.error.formErrors.fieldErrors
   }
 
@@ -26,13 +49,25 @@ export async function addProduct(prevState: unknown, formData: FormData){
   await fs.mkdir("public/products", {recursive: true })
   const imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`
   await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
-
+  
   await prisma.product.create({ data: {
     isAvailable: false,
     name: data.name,
     description: data.description,
     priceInPence: data.priceInPence,
-    imagePath
+    imagePath,
+    brand: data.brand,
+    isFeatured: data.isFeatured,
+    cpuModel: data.cpuModel,
+    gpuModel: data.gpuModel,
+    colour: data.colour,
+    caseSize: data.caseSize,
+    memorySize: data.memorySize,
+    memoryType: data.memoryType,
+    storageType: data.storageType,
+    totalStorage: data.totalStorage,
+    connectivity: data.connectivity,
+    coolingMethod: data.coolingMethod
   }})
 
   redirect("/admin/products")
@@ -60,7 +95,14 @@ const editSchema = addSchema.extend({
 })
 
 export async function updateProduct( id: string, prevState: unknown, formData: FormData){
-  const result = editSchema.safeParse(Object.fromEntries(formData.entries()))
+  const formEntries = Object.fromEntries(formData.entries());
+
+  const validationEntries = {
+    ...formEntries,
+    isFeatured: formEntries.isFeatured === "on"
+  };
+
+  const result = editSchema.safeParse(validationEntries)
   if (result.success === false) {
     return result.error.formErrors.fieldErrors
   }
@@ -82,7 +124,19 @@ export async function updateProduct( id: string, prevState: unknown, formData: F
     name: data.name,
     description: data.description,
     priceInPence: data.priceInPence,
-    imagePath
+    imagePath,
+    brand: data.brand,
+    isFeatured: data.isFeatured,
+    cpuModel: data.cpuModel,
+    gpuModel: data.gpuModel,
+    colour: data.colour,
+    caseSize: data.caseSize,
+    memorySize: data.memorySize,
+    memoryType: data.memoryType,
+    storageType: data.storageType,
+    totalStorage: data.totalStorage,
+    connectivity: data.connectivity,
+    coolingMethod: data.coolingMethod
   }})
 
   redirect("/admin/products")

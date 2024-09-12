@@ -23,6 +23,8 @@ model Product {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   order         Order[]
+  isFeatured Boolean @default(false)
+  brand        String
   cpuModel      String
   gpuModel      String
   colour        String
