@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PageHeader } from "../../adminComponents/PageHeader";
-import ComponentTable from "../components/componentTable";
+import ComponentTable from "../cpu/cpuTable";
 import { Button } from "@/components/ui/button";
 
 export default function cpuCooler() {

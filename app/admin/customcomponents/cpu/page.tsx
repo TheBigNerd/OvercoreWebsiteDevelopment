@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PageHeader } from "../../adminComponents/PageHeader";
-import ComponentTable from "../components/componentTable";
+import CPUTable from "./cpuTable";
 import { Button } from "@/components/ui/button";
 
 export default function cpuHome() {
@@ -8,13 +8,13 @@ export default function cpuHome() {
         <>
         <div className="flex justify-between items-center gap-4">
         <PageHeader>CPU</PageHeader>
-        <Link href="/admin/customcomponents/cpuCooler/new" passHref>
+        <Link href="/admin/customcomponents/cpu/new" passHref>
             <Button>
                 Add CPU
             </Button>
         </Link>
     </div>
-        <ComponentTable componenttype="cPU"/>
+        <CPUTable/>
         </>
     )
 }
