@@ -6,7 +6,8 @@ export default function CustomComponents() {
 
 return ( 
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <DashboardCard title="CPU" subtitle="cpus Total=" body="10" componenttype="cpu"></DashboardCard>
+        <DashboardCard title="CPU" subtitle="cpus Total =" body="10" componenttype="cpu"></DashboardCard>
+        <DashboardCard title="CPU Cooler" subtitle="CPU Cooler Total =" body="10" componenttype="cpuCooler"></DashboardCard>
     </div>
 )
 }
