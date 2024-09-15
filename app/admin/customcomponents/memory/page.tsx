@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { PageHeader } from "../../adminComponents/PageHeader";
+import MemoryTable from "./MemoryTable"
 import { Button } from "@/components/ui/button";
-import MotherboardTable from "./motherboardTable";
 
-export default function MotherboardHome() { 
+export default function MemoryHome() {
     return (
         <>
         <div className="flex justify-between items-center gap-4">
-        <PageHeader>Motherboard</PageHeader>
-        <Link href="/admin/customcomponents/motherboard/new" passHref>
+        <PageHeader>Memory</PageHeader>
+        <Link href="/admin/customcomponents/memory/new" passHref>
             <Button>
-                Add Motherboard
+                Add Memory
             </Button>
         </Link>
     </div>
-        <MotherboardTable/>
+        <MemoryTable/>
         </>
     )
 }
