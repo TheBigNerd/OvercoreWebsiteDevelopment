@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";                    
-import { CpuForm } from "../../new/cpuForm"; 
+import { CpuCoolerForm } from "../../new/cpuCoolerForm";
 import { PageHeader } from "@/app/admin/adminComponents/PageHeader";
 
 export default async function EditProductPage({
@@ -7,11 +7,11 @@ export default async function EditProductPage({
 }: {
   params: { id: string }
 }) {
-    const CPU = await prisma.cPU.findUnique( { where: { id }})
+    const CpuCooler = await prisma.cpuCooler.findUnique( { where: { id }})
     return(
         <>
-        <PageHeader>Edit CPU</PageHeader>
-        <CpuForm cpu={CPU} />
+        <PageHeader>Edit CPU Cooler</PageHeader>
+        <CpuCoolerForm cpuCooler={CpuCooler} />
         </>
     )
 

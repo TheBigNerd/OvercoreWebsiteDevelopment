@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PageHeader } from "../../adminComponents/PageHeader";
-import ComponentTable from "../cpu/cpuTable";
 import { Button } from "@/components/ui/button";
+import CPUCoolerTable from "./cpuCoolerTable";
 
 export default function cpuCooler() {
     return (
@@ -14,7 +14,7 @@ export default function cpuCooler() {
                 </Button>
             </Link>
         </div>
-        <ComponentTable componenttype="cpuCooler"/>
+        <CPUCoolerTable/>
         </>
     )
 }
