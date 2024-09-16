@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { PageHeader } from "../../adminComponents/PageHeader";
-import CPUTable from "./cpuTable";
+import StorageTable from "./storageTable";
 import { Button } from "@/components/ui/button";
 
 export default function cpuHome() {
     return (
         <>
         <div className="flex justify-between items-center gap-4">
-        <PageHeader>CPU</PageHeader>
-        <Link href="/admin/customcomponents/cpu/new" passHref>
+        <PageHeader>Storage</PageHeader>
+        <Link href="/admin/customcomponents/storage/new" passHref>
             <Button>
-                Add CPU
+                Add Storage
             </Button>
         </Link>
     </div>
-        <CPUTable/>
+        <StorageTable/>
         </>
     )
 }

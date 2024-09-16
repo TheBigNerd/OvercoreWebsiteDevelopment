@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { PageHeader } from "../../adminComponents/PageHeader";
-import CPUTable from "./cpuTable";
+import MemoryTable from "./MemoryTable"
 import { Button } from "@/components/ui/button";
 
-export default function cpuHome() {
+export default function MemoryHome() {
     return (
         <>
         <div className="flex justify-between items-center gap-4">
-        <PageHeader>CPU</PageHeader>
-        <Link href="/admin/customcomponents/cpu/new" passHref>
+        <PageHeader>Memory</PageHeader>
+        <Link href="/admin/customcomponents/memory/new" passHref>
             <Button>
-                Add CPU
+                Add Memory
             </Button>
         </Link>
     </div>
-        <CPUTable/>
+        <MemoryTable/>
         </>
     )
 }
