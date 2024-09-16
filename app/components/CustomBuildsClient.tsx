@@ -22,6 +22,7 @@ const CustomPartsDisplay: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: string }>({});
+  const [selectedSocketType, setSelectedSocketType] = useState<string | null>(null);
   const handleExportToCookie = () => {
     nookies.set(null, 'customProduct', JSON.stringify(selectedItems), {
       maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -54,8 +55,9 @@ const CustomPartsDisplay: React.FC = () => {
 
   const [price, setPrice] = useState(0);
   const [itemPrices, setItemPrices] = useState<{ [key: string]: number }>({});
+  const [totalWattage, setTotalWattage] = useState(0);
   
-  const handleItemClick = (type: string, id: string, itemPrice: number) => {
+  const handleItemClick = (type: string, id: string, itemPrice: number, socketType?: string) => {
     setSelectedItems((prevSelectedItems) => {
       if (prevSelectedItems[type] === id) {
         console.log(`Deselected item: ${id}`);
@@ -66,6 +68,9 @@ const CustomPartsDisplay: React.FC = () => {
         });
         return rest;
       } else {
+        if (type === 'cpus' && socketType) {
+          setSelectedSocketType(socketType);
+        }
         console.log(`Selected item: ${id}`);
         setItemPrices((prevItemPrices) => ({
           ...prevItemPrices,
@@ -80,6 +85,23 @@ const CustomPartsDisplay: React.FC = () => {
     const totalPrice = Object.values(itemPrices).reduce((acc, curr) => acc + curr, 0);
     setPrice(totalPrice);
   }, [itemPrices]);
+
+  useEffect(() => {
+    const calculateTotalWattage = () => {
+      let wattage = 0;
+      Object.keys(selectedItems).forEach(type => {
+        const selectedItem = customParts && customParts[type as keyof CustomParts]?.find((item: { id: string; }) => item.id === selectedItems[type]);
+        if (selectedItem) {
+          if ('wattage' in selectedItem) {
+            wattage += typeof selectedItem.wattage === 'number' ? selectedItem.wattage : 0;
+          }
+        }
+      });
+      setTotalWattage(wattage);
+    };
+
+    calculateTotalWattage();
+  }, [selectedItems, customParts]);
   
   const isSelected = (type: string, id: string) => selectedItems[type] === id;
   
@@ -93,11 +115,19 @@ const CustomPartsDisplay: React.FC = () => {
           key={item.id}
           item={item}
           isSelected={isSelected(type, item.id)}
-          onClick={() => handleItemClick(type, item.id,item.priceInPence)}
+          onClick={() => handleItemClick(type, item.id, item.priceInPence, item.socketType)}
         />
       ))}
     </div>
   );
+
+  const currentPSU = customParts?.psu?.find(item => isSelected('psu', item.id));
+  const psuWattage = currentPSU ? currentPSU.wattage : 0;
+  const shouldDisplayPSU =(psuWattage + 150) - totalWattage  > 0;
+
+  const filteredMotherboards = selectedSocketType
+    ? customParts?.motherboards?.filter(mb => mb.socketType === selectedSocketType)
+    : customParts?.motherboards;
 
   return (
     <div className="p-4">
@@ -106,8 +136,8 @@ const CustomPartsDisplay: React.FC = () => {
         {customParts?.cases && renderPartItems('cases', customParts.cases)}
         {customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
         {customParts?.gpus && renderPartItems('gpus', customParts.gpus)}
-        {customParts?.motherboards && renderPartItems('motherboards', customParts.motherboards)}
-        {customParts?.psu && renderPartItems('psu', customParts.psu)}
+        {filteredMotherboards && renderPartItems('motherboards', filteredMotherboards)}
+        {shouldDisplayPSU && customParts?.psu && renderPartItems('psu', customParts.psu)}
         {customParts?.cpuCoolers && renderPartItems('cpuCoolers', customParts.cpuCoolers)}
         {customParts?.memory && renderPartItems('memory', customParts.memory)}
         {customParts?.storage && renderPartItems('storage', customParts.storage)}
