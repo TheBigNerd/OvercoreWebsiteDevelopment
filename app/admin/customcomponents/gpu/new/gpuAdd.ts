@@ -14,6 +14,7 @@ const gpuSchema = z.object({
     priceInPence: z.coerce.number().int().min(1),
     Wattage: z.coerce.number().int().min(1),
     width: z.coerce.number().int().min(1),
+    description: z.string().min(1),
 })
 
 export async function addGpu(prevState: unknown, formData: FormData){
@@ -43,7 +44,8 @@ export async function addGpu(prevState: unknown, formData: FormData){
         imagePath,
         priceInPence: data.priceInPence,
         Wattage: data.Wattage,
-        width: data.width
+        width: data.width,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/gpu")
@@ -94,7 +96,8 @@ export async function updateGPU(id: string, prevState: unknown, formData: FormDa
         imagePath,
         priceInPence: data.priceInPence,
         Wattage: data.Wattage,
-        width: data.width
+        width: data.width,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/gpu")

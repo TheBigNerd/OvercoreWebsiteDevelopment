@@ -16,6 +16,7 @@ const storageSchema = z.object({
     connection: z.string().min(1),
     capacity: z.coerce.number().int().min(1),
     wattage: z.coerce.number().int().min(1),
+    description: z.string().min(1),
 })
 
 export async function addStorage(prevState: unknown, formData: FormData){
@@ -46,7 +47,8 @@ export async function addStorage(prevState: unknown, formData: FormData){
         priceInPence: data.priceInPence,
         connection: data.connection,
         capacity: data.capacity,
-        wattage: data.wattage
+        wattage: data.wattage,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/storage")
@@ -98,7 +100,8 @@ export async function updateStorage(id: string, prevState: unknown, formData: Fo
         priceInPence: data.priceInPence,
         connection: data.connection,
         capacity: data.capacity,
-        wattage: data.wattage
+        wattage: data.wattage,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/storage")

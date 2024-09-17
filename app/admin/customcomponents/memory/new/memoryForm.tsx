@@ -61,6 +61,11 @@ export function MemoryForm({ memory }: {memory?: memory | null}) {
         </div>
         <div className="text-muted-foreground">{capacity}GB</div>
         {error?.capacity && <div className="text-destructive">{error.capacity}</div>}
+        <div>
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" required defaultValue={memory?.description || ""} />
+            {error?.description && <div className="text-destructive">{error.description}</div>}
+        </div>
         <SubmitButton />
     </form>
 }

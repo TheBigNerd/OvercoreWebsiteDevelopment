@@ -61,6 +61,11 @@ export function CpuForm({ cpu }: {cpu?: CPU | null}) {
         </div>
         <div className="text-muted-foreground">{IntegratedCooler}</div>
         {error?.IntegratedCooler && <div className="text-destructive">{error.IntegratedCooler}</div>}
+        <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" required defaultValue={cpu?.description || ""} />
+            {error?.description && <div className="text-destructive">{error.description}</div>}
+        </div>
         <SubmitButton />
     </form>
 }

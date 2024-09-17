@@ -16,6 +16,7 @@ const cpuSchema = z.object({
     Socket: z.enum(["AM4", "AM5", "LGA1151", "LGA1200", "LGA1700"]),
     IntegratedGraphics: z.boolean(),
     IntegratedCooler: z.boolean(),
+    description: z.string().min(1),
 })
 
 export async function addCpu(prevState: unknown, formData: FormData){
@@ -49,7 +50,8 @@ export async function addCpu(prevState: unknown, formData: FormData){
         Wattage: data.Wattage,
         Socket: data.Socket,
         IntegratedGraphics: data.IntegratedGraphics,
-        IntegratedCooler: data.IntegratedCooler
+        IntegratedCooler: data.IntegratedCooler,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/cpu")
@@ -106,7 +108,8 @@ export async function updateCPU(id: string, prevState: unknown, formData: FormDa
         Wattage: data.Wattage,
         Socket: data.Socket,
         IntegratedGraphics: data.IntegratedGraphics,
-        IntegratedCooler: data.IntegratedCooler
+        IntegratedCooler: data.IntegratedCooler,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/cpu")

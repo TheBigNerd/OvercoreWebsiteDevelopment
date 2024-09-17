@@ -16,6 +16,7 @@ const MemorySchema = z.object({
     numberOfSticks: z.coerce.number().int().min(1),
     speed: z.coerce.number().int().min(1),
     capacity: z.coerce.number().int().min(1),
+    description: z.string().min(1),
 })
 
 export async function addMemory(prevState: unknown, formData: FormData){
@@ -47,7 +48,8 @@ export async function addMemory(prevState: unknown, formData: FormData){
         Wattage: data.Wattage,
         numberOfSticks: data.numberOfSticks,
         speed: data.speed,
-        capacity: data.capacity
+        capacity: data.capacity,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/memory")
@@ -102,7 +104,8 @@ export async function updateMemory(id: string, prevState: unknown, formData: For
         Wattage: data.Wattage,
         numberOfSticks: data.numberOfSticks,
         speed: data.speed,
-        capacity: data.capacity
+        capacity: data.capacity,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/memory")

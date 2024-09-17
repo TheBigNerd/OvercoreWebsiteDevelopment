@@ -47,6 +47,11 @@ export function GpuForm({ gpu }: {gpu?: Gpu | null}) {
         </div>
         <div className="text-muted-foreground">{width}mm</div>
         {error?.width && <div className="text-destructive">{error.width}</div>}
+        <div>
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" required defaultValue={gpu?.description || ""} />
+            {error?.description && <div className="text-destructive">{error.description}</div>}
+        </div>
         <SubmitButton />
     </form>
 }
