@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import HoverableLink from "@/app/components/HoverableLink";
+import HoverableLink from "./HoverableLink";
 import Logo from "./Logo";
 import { Basket } from "./button";
 import { Favourites } from "./button";
