@@ -20,7 +20,7 @@ export default function Footer() {
         <div className="flex justify-center space-x-8 text-gray-300 text-sm">
           <a href="#" className="hover:text-orange-400">Home</a>
           <a href="#" className="hover:text-orange-400">Services</a>
-          <a href="app/about-us" className="hover:text-orange-400">About</a>
+          <a href="/about-us" className="hover:text-orange-400">About</a>
           <a href="#" className="hover:text-orange-400">Terms</a>
           <a href="#" className="hover:text-orange-400">Privacy Policy</a>
         </div>
