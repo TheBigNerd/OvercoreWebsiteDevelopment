@@ -1,5 +1,4 @@
-import { prisma } from '@/lib/prisma';
-import { parseCookies, setCookie} from 'nookies';
+import { destroyCookie, parseCookies, setCookie} from 'nookies';
 
 export default function getCookieIds(): string[] | null {
     const cookies = parseCookies();
@@ -51,5 +50,14 @@ export function removeCookieId(id: string): void {
         setCookie(null, 'productBasket', ids.join(','), {
             path: '/',
         });
+    }
+}
+
+export function removeCookieCustom(id: string): void {
+    const cookies = parseCookies();
+    const cookieValue = cookies['customProduct'];
+
+    if (cookieValue) {
+        destroyCookie(null, 'customProduct');
     }
 }
