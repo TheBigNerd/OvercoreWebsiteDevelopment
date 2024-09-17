@@ -10,7 +10,7 @@ import { FormEvent, useState } from "react"
 import type { Product } from "@prisma/client";
 
 type CheckoutFormProps = {
-    product: Product | null
+    product: Product
     clientSecret: string
 }
 

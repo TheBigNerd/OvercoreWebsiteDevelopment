@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PageHeader } from "../../adminComponents/PageHeader";
-import MemoryTable from "./MemoryTable"
+import MemoryTable from "./memoryTable"
 import { Button } from "@/components/ui/button";
 
 export default function MemoryHome() {

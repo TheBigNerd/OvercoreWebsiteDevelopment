@@ -18,6 +18,6 @@ export default async function CheckoutPage() {
     }
 
     return (
-        <CheckoutForm product={product} clientSecret={paymentIntent.client_secret} />
+        <CheckoutForm product={product!} clientSecret={paymentIntent.client_secret} />
     )
 }
