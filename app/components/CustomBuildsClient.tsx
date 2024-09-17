@@ -112,7 +112,7 @@ const CustomPartsDisplay: React.FC = () => {
         {customParts?.memory && renderPartItems('memory', customParts.memory)}
         {customParts?.storage && renderPartItems('storage', customParts.storage)}
       </div>
-      <div>Current Price: ${(price / 100).toFixed(2)}</div>
+      <div>Current Price: £{(price / 100).toFixed(2)}</div>
       <button 
         onClick={handleExportToCookie} 
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
