@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
-
-import Navbar from "@/app/_components/Navigation/Navbar";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
 	const products = await prisma.product.findMany();
@@ -12,10 +11,10 @@ export async function generateStaticParams() {
 
 export default async function ProductPage({ params } : { params: { id: string }}) {
 	const product = await getProduct(params.id);
+	if (!product) return notFound();
 	
 	return (
 		<>
-			<Navbar />
 			<main className="my-4">
 				<section className="text-center">
 					<h1 className="text-4xl font-bold">{product.name}</h1>

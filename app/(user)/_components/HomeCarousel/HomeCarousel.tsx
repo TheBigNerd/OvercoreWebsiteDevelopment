@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../../components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import CarouselLook from './caroselComponent';
 import fetchFeaturedProducts from './fetchFeaturedProducts';
 

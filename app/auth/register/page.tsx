@@ -1,5 +1,5 @@
 
-import { RegisterForm } from "@/app/_components/auth/register-form"
+import { RegisterForm } from "@/app/(protected)/_components/auth/register-form"
 
 const RegisterPage = () => {
     return (
