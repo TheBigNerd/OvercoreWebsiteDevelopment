@@ -102,6 +102,11 @@ export function MotherboardForm({ motherboard }: {motherboard?: Motherboard | nu
         </div>
         <div className="text-muted-foreground">{motherboard?.memorySpeed.join(", ")} MHz</div>
         {error?.memorySpeed && <div className="text-destructive">{error.memorySpeed}</div>}
+        <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" required defaultValue={motherboard?.description || ""} />
+            {error?.description && <div className="text-destructive">{error.description}</div>}
+        </div>
         <SubmitButton />
     </form>
 }

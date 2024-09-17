@@ -17,6 +17,7 @@ const caseSchema = z.object({
     MicroATX: z.boolean(),
     MiniITX: z.boolean(),
     XLATX: z.boolean(),
+    description: z.string().min(1),
 })
 
 export async function addCase(prevState: unknown, formData: FormData){
@@ -53,7 +54,8 @@ export async function addCase(prevState: unknown, formData: FormData){
         EATX: data.EATX,
         MicroATX: data.MicroATX,
         MiniITX: data.MiniITX,
-        XLATX: data.XLATX
+        XLATX: data.XLATX,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/case")
@@ -114,7 +116,8 @@ export async function updateCase(id: string, prevState: unknown, formData: FormD
         EATX: data.EATX,
         MicroATX: data.MicroATX,
         MiniITX: data.MiniITX,
-        XLATX: data.XLATX
+        XLATX: data.XLATX,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/case")

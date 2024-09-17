@@ -23,6 +23,7 @@ const motherboardSchema = z.object({
     XLATX: z.boolean(),
     memorySpeed: z.array(z.string()),
     wifi: z.boolean(),
+    description: z.string().min(1),
 })
 
 export async function addMotherboard(prevState: unknown, formData: FormData){
@@ -67,7 +68,8 @@ export async function addMotherboard(prevState: unknown, formData: FormData){
         MiniITX: data.MiniITX,
         XLATX: data.XLATX,
         memorySpeed: data.memorySpeed,
-        wifi: data.wifi
+        wifi: data.wifi,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/motherboard")
@@ -135,7 +137,8 @@ export async function updateMotherboard(id: string, prevState: unknown, formData
         MiniITX: data.MiniITX,
         XLATX: data.XLATX,
         memorySpeed: data.memorySpeed,
-        wifi: data.wifi
+        wifi: data.wifi,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/motherboard")

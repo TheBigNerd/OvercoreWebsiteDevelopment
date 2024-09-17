@@ -4,30 +4,29 @@ import fs from "fs/promises";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { title } from "process";
-import { connect } from "http2";
 
 const fileSchema = z.instanceof(File, {message : "Required"})
 const imageSchema = fileSchema.refine(file => file.size === 0 || file.type.startsWith("image/"))
 
-const storageSchema = z.object({
+const psuSchema = z.object({
     title: z.string().min(1),
     image: imageSchema.refine(file => file.size > 0, "Required"),
     priceInPence: z.coerce.number().int().min(1),
-    connection: z.string().min(1),
-    capacity: z.coerce.number().int().min(1),
     wattage: z.coerce.number().int().min(1),
+    modular: z.boolean(),
     description: z.string().min(1),
 })
 
-export async function addStorage(prevState: unknown, formData: FormData){
+export async function addPSU(prevState: unknown, formData: FormData){
     const formEntries = Object.fromEntries(formData.entries());
 
     const validationEntries = {
         ...formEntries,
+        modular: formEntries.modular === "on",
     };
 
     console.log('Form data entries:', Object.fromEntries(formData.entries()));
-    const result = storageSchema.safeParse(validationEntries)
+    const result = psuSchema.safeParse(validationEntries)
     console.log('Parsing result:', result);
     console.log(result)
     if (result.success === false) {
@@ -37,76 +36,73 @@ export async function addStorage(prevState: unknown, formData: FormData){
 
     const data = result.data
 
-    await fs.mkdir("public/storage", {recursive: true })
-    const imagePath = `/storage/${crypto.randomUUID()}-${data.image.name}`
+    await fs.mkdir("public/psu", {recursive: true })
+    const imagePath = `/psu/${crypto.randomUUID()}-${data.image.name}`
     await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
 
-    await prisma.storage.create({ data: {
+    await prisma.pSU.create({ data: {
         title: data.title,
         imagePath,
         priceInPence: data.priceInPence,
-        connection: data.connection,
-        capacity: data.capacity,
         wattage: data.wattage,
+        modular: data.modular,
         description: data.description
     }})
 
-    redirect("/admin/customcomponents/storage")
+    redirect("/admin/customcomponents/psu")
+
+    
 }
 
-export async function deleteStorage(id: string){
-    const storage = await prisma.storage.findUnique({where: {id}});
-    if(storage == null){
+export async function deletePSU(id: string){
+    const PSU = await prisma.pSU.findUnique({where: {id}});
+    if(PSU == null){
         return notFound()
     }
-    await prisma.storage.delete({where: {id}})
+    await prisma.pSU.delete({where: {id}})
 
-    fs.unlink(`public${storage.imagePath}`)
+    fs.unlink(`public${PSU.imagePath}`)
 }
 
-const editStorageSchema = storageSchema.extend({
+const editPSUSchema = psuSchema.extend({
     image: imageSchema.optional(),
 })
 
-export async function updateStorage(id: string, prevState: unknown, formData: FormData) {
+export async function updatePSU(id: string, prevState: unknown, formData: FormData) {
     const formEntries = Object.fromEntries(formData.entries());
 
     const validationEntries = {
         ...formEntries,
+        IntegratedGraphics: formEntries.IntegratedGraphics === "on",
     };
 
-    const result = editStorageSchema.safeParse(validationEntries)
+    const result = editPSUSchema.safeParse(validationEntries)
     if(result.success === false){
         return result.error.formErrors.fieldErrors
     }
 
     const data = result.data
-    const storage = await prisma.storage.findUnique({where: {id}});
+    const PSU = await prisma.pSU.findUnique({where: {id}});
 
-    if (storage == null) {
+    if (PSU == null) {
         return notFound()
     }
 
-    let imagePath = storage.imagePath;
+    let imagePath = PSU.imagePath;
     if (data.image != null && data.image.size > 0) {
-        await fs.unlink(`public${storage.imagePath}`)
-        imagePath = `/storage/${crypto.randomUUID()}-${data.image.name}`
+        await fs.unlink(`public${PSU.imagePath}`)
+        imagePath = `/psu/${crypto.randomUUID()}-${data.image.name}`
         await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
     }
 
-    await prisma.storage.update({where: {id}, data: {
+    await prisma.pSU.update({where: {id}, data: {
         title: data.title,
         imagePath,
         priceInPence: data.priceInPence,
-        connection: data.connection,
-        capacity: data.capacity,
         wattage: data.wattage,
+        modular: data.modular,
         description: data.description
     }})
 
-    redirect("/admin/customcomponents/storage")
+    redirect("/admin/customcomponents/cpu")
 }
-
-
-
-   

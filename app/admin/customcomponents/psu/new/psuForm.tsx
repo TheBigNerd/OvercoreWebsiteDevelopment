@@ -6,21 +6,22 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
 import { useState } from "react";
-import { addStorage, updateStorage } from "./storageAdd";
+import { addPSU, updatePSU } from "./psuAdd";
 import { useFormState, useFormStatus } from "react-dom";
-import { storage } from "@prisma/client";
+import { PSU } from "@prisma/client";
 import Image from "next/image";
 
-export function StorageForm({ storage }: {storage?: storage | null}) {
-    const [error, action] = useFormState(storage == null ? addStorage : updateStorage.bind(null, storage.id), {});
-    const [priceInPence, setPriceInPence] = useState<number | undefined>(storage?.priceInPence)
-    const [Wattage, setWattage] = useState<number | undefined>(storage?.wattage)
-    const [capacity, setCapacity] = useState<number | undefined>(storage?.capacity)
+export function PSUForm({ PSU }: {PSU?: PSU | null}) {
+    const [error, action] = useFormState(PSU == null ? addPSU : updatePSU.bind(null, PSU.id), {});
+    const [priceInPence, setPriceInPence] = useState<number | undefined>(PSU?.priceInPence)
+    const [Wattage, setWattage] = useState<number | undefined>(PSU?.wattage)
+    const [modular, setModular] = useState<boolean | undefined>(PSU?.modular)
+    const [description, setDescription] = useState<string | undefined>(PSU?.description)
 
     return <form action={action} className="space-y-8">
         <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
-            <Input type="text" id="title" name="title" required defaultValue={storage?.title || "" } />
+            <Input type="text" id="title" name="title" required defaultValue={PSU?.title || "" } />
             {error?.title && <div className="text-destructive">{error.title}</div>}
         </div>
         <div className="space-y-2">
@@ -30,9 +31,9 @@ export function StorageForm({ storage }: {storage?: storage | null}) {
         <div className="text-muted-foreground">{formatCurrency((priceInPence || 0) / 100)}</div>
         {error?.priceInPence && <div className="text-destructive">{error.priceInPence}</div>}
         <div className="space-y-2">
-            <Label htmlFor="image">Storage Image</Label>
-            <Input type="file" id="image" name="image" required={storage == null} />
-            {storage != null && <Image src={storage.imagePath} height="400" width="400" alt="storage image"/> }
+            <Label htmlFor="image">PSU Image</Label>
+            <Input type="file" id="image" name="image" required={PSU == null} />
+            {PSU != null && <Image src={PSU.imagePath} height="400" width="400" alt="psu image"/> }
             {error?.image && <div className="text-destructive">{error.image}</div>}
         </div>
         <div className="space-y-2">
@@ -42,21 +43,17 @@ export function StorageForm({ storage }: {storage?: storage | null}) {
         <div className="text-muted-foreground">{Wattage}W</div>
         {error?.wattage && <div className="text-destructive">{error.wattage}</div>}
         <div className="space-y-2">
-            <Label htmlFor="capacity">Capacity</Label>
-            <Input type="number" id="capacity" name="capacity" required value={capacity} onChange={e => setCapacity(Number(e.target.value) || undefined)} />
+            <Label htmlFor="modular">Modular</Label>
+            <Input type="checkbox" id="modular" name="modular" checked={modular} onChange={e => setModular(e.target.checked)} />
         </div>
-        <div className="text-muted-foreground">{capacity}GB</div>
-        {error?.capacity && <div className="text-destructive">{error.capacity}</div>}
+        <div className="text-muted-foreground">{modular}</div>
+        {error?.modular && <div className="text-destructive">{error.modular}</div>}
         <div className="space-y-2">
-            <Label htmlFor="connection">Connection</Label>
-            <Input type="text" id="connection" name="connection" required defaultValue={storage?.connection || "" } />
-            {error?.connection && <div className="text-destructive">{error.connection}</div>}
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" required value={description} onChange={e => setDescription(e.target.value)} />
         </div>
-        <div className="space-y-2">
-            <Label htmlFor="formFactor">Description</Label>
-            <Textarea id="formFactor" name="formFactor" required defaultValue={storage?.description || ""} />
-            {error?.description && <div className="text-destructive">{error.description}</div>}
-        </div>
+        <div className="text-muted-foreground">{description}</div>
+        {error?.description && <div className="text-destructive">{error.description}</div>}
         <SubmitButton />
     </form>
 }

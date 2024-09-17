@@ -75,6 +75,11 @@ export function CpuCoolerForm({ cpuCooler }: {cpuCooler?: cpuCooler | null}) {
         </div>
         <div className="text-muted-foreground">{LGA1700}</div>
         {error?.LGA1700 && <div className="text-destructive">{error.LGA1700}</div>}
+        <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" required defaultValue={cpuCooler?.description || ""} />
+            {error?.description && <div className="text-destructive">{error.description}</div>}
+        </div>
         <SubmitButton />
     </form>
 }

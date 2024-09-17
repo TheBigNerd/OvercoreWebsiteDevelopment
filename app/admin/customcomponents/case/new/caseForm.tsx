@@ -53,6 +53,11 @@ export function CaseForm({ Case }: {Case?: Case | null}) {
             <Label htmlFor="XLATX">XLATX</Label>
             <Input type="checkbox" id="XLATX" name="XLATX" defaultChecked={Case?.XLATX} />
         </div>
+        <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" required defaultValue={Case?.description || ""} />
+            {error?.description && <div className="text-destructive">{error.description}</div>}
+        </div>
         <SubmitButton />
     </form>
 }
