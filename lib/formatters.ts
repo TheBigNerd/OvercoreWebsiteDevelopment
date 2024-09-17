@@ -1,7 +1,7 @@
 const CURRENCY_FORMATTER = new Intl.NumberFormat("en-US", {
     currency: "GBP",
     style: "currency",
-    minimumFractionDigits: 0,
+	trailingZeroDisplay: "stripIfInteger"
 })
 
 export function formatCurrency(amount: number) {
