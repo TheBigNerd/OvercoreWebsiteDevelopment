@@ -1,7 +1,6 @@
 import Stripe from "stripe"
 import { CheckoutForm } from "./_checkoutcomponents/CheckoutForm"
 import { prisma } from "@/lib/prisma"
-import Navbar from "../components/Navigation/Navbar"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
@@ -18,9 +17,7 @@ export default async function CheckoutPage() {
         throw Error("Stripe failed to create payment intent")
     }
 
-    return(
-        <><Navbar />
+    return (
         <CheckoutForm product={product} clientSecret={paymentIntent.client_secret} />
-        </>
     )
 }

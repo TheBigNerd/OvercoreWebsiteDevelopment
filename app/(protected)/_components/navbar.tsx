@@ -1,5 +1,5 @@
 "use client"
-import { UserButton } from "@/app/components/auth/user-button"
+import { UserButton } from "./auth/user-button"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
