@@ -61,3 +61,8 @@ export function removeCookieCustom(id: string): void {
         destroyCookie(null, 'customProduct');
     }
 }
+
+export function createFakeCookie(id1: string,id2: string): void {
+    setCookie(null, 'productBasket', `${id1},${id2}`, {});
+}
+
