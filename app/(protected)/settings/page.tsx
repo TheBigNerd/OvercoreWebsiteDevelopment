@@ -49,7 +49,7 @@ const SettingsPage = () => {
         })
     }
     return (
-        <Card className="w-[600px]">
+        <Card className="bg-slate-100 w-[600px]">
             <CardHeader>
                 <p className="text-2xl font-semibold text-center">
                     Account Settings
