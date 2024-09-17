@@ -1,7 +1,7 @@
 .md {
-	& h1 { font-size: 2rem; }
-	& h2 { font-size: 1.5rem; }
-	& h3 { font-size: 1.25rem; }
+	& h1 { font-size: 2rem; font-weight: 700; }
+	& h2 { font-size: 1.5rem; font-weight: 600; }
+	& h3 { font-size: 1.25rem; font-weight: 500; }
 	& h4 { font-size: 1rem; }
 	& h5 { font-size: .875rem; }
 	& h6 { font-size: .75rem; }
@@ -28,7 +28,7 @@
 	}
 
 	& li {
-		margin-left: 1rem;
+		margin-left: 1.5rem;
 	}
 
 	& table {
