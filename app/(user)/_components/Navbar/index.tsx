@@ -5,8 +5,8 @@ import Link from "next/link";
 import Logo from "./Logo";
 import { Basket } from "./button";
 import { Favourites } from "./button";
-import { LoginButton } from "../../auth/login-button";
 import { Button } from "@/components/ui/button";
+import { LoginButton } from "@/app/(protected)/_components/auth/login-button";
 
 const Navbar = () => {
   return (

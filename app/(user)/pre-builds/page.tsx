@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import React from "react";
 
-import AllProducts from "./components/allProducts";
+import AllProducts from "./_components/allProducts";
 
 export default async function Prebuilds({ searchParams } : { searchParams: any }) {
 	const allProducts = await getProducts({});

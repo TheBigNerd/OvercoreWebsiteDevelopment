@@ -1,4 +1,4 @@
-// components/CustomPartsDisplay.tsx
+// _components/CustomPartsDisplay.tsx
 "use client"
 import React, { useEffect, useState } from 'react';
 import { fetchCustomParts } from '../data/customPartsService';

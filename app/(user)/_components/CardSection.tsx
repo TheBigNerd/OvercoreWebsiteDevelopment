@@ -1,4 +1,4 @@
-// components/CardSection.tsx
+// _components/CardSection.tsx
 import React, { useCallback } from 'react';
 import { Card as CardType, CustomParts } from '../data/customParts';
 import Card from './Card';
