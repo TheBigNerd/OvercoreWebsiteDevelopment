@@ -7,14 +7,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { formatCurrency } from "@/lib/formatters"
 import { FormEvent, useState } from "react"
+import type { Product } from "@prisma/client";
 
 type CheckoutFormProps = {
-    product: {
-        imagePath: string
-        name: string
-        priceInPence: number
-        description: string
-    }
+    product: Product | null
     clientSecret: string
 }
 
