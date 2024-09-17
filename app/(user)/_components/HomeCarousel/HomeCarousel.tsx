@@ -4,7 +4,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import CarouselLook from './caroselComponent';
 import fetchFeaturedProducts from './fetchFeaturedProducts';
 
-export default function HomepageCarosel() {
+export default function HomeCarousel() {
 const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
 
 useEffect(() => {

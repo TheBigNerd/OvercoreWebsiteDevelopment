@@ -1,4 +1,4 @@
-import CustomPartsDisplay from '../components/CustomBuildsClient';
+import CustomPartsDisplay from '@/app/(user)/_components/CustomBuildsClient';
 
 const CustomBuildsPage = () => {
   return ( <CustomPartsDisplay /> );

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-import Navbar from "@/app/components/Navigation/Navbar";
+import Navbar from "@/app/_components/Navigation/Navbar";
 
 export async function generateStaticParams() {
 	const products = await prisma.product.findMany();

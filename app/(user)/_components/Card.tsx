@@ -1,4 +1,4 @@
-// components/Card.tsx
+// _components/Card.tsx
 import React, { useCallback } from 'react';
 import { Case, Motherboard, CPU, GPU } from '../data/customParts';
 

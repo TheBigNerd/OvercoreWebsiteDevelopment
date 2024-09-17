@@ -1,5 +1,5 @@
-import { Header } from "@/app/components/auth/header"
-import { BackButton } from "@/app/components/auth/back-button"
+import { Header } from "@/app/_components/auth/header"
+import { BackButton } from "@/app/_components/auth/back-button"
 import { Card, CardFooter, CardHeader } from "@/components/ui/card"
 
 export const ErrorCard = () => {

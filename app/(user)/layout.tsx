@@ -1,5 +1,5 @@
-import Navbar from "./components/Navigation/Navbar";
-import Footer from "./components/footer/Page";
+import Navbar from "./_components/Navbar";
+import Footer from "./_components/Footer";
 
 export default async function UserLayout({ children }: { children: React.ReactNode }) {
 	return (
