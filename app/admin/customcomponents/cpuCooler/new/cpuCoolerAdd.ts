@@ -18,6 +18,7 @@ const cpuCoolerSchema = z.object({
     LGA1151: z.boolean(),
     LGA1200: z.boolean(),
     LGA1700: z.boolean(),
+    description: z.string().min(1),
 })
 
 export async function addCpuCooler(prevState: unknown, formData: FormData){
@@ -56,7 +57,8 @@ export async function addCpuCooler(prevState: unknown, formData: FormData){
         AM5: data.AM5,
         LGA1151: data.LGA1151,
         LGA1200: data.LGA1200,
-        LGA1700: data.LGA1700
+        LGA1700: data.LGA1700,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/cpuCooler")
@@ -117,6 +119,9 @@ export async function updateCpuCooler(id: string, prevState: unknown, formData: 
         AM4: data.AM4,
         AM5: data.AM5,
         LGA1151: data.LGA1151,
+        LGA1200: data.LGA1200,
+        LGA1700: data.LGA1700,
+        description: data.description
     }})
 
     redirect("/admin/customcomponents/cpuCooler")
