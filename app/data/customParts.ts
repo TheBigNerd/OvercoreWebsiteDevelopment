@@ -24,6 +24,7 @@ export type CPU = {
   priceInPence: number;
   wattage: number;
   socketType: string;
+  description: string;
 };
 
 export type GPU = {
@@ -32,6 +33,7 @@ export type GPU = {
   image: string;
   priceInPence: number;
   wattage: number;
+  description: string;
 };
 
 export type PSU = {
@@ -40,6 +42,7 @@ export type PSU = {
   image: string;
   priceInPence: number;
   wattage: number;
+  description: string;
 };
 
 export type CPUCooler = {
@@ -48,6 +51,7 @@ export type CPUCooler = {
   image: string;
   priceInPence: number;
   wattage: number;
+  description: string;
 };
 
 export type Memory = {
@@ -56,6 +60,7 @@ export type Memory = {
   image: string;
   priceInPence: number;
   capacity: number;
+  description: string;
 };
 
 export type Storage = {
@@ -64,6 +69,7 @@ export type Storage = {
   image: string;
   priceInPence: number;
   capacity: number;
+  description: string;
 };
 
 export type CustomParts = {
