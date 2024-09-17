@@ -138,6 +138,7 @@ model CPU {
   Socket             Socket
   IntegratedGraphics Boolean
   IntegratedCooler   Boolean
+  description        String
 }
 
 enum Socket {
@@ -159,6 +160,7 @@ model cpuCooler {
   LGA1200      Boolean
   LGA1700      Boolean
   wattage      Int
+  description  String
 }
 
 model Motherboard {
@@ -176,6 +178,7 @@ model Motherboard {
   XLATX        Boolean
   memorySpeed  String[]
   wifi         Boolean
+  description  String
 }
 
 model memory {
@@ -187,6 +190,7 @@ model memory {
   numberOfSticks Int
   speed          Int
   capacity       Int
+  description    String
 }
 
 model storage {
@@ -197,6 +201,7 @@ model storage {
   connection   String
   capacity     Int
   wattage      Int
+  description  String
 }
 
 enum connection {
@@ -211,6 +216,7 @@ model Gpu {
   priceInPence Int
   Wattage      Int
   width        Int
+  description  String
 }
 
 model Case {
@@ -223,6 +229,7 @@ model Case {
   MicroATX     Boolean
   MiniITX      Boolean
   XLATX        Boolean
+  description  String
 }
 
 model PSU {
@@ -231,4 +238,6 @@ model PSU {
   imagePath    String
   priceInPence Int
   wattage      Int
+  modular      Boolean
+  description  String
 }
