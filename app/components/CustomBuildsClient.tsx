@@ -12,8 +12,8 @@ const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }
   >
     <img src={item.image} alt={item.title} className="w-full h-32 object-cover mb-4 rounded" />
     <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-    <p className="text-gray-700 mb-1">Price: £{(item.priceInPence / 100).toFixed(2)}</p>
-    <p className="text-gray-500">{item.wattage}</p>
+    <h3 className="text-black">description</h3>
+    <p className="text-gray-400 mb-1">Price: £{(item.priceInPence / 100).toFixed(2)}</p>
   </div>
 );
 
@@ -22,6 +22,7 @@ const CustomPartsDisplay: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: string }>({});
+  const [selectedSocketType, setSelectedSocketType] = useState<string | null>(null);
   const handleExportToCookie = () => {
     nookies.set(null, 'customProduct', JSON.stringify(selectedItems), {
       maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -54,8 +55,9 @@ const CustomPartsDisplay: React.FC = () => {
 
   const [price, setPrice] = useState(0);
   const [itemPrices, setItemPrices] = useState<{ [key: string]: number }>({});
+  const [totalWattage, setTotalWattage] = useState(0);
   
-  const handleItemClick = (type: string, id: string, itemPrice: number) => {
+  const handleItemClick = (type: string, id: string, itemPrice: number, socketType?: string) => {
     setSelectedItems((prevSelectedItems) => {
       if (prevSelectedItems[type] === id) {
         console.log(`Deselected item: ${id}`);
@@ -66,6 +68,9 @@ const CustomPartsDisplay: React.FC = () => {
         });
         return rest;
       } else {
+        if (type === 'cpus' && socketType) {
+          setSelectedSocketType(socketType);
+        }
         console.log(`Selected item: ${id}`);
         setItemPrices((prevItemPrices) => ({
           ...prevItemPrices,
@@ -80,6 +85,24 @@ const CustomPartsDisplay: React.FC = () => {
     const totalPrice = Object.values(itemPrices).reduce((acc, curr) => acc + curr, 0);
     setPrice(totalPrice);
   }, [itemPrices]);
+
+  useEffect(() => {
+    const calculateTotalWattage = () => {
+      let wattage = 0;
+      Object.keys(selectedItems).forEach(type => {
+        const selectedItem = customParts && customParts[type as keyof CustomParts]?.find((item: { id: string; }) => item.id === selectedItems[type]);
+        if (selectedItem) {
+          if ('wattage' in selectedItem) {
+            wattage += typeof selectedItem.wattage === 'number' ? selectedItem.wattage : 0;
+            console.log(selectedItem.wattage);
+          }
+        }
+      });
+      setTotalWattage(wattage);
+    };
+
+    calculateTotalWattage();
+  }, [selectedItems, customParts]);
   
   const isSelected = (type: string, id: string) => selectedItems[type] === id;
   
@@ -93,7 +116,7 @@ const CustomPartsDisplay: React.FC = () => {
           key={item.id}
           item={item}
           isSelected={isSelected(type, item.id)}
-          onClick={() => handleItemClick(type, item.id,item.priceInPence)}
+          onClick={() => handleItemClick(type, item.id, item.priceInPence, item.socketType)}
         />
       ))}
     </div>
@@ -112,7 +135,7 @@ const CustomPartsDisplay: React.FC = () => {
         {customParts?.memory && renderPartItems('memory', customParts.memory)}
         {customParts?.storage && renderPartItems('storage', customParts.storage)}
       </div>
-      <div>Current Price: £{(price / 100).toFixed(2)}</div>
+      <div>Current Price: ${(price / 100).toFixed(2)}</div>
       <button 
         onClick={handleExportToCookie} 
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"

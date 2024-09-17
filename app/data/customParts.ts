@@ -83,6 +83,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     title: caseItem.title,
     image: caseItem.imagePath,
     priceInPence: caseItem.priceInPence,
+    description: caseItem.description,
   }));
 
   const motherboards = (await prisma.motherboard.findMany()).map(motherboardItem => ({
@@ -91,6 +92,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     image: motherboardItem.imagePath,
     priceInPence: motherboardItem.priceInPence,
     socketType: motherboardItem.Socket,
+    description: motherboardItem.description,
   }));
 
   const cpus = (await prisma.cPU.findMany()).map(cpuItem => ({
@@ -100,6 +102,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     priceInPence: cpuItem.priceInPence,
     wattage: cpuItem.Wattage,
     socketType: cpuItem.Socket,
+    description: cpuItem.description,
   }));
 
   const gpus = (await prisma.gpu.findMany()).map(gpuItem => ({
@@ -108,6 +111,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     image: gpuItem.imagePath,
     priceInPence: gpuItem.priceInPence,
     wattage: gpuItem.Wattage,
+    description: gpuItem.description,
   }));
 
   const psu = (await prisma.pSU.findMany()).map(psuItem => ({
@@ -116,6 +120,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     image: psuItem.imagePath,
     priceInPence: psuItem.priceInPence,
     wattage: psuItem.wattage,
+    description: psuItem.description,
   }));
 
   const cpuCoolers = (await prisma.cpuCooler.findMany()).map(cpuCoolerItem => ({
@@ -124,6 +129,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     image: cpuCoolerItem.imagePath,
     priceInPence: cpuCoolerItem.priceInPence,
     wattage: cpuCoolerItem.wattage,
+    description: cpuCoolerItem.description,
   }));
 
   const memory = (await prisma.memory.findMany()).map(memoryItem => ({
@@ -132,6 +138,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     image: memoryItem.imagePath,
     priceInPence: memoryItem.priceInPence,
     capacity: memoryItem.capacity,
+    description: memoryItem.description,
   }));
 
   const storage = (await prisma.storage.findMany()).map(storageItem => ({
@@ -140,6 +147,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     image: storageItem.imagePath,
     priceInPence: storageItem.priceInPence,
     capacity: storageItem.capacity,
+    description: storageItem.description,
   }));
 
   return {
