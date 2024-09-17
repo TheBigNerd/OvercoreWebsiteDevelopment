@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,7 +8,7 @@ datasource db {
 }
 
 model Product {
-  id            String   @id @unique @default(uuid())
+  id            String   @id @default(uuid())
   name          String
   priceInPence  Int
   imagePath     String
@@ -22,19 +16,17 @@ model Product {
   isAvailable   Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  order         Order[]
-  isFeatured    Boolean  @default(false)
-  brand         String
+  caseSize      String
+  colour        String
+  connectivity  String
+  coolingMethod String
   cpuModel      String
   gpuModel      String
-  colour        String
-  caseSize      String
   memorySize    String
   memoryType    String
   storageType   String
   totalStorage  String
-  connectivity  String
-  coolingMethod String
+  order         Order[]
 }
 
 model Order {
@@ -42,16 +34,10 @@ model Order {
   pricePaid Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   UserId    String
   productId String
-  user      User    @relation(fields: [UserId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
-}
-
-enum UserRole {
-  ADMIN
-  USER
+  user      User     @relation(fields: [UserId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 model User {
@@ -62,14 +48,13 @@ model User {
   image                 String?
   password              String?
   role                  UserRole               @default(USER)
-  orders                Order[]
-  accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
-  twoFactorConfirmation TwoFactorConfirmation?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
   basket                String[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  accounts              Account[]
+  orders                Order[]
+  twoFactorConfirmation TwoFactorConfirmation?
 }
 
 model Account {
@@ -84,11 +69,9 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
@@ -121,12 +104,9 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-  id String @id @default(cuid())
-
-  userId String
+  id     String @id @default(cuid())
+  userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId])
 }
 
 model CPU {
@@ -138,15 +118,6 @@ model CPU {
   Socket             Socket
   IntegratedGraphics Boolean
   IntegratedCooler   Boolean
-  description        String
-}
-
-enum Socket {
-  AM4
-  AM5
-  LGA1151
-  LGA1200
-  LGA1700
 }
 
 model cpuCooler {
@@ -160,7 +131,6 @@ model cpuCooler {
   LGA1200      Boolean
   LGA1700      Boolean
   wattage      Int
-  description  String
 }
 
 model Motherboard {
@@ -178,7 +148,6 @@ model Motherboard {
   XLATX        Boolean
   memorySpeed  String[]
   wifi         Boolean
-  description  String
 }
 
 model memory {
@@ -190,7 +159,6 @@ model memory {
   numberOfSticks Int
   speed          Int
   capacity       Int
-  description    String
 }
 
 model storage {
@@ -201,12 +169,6 @@ model storage {
   connection   String
   capacity     Int
   wattage      Int
-  description  String
-}
-
-enum connection {
-  sata
-  PCIE
 }
 
 model Gpu {
@@ -216,7 +178,6 @@ model Gpu {
   priceInPence Int
   Wattage      Int
   width        Int
-  description  String
 }
 
 model Case {
@@ -229,7 +190,6 @@ model Case {
   MicroATX     Boolean
   MiniITX      Boolean
   XLATX        Boolean
-  description  String
 }
 
 model PSU {
@@ -238,6 +198,22 @@ model PSU {
   imagePath    String
   priceInPence Int
   wattage      Int
-  modular      Boolean
-  description  String
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum Socket {
+  AM4
+  AM5
+  LGA1151
+  LGA1200
+  LGA1700
+}
+
+enum connection {
+  sata
+  PCIE
 }
