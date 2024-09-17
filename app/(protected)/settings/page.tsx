@@ -2,7 +2,7 @@
 
 import {Card,CardContent,CardHeader} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { settings } from "@/app/components/auth/actions/settings"
+import { settings } from "../_components/auth/actions/settings"
 import { useTransition, useState } from "react"
 import { useSession } from "next-auth/react"
 import * as z from "zod"
@@ -12,8 +12,8 @@ import { SettingsSchema } from "@/schemas"
 import {Form,FormControl,FormDescription,FormField,FormItem,FormLabel,FormMessage} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useCurrentUser } from "@/hooks/use-current-user"
-import { FormError } from "@/app/components/auth/form-error"
-import { FormSuccess } from "@/app/components/auth/form-success"
+import { FormError } from "../_components/auth/form-error"
+import { FormSuccess } from "../_components/auth/form-success"
 import { Switch } from "@/components/ui/switch"
 
 const SettingsPage = () => {

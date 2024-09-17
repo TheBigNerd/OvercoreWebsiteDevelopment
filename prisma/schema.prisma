@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Product {
-  id            String   @id @default(uuid())
+  id            String   @id @unique @default(uuid())
   name          String
   priceInPence  Int
   imagePath     String
@@ -23,8 +23,8 @@ model Product {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   order         Order[]
-  isFeatured Boolean @default(false)
-  brand        String
+  isFeatured    Boolean  @default(false)
+  brand         String
   cpuModel      String
   gpuModel      String
   colour        String
