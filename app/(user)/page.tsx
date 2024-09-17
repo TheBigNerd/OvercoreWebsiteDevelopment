@@ -1,12 +1,10 @@
 import CategoryCardContainer from './homecomponents/categorycardcontainer';
 import HeroBanner from './homecomponents/herobanner';
-import Navbar from './components/Navigation/Navbar';
 import HomepageCarosel from './caroselComponents/homepageCarosel';
-import Footer from './components/footer/Page';
+
 export default function Home() {
   return (
     <>
-      <Navbar />
       <HeroBanner />
       <div className="container mx-auto px-4 py-8">
         <CategoryCardContainer />
@@ -15,7 +13,6 @@ export default function Home() {
         <h2 className="text-2xl font-bold text-left mb-4">Featured Products</h2>
         <HomepageCarosel />
       </div>
-      <Footer></Footer>
     </>
   );
 }

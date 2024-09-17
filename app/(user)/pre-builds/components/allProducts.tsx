@@ -1,8 +1,8 @@
 import type { Product } from "@prisma/client";
 import React from "react";
 
-import FiltersMenu from "@/app/pre-builds/components/filters";
-import ProductCard from "@/app/pre-builds/components/productCard";
+import FiltersMenu from "./filters";
+import ProductCard from "./productCard";
 
 export default function AllProducts({ all, filtered } : { all: Product[], filtered: Product[] }) {
 	return (
