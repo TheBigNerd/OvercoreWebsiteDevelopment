@@ -30,13 +30,13 @@ const Navbar = () => {
             <div className="flex items-center space-x-6">
               {/* Separator Line */}
               <div className="w-px h-6 bg-white mx-4"></div>
-              <div className="flex items-center space-x-1 text-white group">
+              <div className="flex items-center space-x-1 text-white group list-none">
                 <HoverableLink href="/favourites">
                     <Favourites />
                     <span>Favourites</span>
                 </HoverableLink>
               </div>
-              <div className="flex items-center space-x-1 text-white group">
+              <div className="flex items-center space-x-1 text-white group list-none">
                 <HoverableLink href="/basket">
                     <Basket />
                     <span>Basket</span>
