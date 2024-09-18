@@ -1,6 +1,7 @@
 // _components/CustomPartsDisplay.tsx
 "use client"
 import React, { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { fetchCustomParts } from '../data/customPartsService';
 import { CustomParts} from '../data/customParts';
 import nookies from 'nookies';
@@ -44,6 +45,7 @@ const CustomPartsDisplay: React.FC = () => {
         } else {
           setError('An unknown error occurred');
         }
+      
       } finally {
         setLoading(false);
       }
@@ -92,7 +94,7 @@ const CustomPartsDisplay: React.FC = () => {
       Object.keys(selectedItems).forEach(type => {
         const selectedItem = customParts && customParts[type as keyof CustomParts]?.find((item: { id: string; }) => item.id === selectedItems[type]);
         if (selectedItem) {
-          if ('wattage' in selectedItem) {
+          if ('wattage' in selectedItem && selectedItems['psu'] !== selectedItem.id) {
             wattage += typeof selectedItem.wattage === 'number' ? selectedItem.wattage : 0;
             console.log(selectedItem.wattage);
           }
@@ -122,9 +124,11 @@ const CustomPartsDisplay: React.FC = () => {
     </div>
   );
 
-  const currentPSU = customParts?.psu?.find(item => isSelected('psu', item.id));
-  const psuWattage = currentPSU ? currentPSU.wattage : 0;
-  const shouldDisplayPSU =(psuWattage + 150) - totalWattage  > 0;
+  const filterPsusByWattage = (psus: any[], totalWattage: number) => {
+    const filteredPsus = psus.filter(psu => psu.wattage > totalWattage +150);
+    return filteredPsus;
+  };
+
 
   const filteredMotherboards = selectedSocketType
     ? customParts?.motherboards?.filter(mb => mb.socketType === selectedSocketType)
@@ -148,7 +152,7 @@ const CustomPartsDisplay: React.FC = () => {
           {customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
           {customParts?.gpus && renderPartItems('gpus', customParts.gpus)}
           {filteredMotherboards && renderPartItems('motherboards', filteredMotherboards)}
-          {shouldDisplayPSU && customParts?.psu && renderPartItems('psu', customParts.psu)}
+          {customParts?.psu && renderPartItems('psu', filterPsusByWattage(customParts.psu, totalWattage))}
           {customParts?.cpuCoolers && renderPartItems('cpuCoolers', customParts.cpuCoolers)}
           {customParts?.memory && renderPartItems('memory', customParts.memory)}
           {customParts?.storage && renderPartItems('storage', customParts.storage)}
@@ -173,13 +177,12 @@ const CustomPartsDisplay: React.FC = () => {
               );
             })}
           </ul>
-          <div className='text-x2 font-semibold mb-2'>Current Price: £{(price / 100).toFixed(2)}</div>
-          <button 
+          <Button 
             onClick={handleExportToCookie} 
             className="mt-4 px-4 py-2 bg-slate-700 text-white rounded"
           >
             Add to Basket
-          </button>
+          </Button>
         </div>
       </div>
     );
