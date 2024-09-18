@@ -10,18 +10,20 @@ datasource db {
 model Product {
   id            String   @id @default(uuid())
   name          String
-  priceInPence  Int
   imagePath     String
   description   String
   isAvailable   Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  priceInPence  Int
+  brand         String
   caseSize      String
   colour        String
   connectivity  String
   coolingMethod String
   cpuModel      String
   gpuModel      String
+  isFeatured    Boolean  @default(false)
   memorySize    String
   memoryType    String
   storageType   String
@@ -42,15 +44,15 @@ model Order {
 
 model User {
   id                    String                 @id @default(cuid())
-  name                  String?
   email                 String                 @unique
+  name                  String?
+  createdAt             DateTime               @default(now())
   emailVerified         DateTime?
   image                 String?
+  updatedAt             DateTime               @updatedAt
+  isTwoFactorEnabled    Boolean                @default(false)
   password              String?
   role                  UserRole               @default(USER)
-  isTwoFactorEnabled    Boolean                @default(false)
-  createdAt             DateTime               @default(now())
-  updatedAt             DateTime               @updatedAt
   basket                String[]
   accounts              Account[]
   orders                Order[]
@@ -77,10 +79,10 @@ model Account {
 }
 
 model VerificationToken {
-  id      String   @id @default(cuid())
-  email   String
   token   String   @unique
   expires DateTime
+  email   String
+  id      String   @id @default(cuid())
 
   @@unique([email, token])
 }
@@ -118,6 +120,7 @@ model CPU {
   Socket             Socket
   IntegratedGraphics Boolean
   IntegratedCooler   Boolean
+  description        String
 }
 
 model cpuCooler {
@@ -131,6 +134,7 @@ model cpuCooler {
   LGA1200      Boolean
   LGA1700      Boolean
   wattage      Int
+  description  String
 }
 
 model Motherboard {
@@ -148,6 +152,7 @@ model Motherboard {
   XLATX        Boolean
   memorySpeed  String[]
   wifi         Boolean
+  description  String
 }
 
 model memory {
@@ -159,6 +164,7 @@ model memory {
   numberOfSticks Int
   speed          Int
   capacity       Int
+  description    String
 }
 
 model storage {
@@ -169,6 +175,7 @@ model storage {
   connection   String
   capacity     Int
   wattage      Int
+  description  String
 }
 
 model Gpu {
@@ -178,6 +185,7 @@ model Gpu {
   priceInPence Int
   Wattage      Int
   width        Int
+  description  String
 }
 
 model Case {
@@ -190,14 +198,17 @@ model Case {
   MicroATX     Boolean
   MiniITX      Boolean
   XLATX        Boolean
+  description  String
 }
 
 model PSU {
-  id           String @id @default(uuid())
+  id           String  @id @default(uuid())
   title        String
   imagePath    String
   priceInPence Int
   wattage      Int
+  description  String
+  modular      Boolean
 }
 
 enum UserRole {
