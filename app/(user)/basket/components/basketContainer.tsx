@@ -7,23 +7,16 @@ import { getSession } from "next-auth/react";
 import { createFakeCookie, getCookieIds } from "./handleData";
 
 async function getUserId() {
-  const session = await getSession();
-  console.log('Session:', session); // Debug log
-  return session ? session.user.id : null;
+	const session = await getSession();
+	return session ? session.user.id : null;
 }
 
 const BasketContainer = () => {
   const [basketProducts, setBasketProducts] = useState<Product[]>();
 
   useEffect(() => {
-    console.log('useEffect triggered'); // Debug log
-
     async function fetchBasketProducts() {
-      console.log('fetchBasketProducts called'); // Debug log
-
       const userId = await getUserId();
-      console.log('User ID:', userId); // Debug log
-
       let productIds: string[] | null = null;
 
       if (userId) {
@@ -44,7 +37,7 @@ const BasketContainer = () => {
           console.log('Products from user session:', products); // Debug log
           setBasketProducts(products);
         } catch (error) {
-          console.error('Error fetching basket products:', error);
+          console.error(error);
         }
       } else {
         productIds = getCookieIds();
@@ -68,7 +61,7 @@ const BasketContainer = () => {
             console.log('Products from cookies:', products); // Debug log
             setBasketProducts(products);
           } catch (error) {
-            console.error('Error fetching product details:', error);
+            console.error(error);
           }
         }
       }
