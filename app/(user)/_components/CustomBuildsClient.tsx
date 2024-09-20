@@ -8,10 +8,10 @@ import nookies from 'nookies';
 
 const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }> = ({ item, isSelected, onClick }) => (
   <div
-    className={`part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${isSelected ? 'border-blue-500' : ''}`}
+  className={`part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${isSelected ? 'border-blue-500' : ''} w-72 h- flex flex-col justify-between`}
     onClick={onClick}
   >
-    <img src={item.image} alt={item.title} className="w-full h-32 object-cover mb-4 rounded" />
+    <img src={item.image} alt={item.title} className="w-32 h-32 object-cover mb-4 rounded"/>
     <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
     <h3 className="text-black">{item.description}</h3>
     <p className="text-gray-400 mb-1">Price: £{(item.priceInPence / 100).toFixed(2)}</p>
@@ -150,12 +150,12 @@ const CustomPartsDisplay: React.FC = () => {
           <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
           {customParts?.cases && renderPartItems('cases', customParts.cases)}
           {customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
+          {customParts?.cpuCoolers && renderPartItems('cpuCoolers', customParts.cpuCoolers)}
           {customParts?.gpus && renderPartItems('gpus', customParts.gpus)}
           {filteredMotherboards && renderPartItems('motherboards', filteredMotherboards)}
-          {customParts?.psu && renderPartItems('psu', filterPsusByWattage(customParts.psu, totalWattage))}
-          {customParts?.cpuCoolers && renderPartItems('cpuCoolers', customParts.cpuCoolers)}
           {customParts?.memory && renderPartItems('memory', customParts.memory)}
           {customParts?.storage && renderPartItems('storage', customParts.storage)}
+          {customParts?.psu && renderPartItems('psu', filterPsusByWattage(customParts.psu, totalWattage))}
         </div>
         <div className="flex-none ml-4 p-4 border border-gray-300 rounded-lg w-1/3">
           <img 
@@ -172,10 +172,10 @@ const CustomPartsDisplay: React.FC = () => {
                   <ul>
                     {renderItemsList(partType, selectedItem)}
                   </ul>
-                  
                 </li>
               );
             })}
+            <li>Your Price: £{(price / 100).toFixed(2)}</li>
           </ul>
           <Button 
             onClick={handleExportToCookie} 
