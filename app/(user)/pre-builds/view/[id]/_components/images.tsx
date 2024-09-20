@@ -6,7 +6,7 @@ export default function Images({ images } : { images: string[] }) {
 	const [currentImage, setCurrentImage] = useState(0);
 	
 	return (
-		<div className="sticky top-1/2 -translate-y-1/2">
+		<div className="sticky top-32">
 			<Image src={ images[currentImage] } alt="Product Image" width={ 500 } height={ 500 }
 			       className="rounded-lg aspect-square object-contain"/>
 			<div className="flex gap-4 mt-4">
