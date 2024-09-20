@@ -31,14 +31,12 @@ const Navbar = () => {
               {/* Separator Line */}
               <div className="w-px h-6 bg-white mx-4"></div>
               <div className="flex items-center space-x-1 text-white group">
-                <HoverableLink href="/favourites">
-                    <Favourites />
+                <HoverableLink href="/favourites" icon={<Favourites />}>
                     <span>Favourites</span>
                 </HoverableLink>
               </div>
-              <div className="flex items-center space-x-1 text-white group">
-                <HoverableLink href="/basket">
-                    <Basket />
+              <div className="flex items-center space-x-1 text-white">
+                <HoverableLink href="/basket" icon={<Basket/>}>
                     <span>Basket</span>
                 </HoverableLink>
               </div>

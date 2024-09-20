@@ -1,3 +1,5 @@
+"use client"
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { basketArray, fetchProductDetails } from "./basketCollect";
 
