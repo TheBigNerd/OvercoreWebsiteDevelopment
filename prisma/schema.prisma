@@ -17,7 +17,8 @@ model Product {
   id            String   @id @unique @default(uuid())
   name          String
   priceInPence  Int
-  imagePath     String
+  imagePath     String[]
+  tagline       String
   description   String
   isAvailable   Boolean  @default(true)
   createdAt     DateTime @default(now())
@@ -233,7 +234,7 @@ model Case {
 }
 
 model PSU {
-  id           String @id @default(uuid())
+  id           String  @id @default(uuid())
   title        String
   imagePath    String
   priceInPence Int

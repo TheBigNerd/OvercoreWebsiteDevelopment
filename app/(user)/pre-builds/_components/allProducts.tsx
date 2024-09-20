@@ -12,8 +12,7 @@ export default function AllProducts({ all, filtered } : { all: Product[], filter
 			</div>
 			<div className="flex-3 grid grid-cols-1 lg:grid-cols-2 gap-4 content-start">
 				{filtered.map(product => (
-					<ProductCard key={product.name} name={product.name} priceInPence={product.priceInPence}
-					             description={product.description} imagePath={product.imagePath}/>
+					<ProductCard key={product.name} product={product} />
 				))}
 			</div>
 		</>
