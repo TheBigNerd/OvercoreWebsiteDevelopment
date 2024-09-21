@@ -10,7 +10,9 @@ datasource db {
 model Product {
   id            String   @id @default(uuid())
   name          String
-  imagePath     String
+  priceInPence  Int
+  imagePath     String[]
+  tagline       String
   description   String
   isAvailable   Boolean  @default(true)
   createdAt     DateTime @default(now())
