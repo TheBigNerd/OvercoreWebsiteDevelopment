@@ -54,6 +54,7 @@ model User {
   password              String?
   role                  UserRole               @default(USER)
   basket                String[]
+  favourites            String[]
   accounts              Account[]
   orders                Order[]
   twoFactorConfirmation TwoFactorConfirmation?
