@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { fetchCustomParts } from '../data/customPartsService';
 import { CustomParts} from '../data/customParts';
-import nookies from 'nookies';
+import nookies from 'nookies'; 
 
 const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }> = ({ item, isSelected, onClick }) => (
   <div
@@ -138,7 +138,7 @@ const CustomPartsDisplay: React.FC = () => {
 
     const renderItemsList = (type: string, selectedItem: any) => {
       if (selectedItem) {
-        return <li key={selectedItem.id}>{selectedItem.name}</li>;
+        return <li key={selectedItem.id}>{selectedItem}</li>;
       } else {
         return <li style={{ color: 'red' }}>Not selected</li>;
       }
@@ -159,8 +159,8 @@ const CustomPartsDisplay: React.FC = () => {
         </div>
         <div className="flex-none ml-4 p-4 border border-gray-300 rounded-lg w-1/3">
           <img 
-            src="https://via.placeholder.com/300" 
-            alt="Placeholder" 
+            src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image} 
+            alt="Selected Case Picture" 
             className="w-full h-auto object-cover"
           />
           <ul>
@@ -170,7 +170,7 @@ const CustomPartsDisplay: React.FC = () => {
                 <li key={partType}>
                   <h2 className="font-bold">{partType}</h2>
                   <ul>
-                    {renderItemsList(partType, selectedItem)}
+                    {renderItemsList(partType, selectedItem?.title)}
                   </ul>
                 </li>
               );
