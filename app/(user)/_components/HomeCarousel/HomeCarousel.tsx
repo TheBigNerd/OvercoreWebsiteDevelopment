@@ -9,7 +9,7 @@ export default async function HomeCarousel() {
 	
 	return (
 		<Carousel>
-			<CarouselContent className="mx-16">
+			<CarouselContent className="pb-4 mx-16">
 				{ featuredProducts.map(product => (
 					<CarouselItem key={ product.id } className="p-2 basis-1/5 pl-4">
 						<CarouselLook product={ product }/>
