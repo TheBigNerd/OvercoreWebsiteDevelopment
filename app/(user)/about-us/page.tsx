@@ -16,7 +16,7 @@ const AboutUs = () => {
             <div className="md:w-1/2 text-center">
               <h2 className="text-2xl mb-3">Our Story</h2>
               <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+              "We are a group of university students who are undertaking this business as a passion project. This business began as a simple thought experiment that grew into something that we truly believe can become something bigger than ourselves."
               </p>
             </div>
             <div className="md:w-1/3 flex items-center justify-center mt-4">
@@ -30,7 +30,7 @@ const AboutUs = () => {
             <div className="md:w-1/2 text-center">
               <h2 className="text-2xl mb-3 mt-8">Our Mission</h2>
               <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+              "We are committed to providing our customers with products of excellent quality alongside exceptional customer service. "
               </p>
             </div>
           </div>

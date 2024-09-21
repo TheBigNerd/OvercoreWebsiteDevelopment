@@ -1,10 +1,12 @@
-import { prisma } from '@/lib/prisma';
-import { parseCookies, setCookie} from 'nookies';
+"use client"
 
-export default function getCookieIds(): string[] | null {
+import { destroyCookie, parseCookies, setCookie} from 'nookies';
+
+export function getCookieIds(): string[] | null {
     const cookies = parseCookies();
+    console.log('All cookies:', cookies); // Log all cookies
     const cookieValue = cookies['productBasket'];
-
+    console.log('cookieValue:', cookieValue); // Log the specific cookie value
     if (cookieValue) {
         // Parse the cookie value and extract the IDs
         const ids = cookieValue.split(',');
@@ -53,3 +55,17 @@ export function removeCookieId(id: string): void {
         });
     }
 }
+
+export function removeCookieCustom(id: string): void {
+    const cookies = parseCookies();
+    const cookieValue = cookies['customProduct'];
+
+    if (cookieValue) {
+        destroyCookie(null, 'customProduct');
+    }
+}
+
+export function createFakeCookie(): void {
+    setCookie(null, 'productBasket', `${"%7b%22d299c24d-05ab-4da7-bcc7-071744a4032a%22%7D"},${"%7b%22d299c24d-05ab-4da7-bcc7-071744a4032a%22%7D"}`, {});
+}
+

@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 const images = [
-  { src: '/images/orange_desktop.jpg', text: 'Browse our New Builds' },
-  { src: '/images/image2.jpg', text: 'Overcore for business' },
-  { src: '/images/image3.jpg', text: 'Give us a custom request' },
+  { src: '/images/orange_desktop.jpg', text: 'Browse our New Builds', link: '/pre-builds' },
+  { src: '/images/image2.jpg', text: 'Overcore for business', link: '/link2' },
+  { src: '/images/image3.jpg', text: 'Give us a custom request', link: '/contact' },
 ];
 
 export default function HeroBanner() {
@@ -57,8 +58,13 @@ export default function HeroBanner() {
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <img src={image.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
           {index === currentIndex && (
-            <div className="absolute left-10 bottom-10 text-white font-extrabold text-5xl uppercase drop-shadow-xl">
-              <h2>{image.text}</h2>
+            <div className="absolute left-10 bottom-10 text-white max-w-xs lg:max-w-lg">
+              <h2 className="font-extrabold text-3xl lg:text-5xl uppercase drop-shadow-xl mb-4">{image.text}</h2>
+              <Link href={image.link}>
+                <span className="inline-block bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                  Learn More
+                </span>
+              </Link>
             </div>
           )}
         </div>

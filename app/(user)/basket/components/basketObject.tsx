@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { XCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { removeCookieId } from './handleData';
 
 type basketObjectProps = {
+    key: string;
     productName: string
     priceInPence: number
     imagePath: string
@@ -20,11 +22,15 @@ type basketObjectProps = {
     coolingMethod: string
 }
 
-const BasketObject = ({productName, priceInPence, imagePath, brand, cpuModel, gpuModel, memorySize, memoryType, caseSize, colour, storageType, totalStorage, connectivity, coolingMethod}: basketObjectProps) => {
+const BasketObject = ({ key, productName, priceInPence, imagePath, brand, cpuModel, gpuModel, memorySize, memoryType, caseSize, colour, storageType, totalStorage, connectivity, coolingMethod}: basketObjectProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
+    }
+
+    const handleDelete = () => {
+        deleteProduct(key);
     }
 
     return (
@@ -37,14 +43,8 @@ const BasketObject = ({productName, priceInPence, imagePath, brand, cpuModel, gp
                         <p className="text-gray-600">Price: £{priceInPence}</p>
                     </div>
                 </div>
-                <div className='text-sm'>
-                  <p>{brand}</p>
-                  <p>{cpuModel}</p>
-                  <p>{gpuModel}</p>
-                  <p>{memorySize} {memoryType}</p>
-                </div>
                 <div className="ml-5">
-                    <button>
+                    <button onClick={handleDelete}>
                         <XCircle size={24} />
                     </button>
                 </div>
@@ -70,3 +70,9 @@ const BasketObject = ({productName, priceInPence, imagePath, brand, cpuModel, gp
 }
 
 export default BasketObject;
+
+function deleteProduct(id: any) {
+    removeCookieId(id);
+    
+
+}

@@ -29,6 +29,7 @@ export async function addCase(prevState: unknown, formData: FormData){
         EATX: formEntries.EATX === "on",
         MicroATX: formEntries.MicroATX === "on",
         MiniITX: formEntries.MiniITX === "on",
+        XLATX: formEntries.XLATX === "on",
     };
 
     console.log('Form data entries:', Object.fromEntries(formData.entries()));

@@ -1,18 +1,19 @@
 // _components/CustomPartsDisplay.tsx
 "use client"
 import React, { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { fetchCustomParts } from '../data/customPartsService';
 import { CustomParts} from '../data/customParts';
 import nookies from 'nookies';
 
 const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }> = ({ item, isSelected, onClick }) => (
   <div
-    className={`part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${isSelected ? 'border-blue-500' : ''}`}
+  className={`part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${isSelected ? 'border-blue-500' : ''} w-72 h- flex flex-col justify-between`}
     onClick={onClick}
   >
-    <img src={item.image} alt={item.title} className="w-full h-32 object-cover mb-4 rounded" />
+    <img src={item.image} alt={item.title} className="w-32 h-32 object-cover mb-4 rounded"/>
     <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-    <h3 className="text-black">description</h3>
+    <h3 className="text-black">{item.description}</h3>
     <p className="text-gray-400 mb-1">Price: £{(item.priceInPence / 100).toFixed(2)}</p>
   </div>
 );
@@ -44,6 +45,7 @@ const CustomPartsDisplay: React.FC = () => {
         } else {
           setError('An unknown error occurred');
         }
+      
       } finally {
         setLoading(false);
       }
@@ -92,7 +94,7 @@ const CustomPartsDisplay: React.FC = () => {
       Object.keys(selectedItems).forEach(type => {
         const selectedItem = customParts && customParts[type as keyof CustomParts]?.find((item: { id: string; }) => item.id === selectedItems[type]);
         if (selectedItem) {
-          if ('wattage' in selectedItem) {
+          if ('wattage' in selectedItem && selectedItems['psu'] !== selectedItem.id) {
             wattage += typeof selectedItem.wattage === 'number' ? selectedItem.wattage : 0;
             console.log(selectedItem.wattage);
           }
@@ -122,28 +124,68 @@ const CustomPartsDisplay: React.FC = () => {
     </div>
   );
 
-  return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
-      <div className="space-y-8">
-        {customParts?.cases && renderPartItems('cases', customParts.cases)}
-        {customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
-        {customParts?.gpus && renderPartItems('gpus', customParts.gpus)}
-        {customParts?.motherboards && renderPartItems('motherboards', customParts.motherboards)}
-        {customParts?.psu && renderPartItems('psu', customParts.psu)}
-        {customParts?.cpuCoolers && renderPartItems('cpuCoolers', customParts.cpuCoolers)}
-        {customParts?.memory && renderPartItems('memory', customParts.memory)}
-        {customParts?.storage && renderPartItems('storage', customParts.storage)}
-      </div>
-      <div>Current Price: ${(price / 100).toFixed(2)}</div>
-      <button 
-        onClick={handleExportToCookie} 
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-      >
-        Export to Cookie
-      </button>
-    </div>
-  );
-};
+  const filterPsusByWattage = (psus: any[], totalWattage: number) => {
+    const filteredPsus = psus.filter(psu => psu.wattage > totalWattage +150);
+    return filteredPsus;
+  };
 
-export default CustomPartsDisplay;
+
+  const filteredMotherboards = selectedSocketType
+    ? customParts?.motherboards?.filter(mb => mb.socketType === selectedSocketType)
+    : customParts?.motherboards;
+
+    
+
+    const renderItemsList = (type: string, selectedItem: any) => {
+      if (selectedItem) {
+        return <li key={selectedItem.id}>{selectedItem.name}</li>;
+      } else {
+        return <li style={{ color: 'red' }}>Not selected</li>;
+      }
+    };
+    
+    return (
+      <div className="p-4 flex">
+        <div className="flex-1 space-y-8">
+          <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
+          {customParts?.cases && renderPartItems('cases', customParts.cases)}
+          {customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
+          {customParts?.cpuCoolers && renderPartItems('cpuCoolers', customParts.cpuCoolers)}
+          {customParts?.gpus && renderPartItems('gpus', customParts.gpus)}
+          {filteredMotherboards && renderPartItems('motherboards', filteredMotherboards)}
+          {customParts?.memory && renderPartItems('memory', customParts.memory)}
+          {customParts?.storage && renderPartItems('storage', customParts.storage)}
+          {customParts?.psu && renderPartItems('psu', filterPsusByWattage(customParts.psu, totalWattage))}
+        </div>
+        <div className="flex-none ml-4 p-4 border border-gray-300 rounded-lg w-1/3">
+          <img 
+            src="https://via.placeholder.com/300" 
+            alt="Placeholder" 
+            className="w-full h-auto object-cover"
+          />
+          <ul>
+            {customParts && Object.keys(customParts).map(partType => {
+              const selectedItem = customParts[partType as keyof CustomParts]?.find(item => isSelected(partType, item.id));
+              return (
+                <li key={partType}>
+                  <h2 className="font-bold">{partType}</h2>
+                  <ul>
+                    {renderItemsList(partType, selectedItem)}
+                  </ul>
+                </li>
+              );
+            })}
+            <li>Your Price: £{(price / 100).toFixed(2)}</li>
+          </ul>
+          <Button 
+            onClick={handleExportToCookie} 
+            className="mt-4 px-4 py-2 bg-slate-700 text-white rounded"
+          >
+            Add to Basket
+          </Button>
+        </div>
+      </div>
+    );
+  }
+    
+    export default CustomPartsDisplay;

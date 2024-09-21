@@ -15,7 +15,6 @@ export default Button;
 
 const Basket = () => {
   return (
-    <Link href="/basket">
       <Image
         src="/images/cart.png"
         alt="Basket"
@@ -23,7 +22,6 @@ const Basket = () => {
         height={15}
         className="rounded-lg"
       />
-    </Link>
   );
 };
 
@@ -31,7 +29,6 @@ export {Basket};
 
 const Favourites = () => {
   return (
-    <Link href="/favourites">
       <Image
         src="/images/heart.png"
         alt="Favourites"
@@ -39,7 +36,6 @@ const Favourites = () => {
         height={15}
         className="rounded-lg"
       />
-    </Link>
   );
 };
 
