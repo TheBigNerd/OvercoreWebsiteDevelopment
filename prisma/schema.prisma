@@ -17,7 +17,6 @@ model Product {
   isAvailable   Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  priceInPence  Int
   brand         String
   caseSize      String
   colour        String
