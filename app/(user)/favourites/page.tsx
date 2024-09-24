@@ -1,10 +1,7 @@
 import React from 'react';
-import Image from 'next/image';
-import fetchFavouriteProducts from './fetchFavouriteProducts';
-import CarouselLook from '../_components/HomeCarousel/CarouselLook';
+import FavouriteProducts from './FavouriteProducts';
 
 const Favorites = async () => {
-  const favouriteProduct = await fetchFavouriteProducts();
   return (
     <>
       <div className="min-h-screen bg-gray-100 py-10">
@@ -14,11 +11,7 @@ const Favorites = async () => {
             A selection of your most loved products.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            { favouriteProduct.map(product => (
-              <CarouselLook key={ product.id } product={ product }/>
-            )) }
-          </div>
+          <FavouriteProducts />
 
           <div className="mt-12 text-center">
             <p className="text-gray-700 text-lg">
