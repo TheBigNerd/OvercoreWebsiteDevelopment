@@ -13,6 +13,8 @@ const addSchema = z.object({
   description: z.string().min(1),
   priceInPence: z.coerce.number().int().min(1),
   image: imageSchema.refine(file => file.size > 0, "Required"),
+  image2: imageSchema.refine(file => file.size > 0, "Required"),
+  image3: imageSchema.refine(file => file.size > 0, "Required"),
   brand: z.string().min(1),
   isFeatured: z.boolean(),
   cpuModel: z.string().min(1),
@@ -25,6 +27,7 @@ const addSchema = z.object({
   totalStorage: z.string().min(1),
   connectivity: z.string().min(1),
   coolingMethod: z.string().min(1),
+  tagline: z.string().min(1)
 })
 
 export async function addProduct(prevState: unknown, formData: FormData){
@@ -47,8 +50,13 @@ export async function addProduct(prevState: unknown, formData: FormData){
   const data = result.data
 
   await fs.mkdir("public/products", {recursive: true })
-  const imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`
-  await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
+  let imagePath: string[] = []
+  imagePath.push(`/products/${crypto.randomUUID()}-${data.image.name}`)
+  imagePath.push(`/products/${crypto.randomUUID()}-${data.image2.name}`)
+  imagePath.push(`/products/${crypto.randomUUID()}-${data.image3.name}`)
+  await fs.writeFile(`public${imagePath[0]}`, Buffer.from(await data.image.arrayBuffer()))
+  await fs.writeFile(`public${imagePath[1]}`, Buffer.from(await data.image2.arrayBuffer()))
+  await fs.writeFile(`public${imagePath[2]}`, Buffer.from(await data.image3.arrayBuffer()))
   
   await prisma.product.create({ data: {
     isAvailable: false,
@@ -67,7 +75,8 @@ export async function addProduct(prevState: unknown, formData: FormData){
     storageType: data.storageType,
     totalStorage: data.totalStorage,
     connectivity: data.connectivity,
-    coolingMethod: data.coolingMethod
+    coolingMethod: data.coolingMethod,
+    tagline: data.tagline
   }})
 
   redirect("/admin/products")
@@ -115,10 +124,19 @@ export async function updateProduct( id: string, prevState: unknown, formData: F
   let imagePath = product.imagePath
   if (data.image != null && data.image.size > 0){
     await fs.unlink(`public${product.imagePath}`)
-    imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`
+    imagePath.push(`/products/${crypto.randomUUID()}-${data.image.name}`)
     await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
   }
-
+  if (data.image2 != null && data.image2.size > 0){
+    await fs.unlink(`public${product.imagePath}`)
+    imagePath.push(`/products/${crypto.randomUUID()}-${data.image2.name}`)
+    await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image2.arrayBuffer()))
+  }
+  if (data.image3 != null && data.image3.size > 0){
+    await fs.unlink(`public${product.imagePath}`)
+    imagePath.push(`/products/${crypto.randomUUID()}-${data.image3.name}`)
+    await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image3.arrayBuffer()))
+  }
 
   await prisma.product.update({ where: {id}, data: {
     name: data.name,
@@ -136,7 +154,8 @@ export async function updateProduct( id: string, prevState: unknown, formData: F
     storageType: data.storageType,
     totalStorage: data.totalStorage,
     connectivity: data.connectivity,
-    coolingMethod: data.coolingMethod
+    coolingMethod: data.coolingMethod,
+    tagline: data.tagline
   }})
 
   redirect("/admin/products")

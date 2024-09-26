@@ -3,72 +3,23 @@
 import React, { useEffect, useState } from "react";
 import BasketObject from "../components/basketObject";
 import type { Product } from "@prisma/client";
-import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { createFakeCookie, getCookieIds } from "./handleData";
-
-async function getUserId() {
-	const session = await getSession();
-	return session ? session.user.id : null;
-}
 
 const BasketContainer = () => {
   const [basketProducts, setBasketProducts] = useState<Product[]>();
+  const { data, status } = useSession();
+  const userId = data?.user.id;
+  const cookieIds = getCookieIds();
+  const splitCookieIds = cookieIds?.join(',');
 
   useEffect(() => {
-    async function fetchBasketProducts() {
-      const userId = await getUserId();
-      let productIds: string[] | null = null;
-
-      if (userId) {
-        try {
-          const response = await fetch('./basket', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userId }),
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to fetch basket products');
-          }
-
-          const products = await response.json();
-          console.log('Products from user session:', products); // Debug log
-          setBasketProducts(products);
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        productIds = getCookieIds();
-        console.log('Product IDs from cookies:', productIds); // Debug log
-
-        if (productIds && productIds.length > 0) {
-          try {
-            const response = await fetch('./basket', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ productIds }),
-            });
-
-            if (!response.ok) {
-              throw new Error('Failed to fetch product details');
-            }
-
-            const products = await response.json();
-            console.log('Products from cookies:', products); // Debug log
-            setBasketProducts(products);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      }
+    if (status === "authenticated") {
+      fetch(`/api/basket?userId=${userId}&splitCookieIds=${splitCookieIds}`)
+        .then(res => res.json())
+        .then(data => setBasketProducts(data.body));
     }
-
-    fetchBasketProducts();
-  }, []);
+  }, [userId, cookieIds]);
 
   return (
     <>
@@ -79,7 +30,7 @@ const BasketContainer = () => {
               key={product.id}
               productName={product.name}
               priceInPence={product.priceInPence}
-              imagePath={product.imagePath}
+              imagePath={product.imagePath[0]}
               brand={product.brand}
               cpuModel={product.cpuModel}
               gpuModel={product.gpuModel}

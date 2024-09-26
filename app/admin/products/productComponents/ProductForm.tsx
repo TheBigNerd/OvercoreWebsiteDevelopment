@@ -36,8 +36,18 @@ export function ProductForm({ product }: {product?: Product | null}) {
     <div className="space-y-2">
       <Label htmlFor="image">Image #1</Label>
       <Input type="file" id="image" name="image" required={product == null} />
-      {product != null && <Image src={product.imagePath} height="400" width="400" alt="product image"/> }
+      {product != null && <Image src={product.imagePath[0]} height="400" width="400" alt="product image"/> }
       {error.image && <div className="text-destructive">{error.image}</div>}
+    </div>
+    <div className="space-y-2">
+      <Label htmlFor="image2">Image #2</Label>
+      <Input type="file" id="image2" name="image2" />
+      {product != null && <Image src={product.imagePath[1]} height="400" width="400" alt="product image"/> }
+    </div>
+    <div className="space-y-2">
+      <Label htmlFor="image3">Image #3</Label>
+      <Input type="file" id="image3" name="image3" />
+      {product != null && <Image src={product.imagePath[2]} height="400" width="400" alt="product image"/> }
     </div>
     <div className="space-y-2">
       <Label htmlFor="brand">Brand</Label>
@@ -97,6 +107,11 @@ export function ProductForm({ product }: {product?: Product | null}) {
     <div className="space-y-2">
       <Label htmlFor="coolingMethod">Cooling Method</Label>
       <Input type="text" id="coolingMethod" name="coolingMethod" required defaultValue={product?.coolingMethod || "" } />
+      {error.name && <div className="text-destructive">{error.name}</div>}
+    </div>
+    <div className="space-y-2">
+      <Label htmlFor="tagline">Tagline</Label>
+      <Input type="text" id="tagline" name="tagline" required defaultValue={product?.tagline || "" } />
       {error.name && <div className="text-destructive">{error.name}</div>}
     </div>
     <SubmitButton/>
