@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { fetchCustomParts } from '../data/customPartsService';
 import { CustomParts} from '../data/customParts';
-import nookies from 'nookies'; 
+import nookies, { parseCookies } from 'nookies'; 
+
 
 const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }> = ({ item, isSelected, onClick }) => (
   <div
@@ -39,18 +40,28 @@ const CustomPartsDisplay: React.FC = () => {
       try {
         const data = await fetchCustomParts();
         setCustomParts(data);
+
+        // Log the 'customProduct' cookie data
+        const cookies = parseCookies();
+        const cookieValue = cookies['customProduct'];
+        if (cookieValue) {
+          console.log('Custom Product Cookie:', JSON.parse(cookieValue));
+          setSelectedItems(JSON.parse(cookieValue));
+        }
+        // Set the first item as selected if available
+        if (!cookieValue && data.cases && typeof selectedItems['cases'] !== 'string') {
+          const firstItem = data.cases[0];
+          setSelectedItems({ ["cases"]: firstItem.id });
+          }
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
-        } else {
-          setError('An unknown error occurred');
         }
-      
       } finally {
         setLoading(false);
       }
     }
-
+  
     loadCustomParts();
   }, []);
 
@@ -84,6 +95,18 @@ const CustomPartsDisplay: React.FC = () => {
   };
   
   useEffect(() => {
+    // Initialize itemPrices with the prices of the initially selected items
+    const initialItemPrices: { [key: string]: number } = {};
+    Object.keys(selectedItems).forEach(type => {
+      const selectedItem = customParts && customParts[type as keyof CustomParts]?.find((item: { id: string; }) => item.id === selectedItems[type]);
+      if (selectedItem) {
+        initialItemPrices[type] = selectedItem.priceInPence; // Assuming each item has a 'price' property
+      }
+    });
+    setItemPrices(initialItemPrices);
+  }, [customParts, selectedItems]);
+  
+  useEffect(() => {
     const totalPrice = Object.values(itemPrices).reduce((acc, curr) => acc + curr, 0);
     setPrice(totalPrice);
   }, [itemPrices]);
@@ -112,7 +135,7 @@ const CustomPartsDisplay: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
   
   const renderPartItems = (type: string, items: any[]) => (
-    <div className="flex space-x-4">
+    <div className="flex flex-wrap gap-4 ">
       {items.map((item) => (
         <PartItem
           key={item.id}
@@ -123,6 +146,7 @@ const CustomPartsDisplay: React.FC = () => {
       ))}
     </div>
   );
+
 
   const filterPsusByWattage = (psus: any[], totalWattage: number) => {
     const filteredPsus = psus.filter(psu => psu.wattage > totalWattage +150);
@@ -178,10 +202,10 @@ const CustomPartsDisplay: React.FC = () => {
             <li>Your Price: £{(price / 100).toFixed(2)}</li>
           </ul>
           <Button 
-            onClick={handleExportToCookie} 
             className="mt-4 px-4 py-2 bg-slate-700 text-white rounded"
+            onClick={handleExportToCookie}
           >
-            Add to Basket
+          Buy Now
           </Button>
         </div>
       </div>
