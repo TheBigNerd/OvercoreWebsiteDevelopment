@@ -25,12 +25,12 @@ const CustomPartsDisplay: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: string }>({});
   const [selectedSocketType, setSelectedSocketType] = useState<string | null>(null);
-  const handleExportToCookie = () => {
-    nookies.set(null, 'customProduct', JSON.stringify(selectedItems), {
+  
+  const handleExportToCookie = (selected: any) => {
+    nookies.set(null, 'customProduct', JSON.stringify(selected), {
       maxAge: 30 * 24 * 60 * 60, // 30 days
       path: '/',
     });
-    alert('Custom product exported to cookie!');
   };
 
 
@@ -71,28 +71,26 @@ const CustomPartsDisplay: React.FC = () => {
   const [totalWattage, setTotalWattage] = useState(0);
   
   const handleItemClick = (type: string, id: string, itemPrice: number, socketType?: string) => {
-    setSelectedItems((prevSelectedItems) => {
-      if (prevSelectedItems[type] === id) {
-        console.log(`Deselected item: ${id}`);
-        const { [type]: _, ...rest } = prevSelectedItems;
-        setItemPrices((prevItemPrices) => {
-          const { [type]: __, ...restPrices } = prevItemPrices;
-          return restPrices;
-        });
-        return rest;
-      } else {
-        if (type === 'cpus' && socketType) {
-          setSelectedSocketType(socketType);
-        }
-        console.log(`Selected item: ${id}`);
-        setItemPrices((prevItemPrices) => ({
-          ...prevItemPrices,
-          [type]: itemPrice,
-        }));
-        return { ...prevSelectedItems, [type]: id };
-      }
-    });
-    handleExportToCookie();
+	  const currentSelected = selectedItems;
+	  if (currentSelected[type] === id) {
+		  delete currentSelected[type];
+		  
+		  setItemPrices((prevItemPrices) => {
+			  const { [type]: __, ...restPrices } = prevItemPrices;
+			  return restPrices;
+		  });
+	  } else {
+		  if (type === 'cpus' && socketType) setSelectedSocketType(socketType);
+		  
+		  currentSelected[type] = id;
+		  
+		  setItemPrices((prevItemPrices) => ({
+			  ...prevItemPrices,
+			  [type]: itemPrice,
+		  }));
+	  }
+	  setSelectedItems(currentSelected);
+	  handleExportToCookie(currentSelected);
   };
   
   useEffect(() => {
