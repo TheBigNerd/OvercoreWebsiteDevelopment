@@ -17,7 +17,7 @@ const BasketContainer = () => {
         .then(res => res.json())
         .then(data => setBasketProducts(data.body));
     }
-  });
+  }, []);
 
   return (
     <>
