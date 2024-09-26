@@ -18,11 +18,11 @@ const FormContact: React.FC = () => {
       {/* Contact Section */}
       <div className="container mx-auto py-12 px-4 flex flex-wrap justify-between">
         {/* Support Information and Live Chat Section */}
-        <div className="w-full md:w-1/3 mb-8">
+        <div className="w-full md:w-1/3 mb-8 px-5">
           <h2 className="text-2xl font-bold mb-4">Support Information</h2>
-          <p>Hours of Support: 9 AM - 5 PM</p>
-          <p>Phone: +1 (123) 456-7890</p>
-          <p>Email: support@example.com</p>
+          <p>Hours of Support: 24 Hours (Response within 8 hours)</p>
+          <p>Phone: (+44) 7552 776284</p>
+          <p>Email: farhan@overcore.co.uk</p>
 
           {/* Divider Line */}
           <hr className="w-96 my-8 border-gray-300" />
@@ -90,7 +90,7 @@ const FormContact: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-slate-500 text-white py-3 px-4 rounded-lg hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-400"
             >
               Send
             </button>

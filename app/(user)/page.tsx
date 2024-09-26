@@ -1,16 +1,24 @@
 import CategoryCardContainer from './_components/categorycardcontainer';
 import HeroBanner from './_components/herobanner';
 import HomeCarousel from './_components/HomeCarousel/HomeCarousel';
+import TopBanner from './_components/TopBanner';
 
 export default function Home() {
   return (
     <>
+    <div className='relative z-50'>
+    <TopBanner />
+    </div>
+    <div className=''> 
       <HeroBanner />
+    </div>
       <div className="container mx-auto px-4 py-8">
         <CategoryCardContainer />
       </div>
       <div className="m-4">
-        <h2 className="text-2xl font-bold text-left mb-4">Featured Products</h2>
+        <div className='flex justify-center'>
+        <h2 className="text-2xl font-bold mb-4 relative" style={{ right: '30%'}}>Featured Products</h2>
+        </div>
         <HomeCarousel />
       </div>
     </>

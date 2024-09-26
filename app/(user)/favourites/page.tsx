@@ -18,7 +18,7 @@ const Favorites = async () => {
               Ready to purchase your favorite items?
             </p>
             <button className="mt-4 bg-slate-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-slate-400">
-              Proceed to Checkout
+              Add to Basket
             </button>
           </div>
         </div>
