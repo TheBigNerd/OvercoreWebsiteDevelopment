@@ -92,6 +92,7 @@ const CustomPartsDisplay: React.FC = () => {
         return { ...prevSelectedItems, [type]: id };
       }
     });
+    handleExportToCookie();
   };
   
   useEffect(() => {
@@ -203,7 +204,6 @@ const CustomPartsDisplay: React.FC = () => {
           </ul>
           <Button 
             className="mt-4 px-4 py-2 bg-slate-700 text-white rounded"
-            onClick={handleExportToCookie}
           >
           Buy Now
           </Button>
