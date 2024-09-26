@@ -22,9 +22,8 @@ const Navbar = () => {
               <Logo />
             </div>
             <ul className="flex space-x-32 text-white">
-              <HoverableLink href="/pre-builds">Pre Builds</HoverableLink>
-              <HoverableLink href="/custom-builds">Custom Builds</HoverableLink>
-              <HoverableLink href="/parts">Components</HoverableLink>
+              <HoverableLink href="/pre-builds">Gaming Systems</HoverableLink>
+              <HoverableLink href="/custom-builds">Build Your Own</HoverableLink>
               <HoverableLink href="/contact">Contact Us</HoverableLink>
             </ul>
             <div className="flex items-center space-x-6">
@@ -41,7 +40,7 @@ const Navbar = () => {
                 </HoverableLink>
               </div>
               <div className="flex items-center space-x-1 text-white group">
-                <LoginButton mode="modal" asChild>
+                <LoginButton asChild>
                   <Button className="hover:scale-110 transform transition-transform duration-300">
                     Sign In
                   </Button>
