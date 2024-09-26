@@ -4,22 +4,20 @@ import React, { useEffect, useState } from "react";
 import BasketObject from "../components/basketObject";
 import type { Product } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { createFakeCookie, getCookieIds } from "./handleData";
+import { createFakeCookie } from "./handleData";
 
 const BasketContainer = () => {
   const [basketProducts, setBasketProducts] = useState<Product[]>();
   const { data, status } = useSession();
   const userId = data?.user.id;
-  const cookieIds = getCookieIds();
-  const splitCookieIds = cookieIds?.join(',');
 
   useEffect(() => {
     if (status === "authenticated") {
-      fetch(`/api/basket?userId=${userId}&splitCookieIds=${splitCookieIds}`)
+      fetch(`/api/basket?userId=${userId}`)
         .then(res => res.json())
         .then(data => setBasketProducts(data.body));
     }
-  }, [userId, cookieIds]);
+  });
 
   return (
     <>
