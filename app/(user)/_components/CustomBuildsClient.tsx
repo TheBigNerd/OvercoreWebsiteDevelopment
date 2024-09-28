@@ -45,7 +45,6 @@ const CustomPartsDisplay: React.FC = () => {
         const cookies = parseCookies();
         const cookieValue = cookies['customProduct'];
         if (cookieValue) {
-          console.log('Custom Product Cookie:', JSON.parse(cookieValue));
           setSelectedItems(JSON.parse(cookieValue));
         }
         // Set the first item as selected if available
@@ -118,7 +117,6 @@ const CustomPartsDisplay: React.FC = () => {
         if (selectedItem) {
           if ('wattage' in selectedItem && selectedItems['psu'] !== selectedItem.id) {
             wattage += typeof selectedItem.wattage === 'number' ? selectedItem.wattage : 0;
-            console.log(selectedItem.wattage);
           }
         }
       });
@@ -182,7 +180,7 @@ const CustomPartsDisplay: React.FC = () => {
         </div>
         <div className="flex-none ml-4 p-4 border border-gray-300 rounded-lg w-1/3">
           <img 
-            src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image} 
+            src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image || '/case/_af57a160-471f-4f26-ba6f-e516a168aab3.jfif'}  
             alt="Selected Case Picture" 
             className="w-full h-auto object-cover"
           />
