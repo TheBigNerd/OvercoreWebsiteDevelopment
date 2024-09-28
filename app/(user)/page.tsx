@@ -6,7 +6,7 @@ import TopBanner from './_components/TopBanner';
 export default function Home() {
   return (
     <>
-    <div className='relative z-50'>
+    <div>
     <TopBanner />
     </div>
     <div className=''> 

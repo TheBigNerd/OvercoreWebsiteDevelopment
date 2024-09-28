@@ -4,11 +4,13 @@ import React, { useEffect, useState } from "react";
 import BasketObject from "../components/basketObject";
 import type { Product } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { createFakeCookie } from "./handleData";
 
 const BasketContainer = () => {
-  const [basketProducts, setBasketProducts] = useState<Product[]>();
+  const [basketProducts, setBasketProducts] = useState<Product[]>([]);
   const { data, status } = useSession();
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [shippingPrice, setShippingPrice] = useState<number>(0);
+  const [Subtotal, setSubTotal] = useState<number>(0);
   const userId = data?.user.id;
 
   useEffect(() => {
@@ -18,6 +20,22 @@ const BasketContainer = () => {
         .then(data => setBasketProducts(data.body));
     }
   }, []);
+
+  useEffect(() => {
+    if (basketProducts.length > 0) {
+      const subTotal = basketProducts.reduce((acc, product) => acc + product.priceInPence / 100, 0);
+      const shippingPrice = basketProducts.length * 20;
+      const totalPrice = subTotal + shippingPrice;
+
+      setSubTotal(subTotal);
+      setShippingPrice(shippingPrice);
+      setTotalPrice(totalPrice);
+    } else {
+      setSubTotal(0);
+      setShippingPrice(0);
+      setTotalPrice(0);
+    }
+  }, [basketProducts]);
 
   return (
     <>
@@ -50,22 +68,19 @@ const BasketContainer = () => {
         <h2 className="text-2xl font-semibold text-center mb-3">Order Summary</h2>
         <div className="flex justify-between">
           <p className="text-lg">Subtotal:</p>
-          <p className="text-lg">£80.00</p>
+          <p className="text-lg">£{Subtotal}</p>
         </div>
         <div className="flex justify-between">
           <p className="text-lg">Shipping:</p>
-          <p className="text-lg">£5.00</p>
+          <p className="text-lg">£{shippingPrice}</p>
         </div>
         <div className="flex justify-between font-semibold text-xl mt-3">
           <p>Total:</p>
-          <p>£85.00</p>
+          <p>£{totalPrice}</p>
         </div>
         <button className="mt-6 w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-400">
           Proceed to Checkout
         </button>
-      </div>
-      <div>
-        <button onClick={createFakeCookie}>Create Fake Cookie</button>
       </div>
     </>
   );

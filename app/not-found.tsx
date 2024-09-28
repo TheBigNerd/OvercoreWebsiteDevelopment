@@ -11,7 +11,7 @@ const Error = () => {
         <p className="mt-2 text-gray-500">
           Sorry, the page you are looking for does not exist or has been moved.
         </p>
-        <Link href="/"className="mt-6 inline-block px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+        <Link href="/"className="mt-6 inline-block px-6 py-3 bg-slate-600 text-white rounded-lg shadow hover:bg-slate-700">
           
             Go Home
           
