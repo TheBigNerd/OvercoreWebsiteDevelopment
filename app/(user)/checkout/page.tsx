@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma"
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
 const product = await prisma.product.findFirst({
-    where: { id: `14e02bc3-8bc7-4205-83c3-f707f4142dae`}
+    where: { id: `d907f30a-d32e-46b8-9846-381282880188`}
 })
 
 export default async function CheckoutPage() {
