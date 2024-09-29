@@ -40,7 +40,7 @@ const BasketObject = ({ key, productName, priceInPence, imagePath, brand, cpuMod
                     <Image src={imagePath} alt='productImage' width={100} height={100}/>
                     <div className="ml-4">
                         <h2 className="text-xl font-semibold">{productName}</h2>
-                        <p className="text-gray-600">Price: £{priceInPence}</p>
+                        <p className="text-gray-600">Price: £{priceInPence / 100}</p>
                     </div>
                 </div>
                 <div className="ml-5">

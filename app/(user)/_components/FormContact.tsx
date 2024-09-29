@@ -1,6 +1,27 @@
-import React from 'react';
+"use client"
+
+import React, { useRef, useState } from 'react';
+import { addContactForm } from '../contact/addContactForm';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 const FormContact: React.FC = () => {
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const result = await addContactForm(formData);
+    if (result) {
+      console.error('Form submission failed:', result);
+      setSuccessMessage(null);
+    } else {
+      setSuccessMessage('Thank you for your enquiry. We will get back to you soon!');
+      
+    }
+  };
+
   return (
     <div>
       {/* Hero Banner Section */}
@@ -35,15 +56,15 @@ const FormContact: React.FC = () => {
         </div>
 
         {/* Contact Form Section */}
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:w-2/3 px-8">
           <h2 className="text-2xl font-bold mb-8 text-center">Get in Touch</h2>
-          <form className="flex flex-col space-y-6">
+          <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
             <div className="flex space-x-4">
               <div className="w-1/2">
                 <label htmlFor="firstName" className="block text-gray-700 font-bold mb-2">
                   First Name <span className="text-red-500">*</span>
                 </label>
-                <input
+                <Input
                   type="text"
                   id="firstName"
                   name="firstName"
@@ -55,7 +76,7 @@ const FormContact: React.FC = () => {
                 <label htmlFor="lastName" className="block text-gray-700 font-bold mb-2">
                   Last Name <span className="text-red-500">*</span>
                 </label>
-                <input
+                <Input
                   type="text"
                   id="lastName"
                   name="lastName"
@@ -68,7 +89,7 @@ const FormContact: React.FC = () => {
               <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
                 Email Address <span className="text-red-500">*</span>
               </label>
-              <input
+              <Input
                 type="email"
                 id="email"
                 name="email"
@@ -80,13 +101,12 @@ const FormContact: React.FC = () => {
               <label htmlFor="message" className="block text-gray-700 font-bold mb-2">
                 Message <span className="text-red-500">*</span>
               </label>
-              <textarea
+              <Textarea
                 id="message"
                 name="message"
-                rows={4}
                 className="w-full py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
                 required
-              ></textarea>
+              ></Textarea>
             </div>
             <button
               type="submit"
@@ -95,6 +115,11 @@ const FormContact: React.FC = () => {
               Send
             </button>
           </form>
+          {successMessage && (
+            <div className="mt-4 text-green-500 font-bold">
+              {successMessage}
+            </div>
+          )}
         </div>
       </div>
     </div>

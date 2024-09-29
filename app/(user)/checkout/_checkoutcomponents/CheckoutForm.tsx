@@ -21,7 +21,7 @@ export function CheckoutForm({ product, clientSecret}: CheckoutFormProps){
     <div className="max-w-5xl w-full mx-auto space-y-8">
         <div className="flex gap-4 items-center">
             <div className="py-8">
-            <CheckoutProduct name={product.name} priceInPence={product.priceInPence} imagePath={product.imagePath}/>
+            <CheckoutProduct name={product.name} priceInPence={product.priceInPence} imagePath={product.imagePath[1]}/>
             </div>
         </div>
      <Elements options={{ clientSecret }} stripe={stripePromise}>

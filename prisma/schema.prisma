@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ContactForm {
+  id        String   @id @default(uuid())
+  firstName       String
+  lastName        String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
 model Product {
   id            String   @id @default(uuid())
   name          String
