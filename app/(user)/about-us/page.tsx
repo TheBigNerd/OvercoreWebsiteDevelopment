@@ -1,53 +1,79 @@
-import Image from 'next/image';
-import Logo from '@/public/images/Logo.png';
-import missionImage from '@/public/images/Pawel.jpg';
+import React from 'react';
+import Image from 'next/image'; // Assuming you're using Next.js for images
+import Ethan from '@/public/images/Instagram.png'; // Example imports for images
+import Farhan from '@/public/images/Linkedin.png';
+import Sam from '@/public/images/Tiktok.png';
+import Archie from '@/public/images/Facebook.png';
+import OrangeDesktop from '@/public/images/orange_desktop.jpg'; // Importing the new image
+
+// A reusable component for circular images with text
+const TeamMember = ({ imageSrc, altText, description }) => (
+  <div className="flex flex-col items-center">
+    <div className="w-24 h-24 rounded-full overflow-hidden">
+      <Image src={imageSrc} alt={altText} layout="intrinsic" objectFit="cover" width={96} height={96} />
+    </div>
+    <p className="text-center text-sm mt-2">{description}</p>
+  </div>
+);
 
 const AboutUs = () => {
   return (
     <>
-        <div className="text-light py-5">
-          <div className="mb-5">
-            <h1 className="text-center text-5xl ">About Us</h1>
-            <p className="text-center text-xl text-gray-500">
-              Discover our story and mission.
+      <div className="text-light py-10">
+        {/* About Us Title */}
+        <div className="mb-10">
+          <h1 className="text-center text-5xl font-bold">About Us</h1>
+        </div>
+
+        {/* Our Story Section */}
+        <div className="flex justify-center mb-8">
+          <div className="p-8 md:w-3/4 lg:w-1/2 text-center">
+            <h2 className="text-2xl font-bold mb-4">Our Story</h2>
+            <p className="text-lg text-gray-700">
+              We’re a group of four university friends who bonded over our passion for technology while studying computer science. After years of honing our skills and staying up-to-date with the latest innovations, we decided to turn our shared expertise into something more. Combining our technical knowledge with a commitment to quality, we’ve built a company that delivers reliable, high-performance computers tailored to our customers' needs. Based in the UK, we’re proud to help people stay connected and achieve their tech goals.
             </p>
           </div>
-          <div className="flex flex-col md:flex-row justify-center pt-3">
-            <div className="md:w-1/2 text-center">
-              <h2 className="text-2xl mb-3">Our Story</h2>
-              <p>
-              "We are a group of university students who are undertaking this business as a passion project. This business began as a simple thought experiment that grew into something that we truly believe can become something bigger than ourselves."
+        </div>
+
+        {/* Horizontal Line Separator */}
+        <div className="flex justify-center my-8">
+          <hr className="border-t border-gray-300 w-1/2" style={{ height: '1px' }} />
+        </div>
+
+        {/* Our Mission Section with Image */}
+        <div className="flex justify-center mb-8 text-center">
+          <div className="flex p-8 md:w-3/4 lg:w-1/2 space-x-8 items-center">
+            {/* Text Section */}
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+              <p className="text-lg text-gray-700">
+              Our mission is to provide affordable, top-quality computers to people across the UK. As a team of computer science graduates, we understand the importance of powerful, reliable systems, whether for gaming, work, or everyday use. We aim to make technology accessible to all, offering personalized service, expert advice, and products that meet the evolving needs of our customers in a fast-paced digital world.
               </p>
             </div>
-            <div className="md:w-1/3 flex items-center justify-center mt-4">
-              <Image src={Logo} className="animate-bounce duration-20 w-40" alt="Logo" />
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-center pt-3">
-            <div className="md:w-1/3 flex items-center justify-center mt-4">
-              <Image src={missionImage} className="w-3/4 rounded" alt="Mission Image" />
-            </div>
-            <div className="md:w-1/2 text-center">
-              <h2 className="text-2xl mb-3 mt-8">Our Mission</h2>
-              <p>
-              "We are committed to providing our customers with products of excellent quality alongside exceptional customer service. "
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-center pt-3">
-            <div className="md:w-1/3">
-              <h2 className="text-2xl mb-3 mt-8 text-center">Contact Details</h2>
-              <ul className="list-disc list-inside ml-12 pl-5 space-y-1">
-                <li>
-                  Email: ethan@overcore.co.uk
-                </li>
-                <li>
-                  Phone: 
-                </li>
-              </ul>
+
+            {/* Image Section */}
+            <div className="flex-1">
+              <Image src={OrangeDesktop} alt="Orange Desktop" layout="responsive" objectFit="cover" />
             </div>
           </div>
         </div>
+
+        {/* Horizontal Line Separator */}
+        <div className="flex justify-center my-8">
+          <hr className="border-t border-gray-300 w-1/2" style={{ height: '1px' }} />
+        </div>
+
+        {/* Who are we? Section */}
+        <div className="text-center mb-10">
+          <h2 className="text-2xl font-bold mb-6">Who Are We?</h2>
+          <div className="flex justify-center space-x-8">
+            <TeamMember imageSrc={Ethan} altText="Instagram" description="Ethan - Marketing Lead" />
+            <TeamMember imageSrc={Farhan} altText="Linkedin" description="Farhan - HR Manager" />
+            <TeamMember imageSrc={Sam} altText="Tiktok" description="Sam - Content Creator" />
+            <TeamMember imageSrc={Archie} altText="Facebook" description="Archie - Developer" />
+          </div>
+        </div>
+      </div>
     </>
   );
 };
