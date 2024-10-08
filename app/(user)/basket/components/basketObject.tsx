@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { XCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { removeCookieId } from './handleData';
+import { useSession } from 'next-auth/react';
 
 type basketObjectProps = {
     key: string;
@@ -32,6 +33,10 @@ const BasketObject = ({ key, productName, priceInPence, imagePath, brand, cpuMod
     const handleDelete = () => {
         deleteProduct(key);
     }
+
+    useEffect(() => {
+        handleDelete();
+    }, []);
 
     return (
         <div className=" rounded-md p-3 flex flex-col hover:bg-gray-200 transition-colors duration-200">
@@ -71,8 +76,20 @@ const BasketObject = ({ key, productName, priceInPence, imagePath, brand, cpuMod
 
 export default BasketObject;
 
-function deleteProduct(id: any) {
-    removeCookieId(id);
-    
+async function deleteProduct(id: string) {
+    try {
+        const { data, status } = useSession();
+        const userId = data?.user.id;
+        const response = await fetch(`/api/route?userId=${userId}&productId=${id}`, {
+            method: 'DELETE',
+        });
 
+        if (response.ok) {
+            console.log('Product removed from basket');
+        } else {
+            console.error('Failed to remove product from basket');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }

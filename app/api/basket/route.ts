@@ -39,3 +39,31 @@ export async function GET(req: NextRequest) {
 	if (basket.length > 0) return Response.json({ status: 200, body: basket });
 	else return Response.json({ status: 204, body: [] });
 }
+
+
+export async function DELETE(req: NextRequest) {
+    const searchParams = req.nextUrl.searchParams;
+    const userId = searchParams.get("userId");
+    const productId = searchParams.get("productId");
+
+    if (!userId || !productId) {
+        return new Response("Missing userId or productId", { status: 400 });
+    }
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+        return new Response("User not found", { status: 404 });
+    }
+
+    // Remove product from user's basket
+    const updatedBasket = user.basket.filter((id: string) => id !== productId);
+
+    // Update user's basket in the database
+    await prisma.user.update({
+        where: { id: userId },
+        data: { basket: updatedBasket },
+    });
+
+    return new Response("Product removed from basket", { status: 200 });
+}
