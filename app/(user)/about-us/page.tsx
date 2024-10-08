@@ -7,7 +7,13 @@ import Archie from '@/public/images/Facebook.png';
 import OrangeDesktop from '@/public/images/orange_desktop.jpg'; // Importing the new image
 
 // A reusable component for circular images with text
-const TeamMember = ({ imageSrc, altText, description }) => (
+interface TeamMemberProps {
+  imageSrc: string;
+  altText: string;
+  description: string;
+}
+
+const TeamMember: React.FC<TeamMemberProps> = ({ imageSrc, altText, description }) => (
   <div className="flex flex-col items-center">
     <div className="w-24 h-24 rounded-full overflow-hidden">
       <Image src={imageSrc} alt={altText} layout="intrinsic" objectFit="cover" width={96} height={96} />
