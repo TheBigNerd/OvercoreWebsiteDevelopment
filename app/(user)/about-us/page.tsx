@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image'; // Assuming you're using Next.js for images
+import Image, { StaticImageData } from 'next/image'; // Assuming you're using Next.js for images
 import Ethan from '@/public/images/Instagram.png'; // Example imports for images
 import Farhan from '@/public/images/Linkedin.png';
 import Sam from '@/public/images/Tiktok.png';
@@ -8,7 +8,7 @@ import OrangeDesktop from '@/public/images/orange_desktop.jpg'; // Importing the
 
 // A reusable component for circular images with text
 interface TeamMemberProps {
-  imageSrc: string;
+  imageSrc: StaticImageData;
   altText: string;
   description: string;
 }

@@ -59,6 +59,7 @@ model User {
   createdAt             DateTime               @default(now())
   emailVerified         DateTime?
   image                 String?
+  orders                Order[]
   updatedAt             DateTime               @updatedAt
   isTwoFactorEnabled    Boolean                @default(false)
   password              String?
@@ -66,7 +67,6 @@ model User {
   basket                String[]
   favourites            String[]
   accounts              Account[]
-  orders                Order[]
   twoFactorConfirmation TwoFactorConfirmation?
 }
 
