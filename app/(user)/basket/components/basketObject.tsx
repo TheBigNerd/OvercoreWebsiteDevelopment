@@ -2,10 +2,8 @@
 import { useState } from 'react';
 import { XCircle } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { removeCookieId } from './handleData';
 import { useSession } from 'next-auth/react';
-
 
 interface basketObjectProps {
     id: string;
@@ -23,9 +21,10 @@ interface basketObjectProps {
     totalStorage: string;
     connectivity: string;
     coolingMethod: string;
+    refreshBasket: () => void;
 }
 
-const BasketObject = ({ id, productName, priceInPence, imagePath, brand, cpuModel, gpuModel, memorySize, memoryType, caseSize, colour, storageType, totalStorage, connectivity, coolingMethod }: basketObjectProps) => {
+const BasketObject = ({ id, productName, priceInPence, imagePath, brand, cpuModel, gpuModel, memorySize, memoryType, caseSize, colour, storageType, totalStorage, connectivity, coolingMethod, refreshBasket }: basketObjectProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleExpand = () => {
@@ -43,12 +42,12 @@ const BasketObject = ({ id, productName, priceInPence, imagePath, brand, cpuMode
             if (response.ok) {
                 console.log('Product removed from basket');
                 removeCookieId(id);
+                refreshBasket();
             }
         } catch (error) {
             console.error('Failed to delete product from basket', error);
         }
     };
-
 
     return (
         <div className="rounded-md p-3 flex flex-col hover:bg-gray-200 transition-colors duration-200">
@@ -86,12 +85,4 @@ const BasketObject = ({ id, productName, priceInPence, imagePath, brand, cpuMode
     );
 };
 
-
-
-
-    
-
-
 export default BasketObject;
-
-

@@ -19,7 +19,7 @@ const BasketContainer = () => {
         .then(res => res.json())
         .then(data => setBasketProducts(data.body));
     }
-  }, []);
+  }, [status, userId]);
 
   useEffect(() => {
     if (basketProducts.length > 0) {
@@ -43,6 +43,7 @@ const BasketContainer = () => {
         {basketProducts && basketProducts.length > 0 ? (
           basketProducts.map(product => (
             <BasketObject
+              key={product.id}
               id={product.id}
               productName={product.name}
               priceInPence={product.priceInPence}
@@ -57,7 +58,13 @@ const BasketContainer = () => {
               storageType={product.storageType}
               totalStorage={product.totalStorage}
               connectivity={product.connectivity}
-              coolingMethod={product.coolingMethod}/>
+              coolingMethod={product.coolingMethod}
+              refreshBasket={() => {
+                fetch(`/api/basket?userId=${userId}`)
+                  .then(res => res.json())
+                  .then(data => setBasketProducts(data.body));
+              }}
+            />
           ))
         ) : (
           <p>No items in the basket</p>
