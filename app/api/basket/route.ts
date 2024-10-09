@@ -45,6 +45,7 @@ export async function DELETE(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const userId = searchParams.get("userId");
     const productId = searchParams.get("productId");
+	console.log(userId, productId);
 
     if (!userId || !productId) {
         return new Response("Missing userId or productId", { status: 400 });

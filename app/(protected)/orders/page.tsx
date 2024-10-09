@@ -1,18 +1,19 @@
 import React from 'react';
 import OrdersContainer from '@/app/(protected)/orders/OrdersContainer'
+import orderDisplay from '@/app/(protected)/orders/orderDisplay'
 
 
 const Orders = () => {
     return (
       <>
   
-        <div className="mx-auto  py-6">
+        <div className="mx-auto py-12">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">Your Orders</h1>
             <p className="text-center text-lg text-gray-600 mb-6">
               View the details of your recent purchases.
             </p>
-            <OrdersContainer />
+            <orderDisplay/>
            </div>
           </div>
   
