@@ -43,7 +43,7 @@ const BasketContainer = () => {
         {basketProducts && basketProducts.length > 0 ? (
           basketProducts.map(product => (
             <BasketObject
-              key={product.id}
+              id={product.id}
               productName={product.name}
               priceInPence={product.priceInPence}
               imagePath={product.imagePath[0]}
@@ -57,8 +57,7 @@ const BasketContainer = () => {
               storageType={product.storageType}
               totalStorage={product.totalStorage}
               connectivity={product.connectivity}
-              coolingMethod={product.coolingMethod}
-            />
+              coolingMethod={product.coolingMethod}/>
           ))
         ) : (
           <p>No items in the basket</p>
