@@ -1,9 +1,9 @@
 import React from 'react';
 import Image, { StaticImageData } from 'next/image'; // Assuming you're using Next.js for images
-import Ethan from '@/public/images/Instagram.png'; // Example imports for images
-import Farhan from '@/public/images/Linkedin.png';
-import Sam from '@/public/images/Tiktok.png';
-import Archie from '@/public/images/Facebook.png';
+import Ethan from '@/public/images/Ethan.jpg'; // Example imports for images
+import Farhan from '@/public/images/Farhan.jpg';
+import Sam from '@/public/images/Sam.jpg';
+import Archie from '@/public/images/Archie.jpg';
 import OrangeDesktop from '@/public/images/orange_desktop.jpg'; // Importing the new image
 
 // A reusable component for circular images with text
@@ -73,10 +73,10 @@ const AboutUs = () => {
         <div className="text-center mb-10">
           <h2 className="text-2xl font-bold mb-6">Who Are We?</h2>
           <div className="flex justify-center space-x-8">
-            <TeamMember imageSrc={Ethan} altText="Instagram" description="Ethan - Marketing Lead" />
-            <TeamMember imageSrc={Farhan} altText="Linkedin" description="Farhan - HR Manager" />
-            <TeamMember imageSrc={Sam} altText="Tiktok" description="Sam - Content Creator" />
-            <TeamMember imageSrc={Archie} altText="Facebook" description="Archie - Developer" />
+            <TeamMember imageSrc={Ethan} altText="Ethan" description="Ethan - Financial Operator" />
+            <TeamMember imageSrc={Farhan} altText="Farhan" description="Farhan - HR Manager" />
+            <TeamMember imageSrc={Sam} altText="Sam" description="Sam - Marketing Lead" />
+            <TeamMember imageSrc={Archie} altText="Archie" description="Archie - Technical Consultant" />
           </div>
         </div>
       </div>
