@@ -1,8 +1,13 @@
 import { Elements } from "@stripe/react-stripe-js";
+import Navbar from "@/app/(user)/_components/Navbar";
+import Footer from "@/app/(user)/_components/Footer";
 
 export default function SuccessPage() {
     return(
-        <div className="max-w-5xl w-full mx-auto space-y-8">
+        <div>
+            <Navbar />
+            
+            <Footer/>
         </div>
         )
 }
