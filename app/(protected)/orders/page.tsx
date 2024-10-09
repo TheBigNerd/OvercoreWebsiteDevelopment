@@ -1,22 +1,13 @@
 import React from 'react';
-import OrdersContainer from '@/app/(protected)/orders/OrdersContainer'
-import orderDisplay from '@/app/(protected)/orders/orderDisplay'
+import OrderDisplay from './OrderDisplay';
 
 
 const Orders = () => {
     return (
       <>
   
-        <div className="mx-auto py-12">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">Your Orders</h1>
-            <p className="text-center text-lg text-gray-600 mb-6">
-              View the details of your recent purchases.
-            </p>
-            <orderDisplay/>
-           </div>
-          </div>
-  
+            <OrderDisplay/>
+
             <div className="text-center">
               <p className="text-gray-700 text-lg">
                 Need help with your orders?

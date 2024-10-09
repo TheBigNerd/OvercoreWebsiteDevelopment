@@ -38,7 +38,7 @@ model Product {
   memoryType    String
   storageType   String
   totalStorage  String
-  order         Order[]
+  order         OrderProduct[]
 }
 
 model Order {
@@ -46,10 +46,19 @@ model Order {
   pricePaid Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Status   String
   UserId    String
-  productId String
   user      User     @relation(fields: [UserId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id])
+  products OrderProduct[]
+}
+
+model OrderProduct {
+  orderId  String
+  productId String
+  order Order? @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([orderId, productId])
 }
 
 model User {

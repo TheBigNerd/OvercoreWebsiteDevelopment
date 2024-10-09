@@ -3,24 +3,35 @@ import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
-
     const userId = searchParams.get("userId");
 
-    const orders =[];
-
     if (userId === null) {
-        return Response.json({ status: 400, body: "Missing userId" });
+        return new Response(JSON.stringify({ status: 400, body: "Missing userId" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+        });
     }
 
-    const user = await prisma.user.findUnique({ where: { id: userId }, include: { orders: true } });
+    try {
+        const user = await prisma.user.findUnique({ where: { id: userId }, include: { orders: true } });
 
-    const userProductIds = user?.orders.map(order => order.productId);
+        if (!user || !user.orders) {
+            return new Response(JSON.stringify({ status: 404, body: "No User or No Orders" }), {
+                status: 404,
+                headers: { "Content-Type": "application/json" },
+            });
+        }
 
-    const products = await prisma.product.findMany({
-        where: { id: { in: userProductIds } },
-    });
-
-    orders.push(...products);
-
-    return Response.json({ status: 200, body: orders });
+        const orders = [...user.orders];
+        return new Response(JSON.stringify({ status: 200, body: orders }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+        });
+    } catch (error) {
+        console.error("Error fetching user orders:", error);
+        return new Response(JSON.stringify({ status: 500, body: "Internal Server Error" }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+        });
+    }
 }

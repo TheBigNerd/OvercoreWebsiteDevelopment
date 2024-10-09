@@ -2,15 +2,7 @@
 import { useEffect, useState } from "react";
 import OrdersContainer from "./OrdersContainer";
 import { useSession } from "next-auth/react";
-
-interface Order {
-  id: string;
-  name: string;
-  price: number;
-  status: string;
-  date: string;
-  imagePath: string;
-}
+import { Order } from "@prisma/client";
 
 export default function OrderDisplay() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -35,12 +27,10 @@ export default function OrderDisplay() {
         {orders && orders.length > 0 &&
           orders.map((order) => (
             <OrdersContainer
-              key={order.id}
-              productName={order.name}
-              price={order.price}
-              orderStatus={order.status}
-              orderDate={order.date}
-              imagePath={order.imagePath}
+              productName={order.id}
+              price={order.pricePaid}
+              orderStatus={order.Status}
+              orderDate={order.createdAt}
             />
           ))}
       </div>
