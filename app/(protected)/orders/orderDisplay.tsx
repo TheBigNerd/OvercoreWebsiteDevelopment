@@ -24,15 +24,18 @@ export default function OrderDisplay() {
         <p className="text-center text-lg text-gray-600 mb-6">
           View the details of your recent purchases.
         </p>
-        {orders && orders.length > 0 &&
-          orders.map((order) => (
-            <OrdersContainer
-              productName={order.id}
-              price={order.pricePaid}
-              orderStatus={order.Status}
-              orderDate={order.createdAt}
-            />
-          ))}
+        <div className="flex flex-col space-y-4">
+          {orders && orders.length > 0 &&
+            orders.map((order) => (
+              <OrdersContainer
+                key={order.id}
+                productName={order.id}
+                price={order.pricePaid}
+                orderStatus={order.Status}
+                orderDate={order.createdAt}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );
