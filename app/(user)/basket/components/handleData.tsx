@@ -65,7 +65,19 @@ export function removeCookieCustom(id: string): void {
     }
 }
 
-export function createFakeCookie(): void {
-    setCookie(null, 'productBasket', `${"%7b%22d299c24d-05ab-4da7-bcc7-071744a4032a%22%7D"},${"%7b%22d299c24d-05ab-4da7-bcc7-071744a4032a%22%7D"}`, {});
+export function updateCookie(newValue: string): void {
+    const cookies = parseCookies();
+    const cookieValue = cookies['productBasket'];
+
+    let updatedValue;
+    if (cookieValue) {
+        updatedValue = `${cookieValue},${newValue}`;
+    } else {
+        updatedValue = newValue;
+    }
+
+    setCookie(null, 'productBasket', updatedValue, {
+        path: '/',
+    });
 }
 
