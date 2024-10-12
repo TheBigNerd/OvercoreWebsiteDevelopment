@@ -45,3 +45,28 @@ export async function DELETE(req: NextRequest) {
 
     return new Response("Product removed from favourites", { status: 200 });
 }
+
+export async function POST(req: NextRequest) {
+    const searchParams = req.nextUrl.searchParams;
+    const userId = searchParams.get("userId");
+    const productId = searchParams.get("productId");
+
+    if (!userId || !productId) {
+        return new Response("Missing userId and productId", { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+        return new Response("User not found", { status: 404 });
+    }
+
+    const updatedFavourites = [...user.favourites, productId];
+
+    await prisma.user.update({
+        where: { id: userId },
+        data: { favourites: updatedFavourites },
+    });
+
+    return new Response("Product added to User favourites", { status: 200 });
+
+}

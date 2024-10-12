@@ -1,3 +1,4 @@
+
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
@@ -7,6 +8,8 @@ import Shelf from "./_components/shelf";
 
 import { formatCurrency } from "@/lib/formatters";
 import { Button } from "@/components/ui/button";
+import AddToBasketButton from "@/app/(user)/pre-builds/_components/addToBasketButton"
+import AddToFavourites from "../../_components/addToFavourites";
 
 export async function generateStaticParams() {
 	const products = await prisma.product.findMany();
@@ -37,8 +40,8 @@ export default async function ProductPage({ params } : { params: { id: string }}
 						</ul>
 						<h2 className="text-2xl font-bold text-muted-foreground">{formatCurrency(product.priceInPence / 100)}</h2>
 						<div className="flex gap-4 mt-2">
-							<Button className="flex-3">Add to Basket</Button>
-							<Button className="flex-1">Favourite</Button>
+							<AddToBasketButton productId={product.id} />
+							<AddToFavourites productId={product.id} />
 						</div>
 					</div>
 					<Description description={ product.description }/>

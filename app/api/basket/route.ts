@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
+import { getSession } from "next-auth/react";
 
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
@@ -66,4 +67,34 @@ export async function DELETE(req: NextRequest) {
     });
 
     return new Response("Product removed from basket", { status: 200 });
+}
+
+export async function POST(req: NextRequest) {
+    const searchParams = req.nextUrl.searchParams;
+    const userId = searchParams.get("userId");
+    const productId = searchParams.get("productId");
+
+    if (!userId || !productId) {
+        return new Response("Missing userId and productId", { status: 400 });
+    }
+
+    if (!userId) {
+        //we need to add the product to cookies
+        return new Response("Cookies added to basket", { status: 200 });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+        return new Response("User not found", { status: 404 });
+    }
+
+    const updatedBasket = [...user.basket, productId];
+
+    await prisma.user.update({
+        where: { id: userId },
+        data: { basket: updatedBasket },
+    });
+
+    return new Response("Product added to User basket", { status: 200 });
+
 }
