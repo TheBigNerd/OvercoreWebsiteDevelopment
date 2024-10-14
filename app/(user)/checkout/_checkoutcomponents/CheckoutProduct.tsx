@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { formatCurrency } from "@/lib/formatters"
 import Image from "next/image"
 
@@ -11,23 +9,31 @@ interface CheckoutProductProps {
 
 const CheckoutProduct = ({ name, priceInPence, imagePath }: CheckoutProductProps) => {
     return (
-      <Card className="flex flex-row items-center p-4 space-x-4 max-w-md">
-        <div className="flex-shrink-0">
-          <Image src={imagePath} alt="Product Image" width={150} height={150} className="rounded-lg object-cover" />
-        </div>
-        <div className="flex flex-col space-y-2">
-          <CardHeader>
-            <CardTitle className="text-2xl font-semibold">{name}</CardTitle>
-            <CardDescription className="text-xl font-bold">{formatCurrency(priceInPence / 100)}</CardDescription>
-          </CardHeader>
-          <CardContent className="text-sm text-gray-500">
-            <p>CPU: Intel Core i9 14900K</p>
-            <p>Graphics Card: NVIDIA RTX 4090</p>
-            <p>Storage: 2TB SSD</p>
-            <p>RAM: 64GB DDR5 5600MT/s</p>
-          </CardContent>
-        </div>
-      </Card>
+      <>
+      <div className="carousel-item shadow-xl rounded-2xl px-8 py-4 cursor-pointer w-[300px] h-[420px] relative hover:bg-slate-200 transition-colors duration-200">
+          <div className="absolute top-2 right-2">
+          </div>
+          <Image 
+              src={imagePath} 
+              alt="Product Image" 
+              width={200} 
+              height={200} 
+              className="rounded-lg aspect-square object-contain"
+          />
+          <h1 className="product-name font-bold text-1xl pt-4 max-w-[15rem]">
+              {name}
+          </h1>
+          <div className='py-2'>
+              <div className='py-2'>
+                  <p className="product-price">
+                      {formatCurrency(priceInPence / 100)}
+                  </p>
+              </div>
+              <div className=''>
+              </div>
+          </div>
+      </div>
+  </>
     );
   };
   

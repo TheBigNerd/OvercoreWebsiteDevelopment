@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import BasketObject from "../components/basketObject";
 import type { Product } from "@prisma/client";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const BasketContainer = () => {
   const [basketProducts, setBasketProducts] = useState<Product[]>([]);
@@ -12,6 +13,7 @@ const BasketContainer = () => {
   const [shippingPrice, setShippingPrice] = useState<number>(0);
   const [Subtotal, setSubTotal] = useState<number>(0);
   const userId = data?.user.id;
+  const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -36,6 +38,11 @@ const BasketContainer = () => {
       setTotalPrice(0);
     }
   }, [basketProducts]);
+
+  const handleProceedToCheckout = () => {
+    localStorage.setItem("basket", JSON.stringify(basketProducts));
+    router.push("/checkout");
+  }
 
   return (
     <>
@@ -84,7 +91,7 @@ const BasketContainer = () => {
           <p>Total:</p>
           <p>£{totalPrice}</p>
         </div>
-        <button className="mt-6 w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-400">
+        <button className="mt-6 w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-400" onClick={handleProceedToCheckout}>
           Proceed to Checkout
         </button>
       </div>

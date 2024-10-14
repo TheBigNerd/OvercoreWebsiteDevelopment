@@ -18,7 +18,7 @@ export default function OrderDisplay() {
   }, [status, userId]);
 
   return (
-    <div className="mx-auto py-12">
+    <div className="min-h-screen flex flex-col justify-start py-16">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">Your Orders</h1>
         <p className="text-center text-lg text-gray-600 mb-6">
@@ -37,6 +37,14 @@ export default function OrderDisplay() {
             ))}
         </div>
       </div>
+      <div className="text-center py-4">
+              <p className="text-gray-700 text-lg">
+                Need help with your orders?
+              </p>
+              <button className="mt-4 bg-gray-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-gray-700">
+                Contact Support
+              </button>
+        </div>
     </div>
   );
 }
