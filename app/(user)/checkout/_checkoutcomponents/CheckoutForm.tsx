@@ -10,43 +10,45 @@ import { FormEvent, useState } from "react"
 import type { Product } from "@prisma/client";
 
 type CheckoutFormProps = {
-    product: Product
+    products: Product[]
     clientSecret: string
 }
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string)
 
-export function CheckoutForm({ product, clientSecret}: CheckoutFormProps){
-    return(
-    <div className="max-w-5xl w-full mx-auto space-y-8">
-        <div className="flex gap-4 items-center">
-            <div className="py-8">
-            <CheckoutProduct name={product.name} priceInPence={product.priceInPence} imagePath={product.imagePath[1]}/>
-            </div>
-        </div>
-     <Elements options={{ clientSecret }} stripe={stripePromise}>
-        <Form priceInPence={product.priceInPence}/>
-    </Elements>
-    </div>
-    )
+export function CheckoutForm({ products, clientSecret }: CheckoutFormProps) {
+	return (
+		products.map((product) => {
+			return (
+				<div key={product.name} className="max-w-5xl w-full mx-auto space-y-8">
+					<div className="flex gap-4 items-center">
+						<div className="py-8">
+							<CheckoutProduct name={ product.name } priceInPence={ product.priceInPence } imagePath={ product.imagePath[0] }/>
+						</div>
+					</div>
+					<Elements options={ { clientSecret } } stripe={ stripePromise }>
+						<Form priceInPence={ product.priceInPence }/>
+					</Elements>
+				</div>
+			)
+		})
+	)
 }
 
-
-
-function Form({ priceInPence}: { priceInPence: number }) {
-    const stripe = useStripe()
-    const elements = useElements()
-    const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string>()
-
-    function handleSubmit(e: FormEvent){
-        e.preventDefault()
-    
-        if (stripe == null || elements == null) return
-    
-        setIsLoading(true)
-
-        stripe.confirmPayment({ elements, confirmParams: {
+function Form({ priceInPence }: { priceInPence: number }) {
+	const stripe = useStripe()
+	const elements = useElements()
+	const [isLoading, setIsLoading] = useState(false)
+	const [errorMessage, setErrorMessage] = useState<string>()
+	
+	function handleSubmit(e: FormEvent) {
+		e.preventDefault()
+		
+		if (stripe == null || elements == null) return
+		
+		setIsLoading(true)
+		
+		stripe.confirmPayment({ elements, confirmParams: {
             return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/stripe/purchase-success`
         },
      }).then(({ error }) => {

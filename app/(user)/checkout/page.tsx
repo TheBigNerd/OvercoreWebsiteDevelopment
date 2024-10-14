@@ -1,9 +1,7 @@
 "use client"
-
 import Stripe from "stripe"
 import { CheckoutForm } from "./_checkoutcomponents/CheckoutForm"
 import { useEffect, useState } from "react"
-
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
@@ -37,6 +35,6 @@ export default function CheckoutPage() {
         return <div>Loading...</div>
     }
     return (
-        <CheckoutForm product={product!} clientSecret={clientSecret} />
+        <CheckoutForm products={product!} clientSecret={clientSecret} />
     )
 }
