@@ -4,5 +4,18 @@ const nextConfig = {
         AUTH_SECRET: process.env.AUTH_SECRET,
     }
 };
-
-export default nextConfig;
+// next.config.mjs
+export default {
+    async rewrites() {
+      return [
+        {
+          source: '/sitemap.xml',
+          destination: '/_next/static/sitemap.xml',
+        },
+        {
+          source: '/robots.txt',
+          destination: '/_next/static/robots.txt',
+        },
+      ];
+    },
+  };

@@ -1,6 +1,5 @@
 import React from 'react';
 import BasketContainer from "./components/basketContainer"
-import { createFakeCookie } from './components/handleData';
 
 const Basket = () => {
 	return (

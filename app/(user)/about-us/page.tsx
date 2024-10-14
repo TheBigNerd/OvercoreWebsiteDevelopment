@@ -36,7 +36,7 @@ const AboutUs = () => {
           <div className="p-8 md:w-3/4 lg:w-1/2 text-center">
             <h2 className="text-2xl font-bold mb-4">Our Story</h2>
             <p className="text-lg text-gray-700">
-              We’re a group of four university friends who bonded over our passion for technology while studying computer science. After years of honing our skills and staying up-to-date with the latest innovations, we decided to turn our shared expertise into something more. Combining our technical knowledge with a commitment to quality, we’ve built a company that delivers reliable, high-performance computers tailored to our customers' needs. Based in the UK, we’re proud to help people stay connected and achieve their tech goals.
+            We&apos;re a group of four university friends who bonded over our passion for technology while studying computer science. After years of honing our skills and staying up-to-date with the latest innovations, we decided to turn our shared expertise into something more. Combining our technical knowledge with a commitment to quality, we&apos;ve built a company that delivers reliable, high-performance computers tailored to our customers&apos; needs. Based in the UK, we&apos;re proud to help people stay connected and achieve their tech goals.
             </p>
           </div>
         </div>
