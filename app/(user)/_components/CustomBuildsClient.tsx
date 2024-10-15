@@ -25,6 +25,7 @@ const CustomPartsDisplay: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: string }>({});
   const [selectedSocketType, setSelectedSocketType] = useState<string | null>(null);
+  const [selectedMotherboardSocketType, setSelectedMotherboardSocketType] = useState<string | null>(null);
   
   const handleExportToCookie = (selected: any) => {
     nookies.set(null, 'customProduct', JSON.stringify(selected), {
@@ -40,18 +41,22 @@ const CustomPartsDisplay: React.FC = () => {
       try {
         const data = await fetchCustomParts();
         setCustomParts(data);
-
+  
         // Log the 'customProduct' cookie data
         const cookies = parseCookies();
         const cookieValue = cookies['customProduct'];
         if (cookieValue) {
-          setSelectedItems(JSON.parse(cookieValue));
-        }
-        // Set the first item as selected if available
-        if (!cookieValue && data.cases && typeof selectedItems['cases'] !== 'string') {
+          const selectedItemsFromCookie = JSON.parse(cookieValue);
+          setSelectedItems(selectedItemsFromCookie);
+          const parsedCookieValue = JSON.parse(cookieValue);
+          const socketType = data.cpus.find((cpu: { id: string; }) => cpu.id === parsedCookieValue.cpus)?.socketType;
+          if (socketType) {
+            setSelectedSocketType(socketType);
+          }
+        } else if (data.cases && typeof selectedItems['cases'] !== 'string') {
           const firstItem = data.cases[0];
           setSelectedItems({ ["cases"]: firstItem.id });
-          }
+        }
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -63,6 +68,8 @@ const CustomPartsDisplay: React.FC = () => {
   
     loadCustomParts();
   }, []);
+
+
 
 
   const [price, setPrice] = useState(0);
@@ -79,15 +86,29 @@ const CustomPartsDisplay: React.FC = () => {
 			  return restPrices;
 		  });
 	  } else {
-		  if (type === 'cpus' && socketType) setSelectedSocketType(socketType);
-		  
-		  currentSelected[type] = id;
-		  
-		  setItemPrices((prevItemPrices) => ({
-			  ...prevItemPrices,
-			  [type]: itemPrice,
-		  }));
-	  }
+      if (type === 'cpus' && socketType) {
+        setSelectedSocketType(socketType);
+
+        // Check if the selected CPU's socket type matches the motherboard's socket type
+        const selectedMotherboard = customParts && customParts['motherboards']?.find((item: { id: string; }) => item.id === currentSelected['motherboards']);
+        if (selectedMotherboard && selectedMotherboard.socketType !== socketType) {
+          // Remove the motherboard from selected items if the socket types don't match
+          delete currentSelected['motherboards'];
+
+          setItemPrices((prevItemPrices) => {
+            const { motherboards: __, ...restPrices } = prevItemPrices;
+            return restPrices;
+          });
+        }
+      }
+
+      currentSelected[type] = id;
+
+      setItemPrices((prevItemPrices) => ({
+        ...prevItemPrices,
+        [type]: itemPrice,
+      }));
+    }
 	  setSelectedItems(currentSelected);
 	  handleExportToCookie(currentSelected);
   };
