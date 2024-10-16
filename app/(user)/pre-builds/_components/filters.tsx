@@ -14,7 +14,8 @@ const fieldsToFilter = [
 	{ nice: 'Storage Type', dbName: 'storageType' },
 	{ nice: 'Total Storage', dbName: 'totalStorage' },
 	{ nice: 'Connectivity', dbName: 'connectivity' },
-	{ nice: 'Cooling Method', dbName: 'coolingMethod' }
+	{ nice: 'Cooling Method', dbName: 'coolingMethod' },
+	{ nice: 'Overcore Brand', dbName: 'brand' }
 ];
 
 export default function FiltersMenu({ products } : { products: Product[] }) {
