@@ -46,7 +46,7 @@ export default function HeroBanner() {
   };
 
   return (
-    <div className="relative w-[85%] h-[55vh] mx-auto overflow-hidden py-5">
+    <div className="relative w-full h-[55vh] mx-auto overflow-hidden py-5 md:w-[85%]">
       {images.map((image, index) => (
         <div
           key={index}
@@ -54,12 +54,11 @@ export default function HeroBanner() {
             index === currentIndex ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* Add an overlay to dim the background */}
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <img src={image.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
           {index === currentIndex && (
-            <div className="absolute left-10 bottom-10 text-white max-w-xs lg:max-w-lg">
-              <h2 className="font-extrabold text-3xl lg:text-5xl uppercase drop-shadow-xl mb-4">{image.text}</h2>
+            <div className="absolute left-4 bottom-4 text-white max-w-xs md:left-10 md:bottom-10 md:max-w-lg">
+              <h2 className="font-extrabold text-xl md:text-3xl lg:text-5xl uppercase drop-shadow-xl mb-4">{image.text}</h2>
               <Link href={image.link}>
                 <span className="inline-block bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
                   Learn More
@@ -70,13 +69,13 @@ export default function HeroBanner() {
         </div>
       ))}
       <button
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 p-2 rounded-full"
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 p-2 rounded-full md:left-4"
         onClick={prevImage}
       >
         <ChevronLeft className="text-white w-6 h-6" />
       </button>
       <button
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 p-2 rounded-full"
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 p-2 rounded-full md:right-4"
         onClick={nextImage}
       >
         <ChevronRight className="text-white w-6 h-6" />

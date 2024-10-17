@@ -14,29 +14,26 @@ const Navbar = () => {
   return (
     <>
       <div className="w-full bg-gray-900 sticky top-0 z-50">
-        {/* First Row */}
         <div className="container mx-auto px-4 py-2.5">
           <div className="flex justify-between items-center">
-            {/* Logo with hover effect */}
             <div className="transform transition-transform duration-300 hover:scale-110">
               <Logo />
             </div>
-            <ul className="flex space-x-32 text-white">
+            <ul className="hidden md:flex space-x-4 lg:space-x-32 text-white">
               <HoverableLink href="/pre-builds">Gaming Systems</HoverableLink>
               <HoverableLink href="/custom-builds">Build Your Own</HoverableLink>
               <HoverableLink href="/contact">Contact Us</HoverableLink>
             </ul>
             <div className="flex items-center space-x-6">
-              {/* Separator Line */}
-              <div className="w-px h-6 bg-white mx-4"></div>
+              <div className="w-px h-6 bg-white mx-4 hidden md:block"></div>
               <div className="flex items-center space-x-1 text-white group">
                 <HoverableLink href="/favourites" icon={<Favourites />}>
-                    <span>Favourites</span>
+                  <span>Favourites</span>
                 </HoverableLink>
               </div>
               <div className="flex items-center space-x-1 text-white">
-                <HoverableLink href="/basket" icon={<Basket/>}>
-                    <span>Basket</span>
+                <HoverableLink href="/basket" icon={<Basket />}>
+                  <span>Basket</span>
                 </HoverableLink>
               </div>
               <div className="flex items-center space-x-1 text-white group">
@@ -47,13 +44,38 @@ const Navbar = () => {
                 </LoginButton>
               </div>
             </div>
+            <button
+              className="md:hidden text-white"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              ☰
+            </button>
           </div>
         </div>
-        {/* Second Row with light grey background */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-gray-900">
+            <ul className="flex flex-col space-y-4 p-4 text-white">
+              <HoverableLink href="/pre-builds">Gaming Systems</HoverableLink>
+              <HoverableLink href="/custom-builds">Build Your Own</HoverableLink>
+              <HoverableLink href="/contact">Contact Us</HoverableLink>
+              <HoverableLink href="/favourites" icon={<Favourites />}>
+                <span>Favourites</span>
+              </HoverableLink>
+              <HoverableLink href="/basket" icon={<Basket />}>
+                <span>Basket</span>
+              </HoverableLink>
+              <LoginButton asChild>
+                <Button className="hover:scale-110 transform transition-transform duration-300">
+                  Sign In
+                </Button>
+              </LoginButton>
+            </ul>
+          </div>
+        )}
       </div>
       <div className="w-full bg-gray-300 py-2">
         <div className="container mx-auto px-4">
-          <ul className="flex justify-between text-gray-800">
+          <ul className="flex flex-wrap justify-between text-gray-800">
             <HoverableLink href="/link1" underlineColor="gray-800">Link 1</HoverableLink>
             <HoverableLink href="/link2" underlineColor="gray-800">Link 2</HoverableLink>
             <HoverableLink href="/link3" underlineColor="gray-800">Link 3</HoverableLink>
