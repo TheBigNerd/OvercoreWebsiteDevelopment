@@ -95,7 +95,9 @@ export async function deleteProduct(id: string){
   const product = await prisma.product.delete({ where: { id }})
   if (product == null) return notFound()
 
-  fs.unlink(`public${product.imagePath}`)
+  fs.unlink(`public${product.imagePath[0]}`)
+  fs.unlink(`public${product.imagePath[1]}`)
+  fs.unlink(`public${product.imagePath[2]}`)
 }
 
 const editSchema = addSchema.extend({

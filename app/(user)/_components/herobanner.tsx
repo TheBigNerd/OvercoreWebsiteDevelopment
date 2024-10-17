@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const images = [
   { src: '/images/orange_desktop.jpg', text: 'Browse our New Builds', link: '/pre-builds' },
-  { src: '/images/image2.jpg', text: 'Overcore for business', link: '/link2' },
+  { src: '/images/image2.jpg', text: 'Overcore for business', link: '/business' },
   { src: '/images/image3.jpg', text: 'Give us a custom request', link: '/contact' },
 ];
 
@@ -56,16 +56,15 @@ export default function HeroBanner() {
         >
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <img src={image.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
-          {index === currentIndex && (
-            <div className="absolute left-4 bottom-4 text-white max-w-xs md:left-10 md:bottom-10 md:max-w-lg">
-              <h2 className="font-extrabold text-xl md:text-3xl lg:text-5xl uppercase drop-shadow-xl mb-4">{image.text}</h2>
-              <Link href={image.link}>
-                <span className="inline-block bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
-                  Learn More
-                </span>
-              </Link>
-            </div>
-          )}
+          <div className="absolute left-4 bottom-4 text-white max-w-xs md:left-10 md:bottom-10 md:max-w-lg">
+            <h2 className="font-extrabold text-xl md:text-3xl lg:text-5xl uppercase drop-shadow-xl mb-4">{image.text}</h2>
+            <p>{image.link}</p>
+            <Link href={image.link}>
+              <span className="inline-block bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                Learn More
+              </span>
+            </Link>
+          </div>
         </div>
       ))}
       <button

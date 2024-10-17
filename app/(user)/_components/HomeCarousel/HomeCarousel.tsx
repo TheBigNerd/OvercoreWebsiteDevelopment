@@ -4,7 +4,6 @@ import fetchFeaturedProducts from './fetchFeaturedProducts';
 
 export default async function HomeCarousel() {
 	let featuredProducts = await fetchFeaturedProducts();
-	featuredProducts = Array.from({ length: 20 }, () => featuredProducts).flat();
 	return (
 		<Carousel className='relative mx-auto' style={{ width: '70%' }}>
 			<CarouselContent className="flex pb-4 mx-16">
