@@ -26,7 +26,7 @@ const BasketContainer = () => {
   useEffect(() => {
     if (basketProducts.length > 0) {
       const subTotal = basketProducts.reduce((acc, product) => acc + product.priceInPence / 100, 0);
-      const shippingPrice = basketProducts.length * 20;
+      const shippingPrice = basketProducts.length * 24.99;
       const totalPrice = subTotal + shippingPrice;
 
       setSubTotal(subTotal);

@@ -7,10 +7,10 @@ import Link from "next/link";
 
 const ProductCard = ({ product }: { product: Product }) => {
     return (
-	    <Card className="flex flex-row p-4 items-center h-fit">
+	    <Card className="flex flex-row p-4 items-center h-90">
 		    { product.imagePath.length > 0 && (
 			    <div className="flex-1">
-				    <Image src={product.imagePath[0]} alt="Product Image" width={300} height={300}
+				    <Image src={product.imagePath[0]} alt="Product Image" width={400} height={400}
 				           className="rounded-lg aspect-square object-contain"/>
 			    </div>
 		    )}
