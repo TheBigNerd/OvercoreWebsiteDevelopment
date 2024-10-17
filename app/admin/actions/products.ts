@@ -100,7 +100,7 @@ export async function deleteProduct(id: string){
 
 const editSchema = addSchema.extend({
   file:fileSchema.optional(),
-  image: imageSchema.optional()
+  image:imageSchema.optional()
 })
 
 export async function updateProduct(id: string, prevState: unknown, formData: FormData) {
