@@ -103,61 +103,84 @@ const editSchema = addSchema.extend({
   image: imageSchema.optional()
 })
 
-export async function updateProduct( id: string, prevState: unknown, formData: FormData){
+export async function updateProduct(id: string, prevState: unknown, formData: FormData) {
   const formEntries = Object.fromEntries(formData.entries());
+  console.log('Form entries:', formEntries);
 
   const validationEntries = {
     ...formEntries,
     isFeatured: formEntries.isFeatured === "on"
   };
+  console.log('Validation entries:', validationEntries);
 
-  const result = editSchema.safeParse(validationEntries)
+  const result = editSchema.safeParse(validationEntries);
+  console.log('Validation result:', result);
+
   if (result.success === false) {
-    return result.error.formErrors.fieldErrors
+    console.error('Validation errors:', result.error.formErrors.fieldErrors);
+    return result.error.formErrors.fieldErrors;
   }
 
-  const data = result.data
-  const product = await prisma.product.findUnique({ where: { id } })
+  const data = result.data;
+  console.log('Validated data:', data);
 
-  if (product == null) return notFound()
+  const product = await prisma.product.findUnique({ where: { id } });
+  console.log('Existing product:', product);
 
-  let imagePath = product.imagePath
-  if (data.image != null && data.image.size > 0){
-    await fs.unlink(`public${product.imagePath}`)
-    imagePath.push(`/products/${crypto.randomUUID()}-${data.image.name}`)
-    await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
-  }
-  if (data.image2 != null && data.image2.size > 0){
-    await fs.unlink(`public${product.imagePath}`)
-    imagePath.push(`/products/${crypto.randomUUID()}-${data.image2.name}`)
-    await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image2.arrayBuffer()))
-  }
-  if (data.image3 != null && data.image3.size > 0){
-    await fs.unlink(`public${product.imagePath}`)
-    imagePath.push(`/products/${crypto.randomUUID()}-${data.image3.name}`)
-    await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image3.arrayBuffer()))
+  if (product == null) {
+    console.error('Product not found');
+    return notFound();
   }
 
-  await prisma.product.update({ where: {id}, data: {
-    name: data.name,
-    description: data.description,
-    priceInPence: data.priceInPence,
-    imagePath,
-    brand: data.brand,
-    isFeatured: data.isFeatured,
-    cpuModel: data.cpuModel,
-    gpuModel: data.gpuModel,
-    colour: data.colour,
-    caseSize: data.caseSize,
-    memorySize: data.memorySize,
-    memoryType: data.memoryType,
-    storageType: data.storageType,
-    totalStorage: data.totalStorage,
-    connectivity: data.connectivity,
-    coolingMethod: data.coolingMethod,
-    tagline: data.tagline
-  }})
+  let imagePath = product.imagePath;
+  console.log('Initial image path:', imagePath);
 
-  redirect("/admin/products")
+  if (data.image != null && data.image.size > 0) {
+    console.log('Updating image 1');
+    await fs.unlink(`public${product.imagePath[0]}`);
+    imagePath[0] = (`/products/${crypto.randomUUID()}-${data.image.name}`);
+    await fs.writeFile(`public${imagePath[0]}`, Buffer.from(await data.image.arrayBuffer()));
+  }
 
+  if (data.image2 != null && data.image2.size > 0) {
+    console.log('Updating image 2');
+    await fs.unlink(`public${product.imagePath[1]}`);
+    imagePath[1] = (`/products/${crypto.randomUUID()}-${data.image2.name}`);
+    await fs.writeFile(`public${imagePath[1]}`, Buffer.from(await data.image2.arrayBuffer()));
+  }
+
+  if (data.image3 != null && data.image3.size > 0) {
+    console.log('Updating image 3');
+    await fs.unlink(`public${product.imagePath[2]}`);
+    imagePath[2] = (`/products/${crypto.randomUUID()}-${data.image3.name}`);
+    await fs.writeFile(`public${imagePath[2]}`, Buffer.from(await data.image3.arrayBuffer()));
+  }
+
+  console.log('Final image path:', imagePath);
+
+  await prisma.product.update({
+    where: { id },
+    data: {
+      name: data.name,
+      description: data.description,
+      priceInPence: data.priceInPence,
+      imagePath,
+      brand: data.brand,
+      isFeatured: data.isFeatured,
+      cpuModel: data.cpuModel,
+      gpuModel: data.gpuModel,
+      colour: data.colour,
+      caseSize: data.caseSize,
+      memorySize: data.memorySize,
+      memoryType: data.memoryType,
+      storageType: data.storageType,
+      totalStorage: data.totalStorage,
+      connectivity: data.connectivity,
+      coolingMethod: data.coolingMethod,
+      tagline: data.tagline
+    }
+  });
+
+  console.log('Product updated successfully');
+  redirect("/admin/products");
 }
