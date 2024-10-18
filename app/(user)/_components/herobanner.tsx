@@ -51,14 +51,13 @@ export default function HeroBanner() {
         <div
           key={index}
           className={`absolute inset-0 transition-opacity duration-500 ${
-            index === currentIndex ? "opacity-100" : "opacity-0"
+            index === currentIndex ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
         >
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <img src={image.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
           <div className="absolute left-4 bottom-4 text-white max-w-xs md:left-10 md:bottom-10 md:max-w-lg">
             <h2 className="font-extrabold text-xl md:text-3xl lg:text-5xl uppercase drop-shadow-xl mb-4">{image.text}</h2>
-            <p>{image.link}</p>
             <Link href={image.link}>
               <span className="inline-block bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
                 Learn More
