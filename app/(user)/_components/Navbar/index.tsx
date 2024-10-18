@@ -7,9 +7,15 @@ import { Basket } from "./button";
 import { Favourites } from "./button";
 import { Button } from "@/components/ui/button";
 import { LoginButton } from "@/app/(protected)/_components/auth/login-button";
+import Image from 'next/image';
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSession();
+  const userId = session?.user.id;
+
+
 
   return (
     <>
@@ -39,7 +45,7 @@ const Navbar = () => {
               <div className="flex items-center space-x-1 text-white group">
                 <LoginButton asChild>
                   <Button className="hover:scale-110 transform transition-transform duration-300">
-                    Sign In
+                  {userId ? "Account" : "Sign In"}
                   </Button>
                 </LoginButton>
               </div>
@@ -76,11 +82,22 @@ const Navbar = () => {
       <div className="w-full bg-gray-300 py-2">
         <div className="container mx-auto px-4">
           <ul className="flex flex-wrap justify-between text-gray-800">
-            <HoverableLink href="/link1" underlineColor="gray-800">Link 1</HoverableLink>
-            <HoverableLink href="/link2" underlineColor="gray-800">Link 2</HoverableLink>
-            <HoverableLink href="/link3" underlineColor="gray-800">Link 3</HoverableLink>
-            <HoverableLink href="/link4" underlineColor="gray-800">Link 4</HoverableLink>
-            <HoverableLink href="/link5" underlineColor="gray-800">Link 5</HoverableLink>
+          <li className="flex items-center space-x-2">
+              <Image src="/navbar/delivery.png" alt="Delivery" width={25} height={40} />
+              <p className="font-bold">2 Week Delivery</p>
+            </li>
+            <li className="flex items-center space-x-2">
+              <Image src="/navbar/customerservice.png" alt="CustomerService" width={25} height={40} />
+              <p className="font-bold">24/7 Customer Support</p>
+            </li>
+            <li className="flex items-center space-x-2">
+              <Image src="/navbar/business.png" alt="Business" width={25} height={40} />
+              <p className="font-bold">Business Aligned</p>
+            </li>
+            <li className="flex items-center space-x-2">
+              <Image src="/navbar/pngegg.png" alt="CustomHardware" width={25} height={10} />
+              <p className="font-bold">Custom Hardware</p>
+            </li>
           </ul>
         </div>
       </div>

@@ -17,7 +17,7 @@ const CategoryCardContainer: React.FC = () => {
 
   const cards = [
     { src: '/images/OvercoreLite.jpeg', alt: 'Overcore Lite', text: 'Overcore Lite', link: '/pre-builds?brand=Overcore%20Lite' },
-    { src: '/images/BrowseWorkstation.jpeg', alt: 'Browse Workstation', text: 'Browse Workstation', link: '/pre-builds?brand=OC%20Workstations' },
+    { src: '/images/BrowseWorkstation.jpg', alt: 'Browse Workstation', text: 'Browse Workstation', link: '/pre-builds?brand=OC%20Workstations' },
     { src: '/images/OvercoreBusiness.jpeg', alt: 'Overcore Business', text: 'Overcore Business', link: '/business' },
   ];
 

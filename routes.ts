@@ -13,7 +13,8 @@ export const publicRoutes = [
     "/contact",
     "/error",
     "/favourites",
-    "/basket"
+    "/basket",
+    "/business"
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings

@@ -15,6 +15,7 @@ import { useCurrentUser } from "@/hooks/use-current-user"
 import { FormError } from "../_components/auth/form-error"
 import { FormSuccess } from "../_components/auth/form-success"
 import { Switch } from "@/components/ui/switch"
+import { LogoutButton } from "../_components/auth/logout-button"
 
 const SettingsPage = () => {
     const user = useCurrentUser()
@@ -144,6 +145,13 @@ const SettingsPage = () => {
                         </Button>
                     </form>
                 </Form>
+                <div className="py-2">
+                <LogoutButton>
+                    <Button>
+                        Logout
+                    </Button>
+                </LogoutButton>
+                </div>
             </CardContent>
         </Card>
     )
