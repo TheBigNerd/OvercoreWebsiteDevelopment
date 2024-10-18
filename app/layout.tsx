@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"],
  });
 
 export const metadata = {
-  title: "Overcore",
+  title: "Overcore | Custom PC Builder | Pre-built PCs | Business Solutions",
   description: "Overcore is a PC builder offering pre-built and custom PC configurations.",
 };
 
