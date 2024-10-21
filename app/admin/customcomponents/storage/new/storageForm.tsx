@@ -53,8 +53,8 @@ export function StorageForm({ storage }: {storage?: storage | null}) {
             {error?.connection && <div className="text-destructive">{error.connection}</div>}
         </div>
         <div className="space-y-2">
-            <Label htmlFor="formFactor">Description</Label>
-            <Textarea id="formFactor" name="formFactor" required defaultValue={storage?.description || ""} />
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" required defaultValue={storage?.description || ""} />
             {error?.description && <div className="text-destructive">{error.description}</div>}
         </div>
         <SubmitButton />
