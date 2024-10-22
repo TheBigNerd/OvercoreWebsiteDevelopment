@@ -4,9 +4,8 @@ import fs from "fs/promises";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 
-
-const fileSchema = z.instanceof(File, {message : "Required"})
-const imageSchema = fileSchema.refine(file => file.size === 0 || file.type.startsWith("image/"))
+const fileSchema = z.instanceof(File, { message: "Required" });
+const imageSchema = fileSchema.refine(file => file.size === 0 || file.type.startsWith("image/"));
 
 const addSchema = z.object({
   name: z.string().min(1),
@@ -28,59 +27,72 @@ const addSchema = z.object({
   connectivity: z.string().min(1),
   coolingMethod: z.string().min(1),
   tagline: z.string().min(1)
-})
+});
 
-export async function addProduct(prevState: unknown, formData: FormData){
+export async function addProduct(prevState: unknown, formData: FormData) {
+  console.log('addProduct called');
   const formEntries = Object.fromEntries(formData.entries());
+  console.log('Form entries:', formEntries);
 
   const validationEntries = {
     ...formEntries,
     isFeatured: formEntries.isFeatured === "on"
   };
-  
-  console.log('Form data entries:', Object.fromEntries(formData.entries()));
-  const result = addSchema.safeParse(validationEntries)
-  console.log('Parsing result:', result);
-  console.log(result)
+  console.log('Validation entries:', validationEntries);
+
+  const result = addSchema.safeParse(validationEntries);
+  console.log('Validation result:', result);
+
   if (result.success === false) {
-    console.error('Validation failed:', result.error.formErrors.fieldErrors);
-    return result.error.formErrors.fieldErrors
+    console.error('Validation errors:', result.error.formErrors.fieldErrors);
+    return result.error.formErrors.fieldErrors;
   }
 
-  const data = result.data
+  const data = result.data;
+  console.log('Validated data:', data);
 
-  await fs.mkdir("public/products", {recursive: true })
-  let imagePath: string[] = []
-  imagePath.push(`/products/${crypto.randomUUID()}-${data.image.name}`)
-  imagePath.push(`/products/${crypto.randomUUID()}-${data.image2.name}`)
-  imagePath.push(`/products/${crypto.randomUUID()}-${data.image3.name}`)
-  await fs.writeFile(`public${imagePath[0]}`, Buffer.from(await data.image.arrayBuffer()))
-  await fs.writeFile(`public${imagePath[1]}`, Buffer.from(await data.image2.arrayBuffer()))
-  await fs.writeFile(`public${imagePath[2]}`, Buffer.from(await data.image3.arrayBuffer()))
-  
-  await prisma.product.create({ data: {
-    isAvailable: false,
-    name: data.name,
-    description: data.description,
-    priceInPence: data.priceInPence,
-    imagePath,
-    brand: data.brand,
-    isFeatured: data.isFeatured,
-    cpuModel: data.cpuModel,
-    gpuModel: data.gpuModel,
-    colour: data.colour,
-    caseSize: data.caseSize,
-    memorySize: data.memorySize,
-    memoryType: data.memoryType,
-    storageType: data.storageType,
-    totalStorage: data.totalStorage,
-    connectivity: data.connectivity,
-    coolingMethod: data.coolingMethod,
-    tagline: data.tagline
-  }})
+  try {
+    await fs.mkdir("public/products", { recursive: true });
+    let imagePath: string[] = [];
+    imagePath.push(`/products/${crypto.randomUUID()}-${data.image.name}`);
+    imagePath.push(`/products/${crypto.randomUUID()}-${data.image2.name}`);
+    imagePath.push(`/products/${crypto.randomUUID()}-${data.image3.name}`);
+    console.log('Image paths:', imagePath);
 
-  redirect("/admin/products")
+    await fs.writeFile(`public${imagePath[0]}`, Buffer.from(await data.image.arrayBuffer()));
+    await fs.writeFile(`public${imagePath[1]}`, Buffer.from(await data.image2.arrayBuffer()));
+    await fs.writeFile(`public${imagePath[2]}`, Buffer.from(await data.image3.arrayBuffer()));
+    console.log('Images saved successfully');
 
+    await prisma.product.create({
+      data: {
+        isAvailable: false,
+        name: data.name,
+        description: data.description,
+        priceInPence: data.priceInPence,
+        imagePath,
+        brand: data.brand,
+        isFeatured: data.isFeatured,
+        cpuModel: data.cpuModel,
+        gpuModel: data.gpuModel,
+        colour: data.colour,
+        caseSize: data.caseSize,
+        memorySize: data.memorySize,
+        memoryType: data.memoryType,
+        storageType: data.storageType,
+        totalStorage: data.totalStorage,
+        connectivity: data.connectivity,
+        coolingMethod: data.coolingMethod,
+        tagline: data.tagline
+      }
+    });
+    console.log('Product created successfully');
+
+    redirect("/admin/products");
+  } catch (error) {
+    console.error('Error during product creation:', error);
+    throw error;
+  }
 }
 
 export async function toggleProductAvailability(
@@ -102,10 +114,13 @@ export async function deleteProduct(id: string){
 
 const editSchema = addSchema.extend({
   file:fileSchema.optional(),
-  image:imageSchema.optional()
+  image:imageSchema.optional(),
+  image2:imageSchema.optional(),
+  image3:imageSchema.optional()
 })
 
 export async function updateProduct(id: string, prevState: unknown, formData: FormData) {
+  console.log('updateProduct called with id:', id);
   const formEntries = Object.fromEntries(formData.entries());
   console.log('Form entries:', formEntries);
 

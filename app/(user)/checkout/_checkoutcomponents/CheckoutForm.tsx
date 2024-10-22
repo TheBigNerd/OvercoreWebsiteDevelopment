@@ -22,7 +22,7 @@ export function CheckoutForm({ products, clientSecret }: CheckoutFormProps) {
 
     return (
         <div className="max-w-5xl w-full mx-auto space-y-8 py-12">
-            <Elements options={{ clientSecret }} stripe={stripePromise}>
+            <Elements options={{ clientSecret, appearance: { theme: 'stripe' },  }} stripe={stripePromise}>
                 <Form priceInPence={totalPriceInPence} />
             </Elements>
         </div>
