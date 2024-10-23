@@ -23,9 +23,8 @@ const CustomPartsDisplay: React.FC = () => {
   const [customParts, setCustomParts] = useState<CustomParts | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedItems, setSelectedItems] = useState<{ [key: string]: string }>({});
+  const [selectedItems, setSelectedItems] = useState<{ [key: string]: string | string[]}>({});
   const [selectedSocketType, setSelectedSocketType] = useState<string | null>(null);
-  const [selectedMotherboardSocketType, setSelectedMotherboardSocketType] = useState<string | null>(null);
   
   const handleExportToCookie = (selected: any) => {
     nookies.set(null, 'customProduct', JSON.stringify(selected), {
@@ -79,7 +78,17 @@ const CustomPartsDisplay: React.FC = () => {
   const handleItemClick = (type: string, id: string, itemPrice: number, socketType?: string) => {
 	  const currentSelected = selectedItems;
 	  if (currentSelected[type] === id) {
-		  delete currentSelected[type];
+      if (type !== 'storage'){
+		  delete currentSelected[type];}
+      else if (type === 'storage' && currentSelected['storage'].includes(id)) {
+        const updatedStorage = Array.isArray(currentSelected['storage'])
+          ? currentSelected['storage'].filter((storageId: string) => storageId !== id)
+          : [];
+          console.log(updatedStorage);
+        currentSelected['storage'] = updatedStorage;
+      }
+
+
 		  
 		  setItemPrices((prevItemPrices) => {
 			  const { [type]: __, ...restPrices } = prevItemPrices;
@@ -100,6 +109,23 @@ const CustomPartsDisplay: React.FC = () => {
             return restPrices;
           });
         }
+      }
+
+      if (type === 'storage') {
+        const updatedStorage = Array.isArray(currentSelected['storage'])
+          ? [...currentSelected[type], id]
+          : [id];
+        setItemPrices((prevItemPrices) => ({
+          ...prevItemPrices,
+          [type]: itemPrice,
+        }));
+        console.log(updatedStorage);
+        setSelectedItems((prevSelectedItems) => ({
+          ...prevSelectedItems,
+          storage: updatedStorage,
+        }));
+        handleExportToCookie(currentSelected);
+        return currentSelected;
       }
 
       currentSelected[type] = id;
