@@ -77,7 +77,7 @@ const CustomPartsDisplay: React.FC = () => {
   
   const handleItemClick = (type: string, id: string, itemPrice: number, socketType?: string) => {
 	  const currentSelected = selectedItems;
-	  if (currentSelected[type] === id) {
+      if (Array.isArray(currentSelected[type]) ? currentSelected[type].includes(id) : currentSelected[type] === id) {
       if (type !== 'storage'){
 		  delete currentSelected[type];}
       else if (type === 'storage' && currentSelected['storage'].includes(id)) {
@@ -86,6 +86,14 @@ const CustomPartsDisplay: React.FC = () => {
           : [];
           console.log(updatedStorage);
         currentSelected['storage'] = updatedStorage;
+        const totalStoragePrice = updatedStorage.reduce((acc: number, storageId: string) => {
+          const storageItem = customParts?.storage?.find(item => item.id === storageId);
+          return acc + (storageItem ? storageItem.priceInPence : 0);
+        }, 0);
+        setItemPrices((prevItemPrices) => ({
+          ...prevItemPrices,
+          totalStoragePrice,
+        }));
       }
 
 
@@ -115,15 +123,19 @@ const CustomPartsDisplay: React.FC = () => {
         const updatedStorage = Array.isArray(currentSelected['storage'])
           ? [...currentSelected[type], id]
           : [id];
+        currentSelected[type] = updatedStorage;
+        const totalStoragePrice = updatedStorage.reduce((acc: number, storageId: string) => {
+          const storageItem = customParts?.storage?.find(item => item.id === storageId);
+          return acc + (storageItem ? storageItem.priceInPence : 0);
+        }, 0);
+        
+
         setItemPrices((prevItemPrices) => ({
           ...prevItemPrices,
-          [type]: itemPrice,
+          totalStoragePrice,
         }));
         console.log(updatedStorage);
-        setSelectedItems((prevSelectedItems) => ({
-          ...prevSelectedItems,
-          storage: updatedStorage,
-        }));
+        setSelectedItems(currentSelected);
         handleExportToCookie(currentSelected);
         return currentSelected;
       }
@@ -173,8 +185,12 @@ const CustomPartsDisplay: React.FC = () => {
     calculateTotalWattage();
   }, [selectedItems, customParts]);
   
-  const isSelected = (type: string, id: string) => selectedItems[type] === id;
-  
+  const isSelected = (type: string, id: string) => {
+    if (type === 'storage' && Array.isArray(selectedItems[type])) {
+      return selectedItems[type].includes(id);
+    }
+    return selectedItems[type] === id;
+  };  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   
@@ -206,7 +222,14 @@ const CustomPartsDisplay: React.FC = () => {
 
     const renderItemsList = (type: string, selectedItem: any) => {
       if (selectedItem) {
-        return <li key={selectedItem.id}>{selectedItem}</li>;
+        if (type === 'storage' && Array.isArray(selectedItems[type])) {
+          return selectedItems[type].map((storageId: string) => {
+        const storageItem = customParts?.storage?.find(item => item.id === storageId);
+        return storageItem ? <li key={storageItem.id}>{storageItem.title}</li> : null;
+          });
+        } else {
+          return <li key={selectedItem.id}>{selectedItem}</li>;
+        }
       } else {
         return <li style={{ color: 'red' }}>Not selected</li>;
       }
