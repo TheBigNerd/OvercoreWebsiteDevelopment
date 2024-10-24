@@ -8,7 +8,7 @@ interface receiptProps{
     price: number
 }
 
-export default function Product({ imageSrc, name, description, price }: receiptProps) {
+export default function ProductReceipt({ imageSrc, name, description, price }: receiptProps) {
     return (
         <div className="flex items-start mb-6">
             {/* Product Image */}
@@ -20,7 +20,7 @@ export default function Product({ imageSrc, name, description, price }: receiptP
             <div className="w-2/3 ml-4">
                 <p className="text-lg font-semibold">{name}</p>
                 <p className="text-gray-500">{description}</p>
-                <p className="mt-2 text-gray-900 font-bold">${price}</p>
+                <p className="mt-2 text-gray-900 font-bold">£{price}</p>
             </div>
         </div>
     );

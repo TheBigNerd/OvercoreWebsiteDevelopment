@@ -17,7 +17,7 @@ type CheckoutFormProps = {
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string)
 
 export function CheckoutForm({ products, clientSecret }: CheckoutFormProps) {
-    const additionalPriceInPence = 2499;
+    const additionalPriceInPence = 0;
     const totalPriceInPence = products.reduce((total, product) => total + product.priceInPence + additionalPriceInPence, 0);
 
     return (
@@ -53,7 +53,11 @@ function Form({ priceInPence }: { priceInPence: number }) {
             } else {
                 setErrorMessage("An unknown error occurred")
             }
-        }).finally(() => setIsLoading(false))
+        }).then(() => {
+
+        }).finally(() => {
+            setIsLoading(false)
+        })
     }
 
     return (

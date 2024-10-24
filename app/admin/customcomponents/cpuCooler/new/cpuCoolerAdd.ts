@@ -11,7 +11,7 @@ const imageSchema = fileSchema.refine(file => file.size === 0 || file.type.start
 const cpuCoolerSchema = z.object({
     title: z.string().min(1),
     image: imageSchema.refine(file => file.size > 0, "Required"),
-    priceInPence: z.coerce.number().int().min(1),
+    priceInPence: z.coerce.number().int().min(0),
     wattage: z.coerce.number().int().min(1),
     AM4: z.boolean(),
     AM5: z.boolean(),

@@ -1,4 +1,4 @@
-import { NavBar } from "./_components/navbar";
+import { NavBar } from "./_components/adminnavbar";
 import Navbar from "../(user)/_components/Navbar";
 
 interface ProtectedLayoutProps {
