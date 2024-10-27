@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 
-export default function successColumn() {
+export default function SuccessColumn() {
     const { data } = useSession();
     const userId = data?.user.id;
     const [parsedProducts, setParsedProducts] = useState<OrderProduct[]>([]);
@@ -35,7 +35,7 @@ export default function successColumn() {
                 console.error('Error:', error);
             });
         }
-    }, []);
+    },[]);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-10">

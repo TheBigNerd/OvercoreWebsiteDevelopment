@@ -17,7 +17,7 @@ type CheckoutFormProps = {
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string)
 
 export function CheckoutForm({ products, clientSecret }: CheckoutFormProps) {
-    const additionalPriceInPence = 0;
+    const additionalPriceInPence = 24.99;
     const totalPriceInPence = products.reduce((total, product) => total + product.priceInPence + additionalPriceInPence, 0);
 
     return (
