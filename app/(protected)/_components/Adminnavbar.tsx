@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 export const AdminNavBar = () => {
     const pathname = usePathname()
     return (
-        <nav className="bg-slate-200 flex justify-between items-center p-4 rounded-xl w-[600px] shadow-sm">
+        <nav className="bg-slate-200 flex justify-between items-center p-4 rounded-xl w-[600px] shadow-sm mt-24 z-20"> {/* Added margin-top and z-index */}
             <div className="flex gap-x-2 ">
                 <Button asChild variant={pathname === "/settings" ? "default" : "outline"}>
                     <Link href="/settings">

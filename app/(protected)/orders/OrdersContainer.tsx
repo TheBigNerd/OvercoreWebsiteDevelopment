@@ -21,9 +21,6 @@ const OrdersContainer: React.FC<OrdersContainerProps> = ({ productName, price, o
         <p className="text-gray-500 mt-1">Order Date: {formattedDate}</p>
         <p className="text-gray-500 mt-1">Total Price: {formatCurrency(price / 100)}</p>
         <div className="mt-3 flex justify-between">
-          <button className="bg-gray-500 text-white px-3 py-2 rounded hover:bg-gray-700">
-            More Information
-          </button>
         </div>
       </div>
     </div>

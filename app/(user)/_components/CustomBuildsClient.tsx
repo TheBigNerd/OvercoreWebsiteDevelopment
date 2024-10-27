@@ -23,9 +23,8 @@ const CustomPartsDisplay: React.FC = () => {
   const [customParts, setCustomParts] = useState<CustomParts | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedItems, setSelectedItems] = useState<{ [key: string]: string }>({});
+  const [selectedItems, setSelectedItems] = useState<{ [key: string]: string | string[]}>({});
   const [selectedSocketType, setSelectedSocketType] = useState<string | null>(null);
-  const [selectedMotherboardSocketType, setSelectedMotherboardSocketType] = useState<string | null>(null);
   
   const handleExportToCookie = (selected: any) => {
     nookies.set(null, 'customProduct', JSON.stringify(selected), {
@@ -78,8 +77,26 @@ const CustomPartsDisplay: React.FC = () => {
   
   const handleItemClick = (type: string, id: string, itemPrice: number, socketType?: string) => {
 	  const currentSelected = selectedItems;
-	  if (currentSelected[type] === id) {
-		  delete currentSelected[type];
+      if (Array.isArray(currentSelected[type]) ? currentSelected[type].includes(id) : currentSelected[type] === id) {
+      if (type !== 'storage'){
+		  delete currentSelected[type];}
+      else if (type === 'storage' && currentSelected['storage'].includes(id)) {
+        const updatedStorage = Array.isArray(currentSelected['storage'])
+          ? currentSelected['storage'].filter((storageId: string) => storageId !== id)
+          : [];
+          console.log(updatedStorage);
+        currentSelected['storage'] = updatedStorage;
+        const totalStoragePrice = updatedStorage.reduce((acc: number, storageId: string) => {
+          const storageItem = customParts?.storage?.find(item => item.id === storageId);
+          return acc + (storageItem ? storageItem.priceInPence : 0);
+        }, 0);
+        setItemPrices((prevItemPrices) => ({
+          ...prevItemPrices,
+          totalStoragePrice,
+        }));
+      }
+
+
 		  
 		  setItemPrices((prevItemPrices) => {
 			  const { [type]: __, ...restPrices } = prevItemPrices;
@@ -100,6 +117,27 @@ const CustomPartsDisplay: React.FC = () => {
             return restPrices;
           });
         }
+      }
+
+      if (type === 'storage') {
+        const updatedStorage = Array.isArray(currentSelected['storage'])
+          ? [...currentSelected[type], id]
+          : [id];
+        currentSelected[type] = updatedStorage;
+        const totalStoragePrice = updatedStorage.reduce((acc: number, storageId: string) => {
+          const storageItem = customParts?.storage?.find(item => item.id === storageId);
+          return acc + (storageItem ? storageItem.priceInPence : 0);
+        }, 0);
+        
+
+        setItemPrices((prevItemPrices) => ({
+          ...prevItemPrices,
+          totalStoragePrice,
+        }));
+        console.log(updatedStorage);
+        setSelectedItems(currentSelected);
+        handleExportToCookie(currentSelected);
+        return currentSelected;
       }
 
       currentSelected[type] = id;
@@ -147,8 +185,12 @@ const CustomPartsDisplay: React.FC = () => {
     calculateTotalWattage();
   }, [selectedItems, customParts]);
   
-  const isSelected = (type: string, id: string) => selectedItems[type] === id;
-  
+  const isSelected = (type: string, id: string) => {
+    if (type === 'storage' && Array.isArray(selectedItems[type])) {
+      return selectedItems[type].includes(id);
+    }
+    return selectedItems[type] === id;
+  };  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   
@@ -180,7 +222,14 @@ const CustomPartsDisplay: React.FC = () => {
 
     const renderItemsList = (type: string, selectedItem: any) => {
       if (selectedItem) {
-        return <li key={selectedItem.id}>{selectedItem}</li>;
+        if (type === 'storage' && Array.isArray(selectedItems[type])) {
+          return selectedItems[type].map((storageId: string) => {
+        const storageItem = customParts?.storage?.find(item => item.id === storageId);
+        return storageItem ? <li key={storageItem.id}>{storageItem.title}</li> : null;
+          });
+        } else {
+          return <li key={selectedItem.id}>{selectedItem}</li>;
+        }
       } else {
         return <li style={{ color: 'red' }}>Not selected</li>;
       }

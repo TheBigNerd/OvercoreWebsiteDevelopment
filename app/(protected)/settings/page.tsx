@@ -1,6 +1,6 @@
 "use client"
 
-import {Card,CardContent,CardHeader} from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { settings } from "../_components/auth/actions/settings"
 import { useTransition, useState } from "react"
@@ -9,7 +9,7 @@ import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SettingsSchema } from "@/schemas"
-import {Form,FormControl,FormDescription,FormField,FormItem,FormLabel,FormMessage} from "@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useCurrentUser } from "@/hooks/use-current-user"
 import { FormError } from "../_components/auth/form-error"
@@ -33,23 +33,24 @@ const SettingsPage = () => {
             email: user?.email || undefined,
             isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
         }
-
     })
+
     const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
         startTransition(() => {
             settings(values)
-            .then((data) => {
-                if (data.error) {
-                    setError(data.error)
-                }
-                if (data.success) {
-                    update()
-                    setSuccess(data.success)
-                }
-        })
-        .catch(() => setError("Something went wrong!"))
+                .then((data) => {
+                    if (data.error) {
+                        setError(data.error)
+                    }
+                    if (data.success) {
+                        update()
+                        setSuccess(data.success)
+                    }
+                })
+                .catch(() => setError("Something went wrong!"))
         })
     }
+
     return (
         <>
         <Card className="bg-slate-100 w-[600px]">
@@ -159,4 +160,5 @@ const SettingsPage = () => {
         </>
     )
 }
+
 export default SettingsPage;
