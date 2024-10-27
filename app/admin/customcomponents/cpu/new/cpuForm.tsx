@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { addCpu, updateCPU } from "./cpuAdd";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { CPU } from "@prisma/client";
 import Image from "next/image";
 
 export function CpuForm({ cpu }: {cpu?: CPU | null}) {
-    const [error, action] = useFormState(cpu == null ? addCpu : updateCPU.bind(null, cpu.id), {});
+    const [error, action] = useActionState(cpu == null ? addCpu : updateCPU.bind(null, cpu.id), {});
     const [priceInPence, setPriceInPence] = useState<number | undefined>(cpu?.priceInPence)
     const [Wattage, setWattage] = useState<number | undefined>(cpu?.Wattage)
     const [Socket, setSocket] = useState<string | undefined>(cpu?.Socket)

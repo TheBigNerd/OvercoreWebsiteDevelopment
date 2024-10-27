@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-export const NavBar = () => {
+export const AdminNavBar = () => {
     const pathname = usePathname()
     return (
         <nav className="bg-slate-200 flex justify-between items-center p-4 rounded-xl w-[600px] shadow-sm">

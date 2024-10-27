@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { addCase, updateCase } from "./caseAdd";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { Case } from "@prisma/client";
 import Image from "next/image";
 
 export function CaseForm({ Case }: {Case?: Case | null}) {
-    const [error, action] = useFormState(Case == null ? addCase : updateCase.bind(null, Case.id), {});
+    const [error, action] = useActionState(Case == null ? addCase : updateCase.bind(null, Case.id), {});
     const [priceInPence, setPriceInPence] = useState<number | undefined>(Case?.priceInPence)
 
     return <form action={action} className="space-y-8">

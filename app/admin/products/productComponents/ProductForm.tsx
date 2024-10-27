@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { addProduct, updateProduct } from "../../actions/products";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 
 export function ProductForm({ product }: { product?: Product | null }) {
-  const [error, action] = useFormState(product == null ? addProduct : updateProduct.bind(null, product.id), {});
+  const [error, action] = useActionState(product == null ? addProduct : updateProduct.bind(null, product.id), {});
   const [priceInPence, setPriceInPence] = useState<number | undefined>(product?.priceInPence);
 
   return (

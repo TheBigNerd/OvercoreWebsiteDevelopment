@@ -20,11 +20,12 @@ export async function generateStaticParams() {
 	}))
 }
 
-export default async function ProductPage({ params } : { params: { id: string }}) {
-	const product = await getProduct(params.id);
-	if (!product) return notFound();
-	
-	return (
+export default async function ProductPage(props: { params: Promise<{ id: string }>}) {
+    const params = await props.params;
+    const product = await getProduct(params.id);
+    if (!product) return notFound();
+
+    return (
 		<>
 			<main className="flex gap-16 my-8 container">
 				<section className="flex-6">

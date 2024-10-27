@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { addCpuCooler, updateCpuCooler } from "./cpuCoolerAdd";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { cpuCooler } from "@prisma/client";
 import Image from "next/image";
 
 export function CpuCoolerForm({ cpuCooler }: {cpuCooler?: cpuCooler | null}) {
-    const [error, action] = useFormState(cpuCooler == null ? addCpuCooler : updateCpuCooler.bind(null, cpuCooler.id), {});
+    const [error, action] = useActionState(cpuCooler == null ? addCpuCooler : updateCpuCooler.bind(null, cpuCooler.id), {});
     const [priceInPence, setPriceInPence] = useState<number | undefined>(cpuCooler?.priceInPence)
     const [wattage, setwattage] = useState<number | undefined>(cpuCooler?.wattage)
     const [AM4, setAM4] = useState<boolean | undefined>(cpuCooler?.AM4)

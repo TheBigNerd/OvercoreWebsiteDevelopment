@@ -16,6 +16,7 @@ import { FormError } from "../_components/auth/form-error"
 import { FormSuccess } from "../_components/auth/form-success"
 import { Switch } from "@/components/ui/switch"
 import { LogoutButton } from "../_components/auth/logout-button"
+import { AdminNavBar } from "../_components/Adminnavbar"
 
 const SettingsPage = () => {
     const user = useCurrentUser()
@@ -50,6 +51,7 @@ const SettingsPage = () => {
         })
     }
     return (
+        <>
         <Card className="bg-slate-100 w-[600px]">
             <CardHeader>
                 <p className="text-2xl font-semibold text-center">
@@ -154,6 +156,7 @@ const SettingsPage = () => {
                 </div>
             </CardContent>
         </Card>
+        </>
     )
 }
 export default SettingsPage;

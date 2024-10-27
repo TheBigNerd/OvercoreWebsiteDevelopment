@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { addMotherboard, updateMotherboard } from "./motherboardAdd";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { Motherboard } from "@prisma/client";
 import Image from "next/image";
 
 export function MotherboardForm({ motherboard }: {motherboard?: Motherboard | null}) {
-    const [error, action] = useFormState(motherboard == null ? addMotherboard : updateMotherboard.bind(null, motherboard.id), {});
+    const [error, action] = useActionState(motherboard == null ? addMotherboard : updateMotherboard.bind(null, motherboard.id), {});
     const [priceInPence, setPriceInPence] = useState<number | undefined>(motherboard?.priceInPence)
     const [Wattage, setWattage] = useState<number | undefined>(motherboard?.Wattage)
     const [Socket, setSocket] = useState<string | undefined>(motherboard?.Socket)
