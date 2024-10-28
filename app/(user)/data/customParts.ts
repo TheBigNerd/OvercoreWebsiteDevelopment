@@ -131,14 +131,16 @@ export async function getCustomParts(): Promise<CustomParts> {
     description: psuItem.description,
   }));
 
-  const cpuCoolers = (await prisma.cpuCooler.findMany()).map(cpuCoolerItem => ({
-    id: cpuCoolerItem.id,
-    title: cpuCoolerItem.title,
-    image: cpuCoolerItem.imagePath,
-    priceInPence: cpuCoolerItem.priceInPence,
-    wattage: cpuCoolerItem.wattage,
-    description: cpuCoolerItem.description,
-  }));
+  const cpuCoolers = (await prisma.cpuCooler.findMany())
+    .map(cpuCoolerItem => ({
+      id: cpuCoolerItem.id,
+      title: cpuCoolerItem.title,
+      image: cpuCoolerItem.imagePath,
+      priceInPence: cpuCoolerItem.priceInPence,
+      wattage: cpuCoolerItem.wattage,
+      description: cpuCoolerItem.description,
+    }))
+    .sort((a, b) => a.priceInPence - b.priceInPence);
 
   const memory = (await prisma.memory.findMany()).map(memoryItem => ({
     id: memoryItem.id,
