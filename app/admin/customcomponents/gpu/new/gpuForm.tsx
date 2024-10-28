@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useActionState, useState } from "react";
+import { useState } from "react";
 import { addGpu, updateGPU } from "./gpuAdd";
-import { useFormStatus } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { Gpu } from "@prisma/client";
 import Image from "next/image";
 
 export function GpuForm({ gpu }: {gpu?: Gpu | null}) {
-    const [error, action] = useActionState(gpu == null ? addGpu : updateGPU.bind(null, gpu.id), {});
+    const [error, action] = useFormState(gpu == null ? addGpu : updateGPU.bind(null, gpu.id), {});
     const [priceInPence, setPriceInPence] = useState<number | undefined>(gpu?.priceInPence)
     const [Wattage, setWattage] = useState<number | undefined>(gpu?.Wattage)
     const [width, setWidth] = useState<number | undefined>(gpu?.width)

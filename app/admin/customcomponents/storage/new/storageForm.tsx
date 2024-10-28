@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useActionState, useState } from "react";
+import { useState } from "react";
 import { addStorage, updateStorage } from "./storageAdd";
-import { useFormStatus } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { storage } from "@prisma/client";
 import Image from "next/image";
 
 export function StorageForm({ storage }: {storage?: storage | null}) {
-    const [error, action] = useActionState(storage == null ? addStorage : updateStorage.bind(null, storage.id), {});
+    const [error, action] = useFormState(storage == null ? addStorage : updateStorage.bind(null, storage.id), {});
     const [priceInPence, setPriceInPence] = useState<number | undefined>(storage?.priceInPence)
     const [Wattage, setWattage] = useState<number | undefined>(storage?.wattage)
     const [capacity, setCapacity] = useState<number | undefined>(storage?.capacity)

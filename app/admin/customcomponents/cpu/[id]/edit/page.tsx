@@ -2,17 +2,11 @@ import { prisma } from "@/lib/prisma";
 import { CpuForm } from "../../new/cpuForm"; 
 import { PageHeader } from "@/app/admin/adminComponents/PageHeader";
 
-export default async function EditProductPage(
-    props: {
-      params: Promise<{ id: string }>
-    }
-) {
-    const params = await props.params;
-
-    const {
-        id
-    } = params;
-
+export default async function EditProductPage({
+    params: { id },
+}: {
+  params: { id: string }
+}) {
     const CPU = await prisma.cPU.findUnique( { where: { id }})
     return(
         <>

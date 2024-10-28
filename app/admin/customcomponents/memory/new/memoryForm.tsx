@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useActionState, useState } from "react";
+import { useState } from "react";
 import { addMemory, updateMemory } from "./MemoryAdd";
-import { useFormStatus } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { memory } from "@prisma/client";
 import Image from "next/image";
 
 export function MemoryForm({ memory }: {memory?: memory | null}) {
-    const [error, action] = useActionState(memory == null ? addMemory : updateMemory.bind(null, memory.id), {});
+    const [error, action] = useFormState(memory == null ? addMemory : updateMemory.bind(null, memory.id), {});
     const [priceInPence, setPriceInPence] = useState<number | undefined>(memory?.priceInPence)
     const [Wattage, setWattage] = useState<number | undefined>(memory?.Wattage)
     const [numberOfSticks, setNumberOfSticks] = useState<number | undefined>(memory?.numberOfSticks)

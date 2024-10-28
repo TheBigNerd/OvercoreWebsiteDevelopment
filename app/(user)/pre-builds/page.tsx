@@ -3,12 +3,11 @@ import React from "react";
 
 import AllProducts from "./_components/allProducts";
 
-export default async function Prebuilds(props: { searchParams: Promise<any> }) {
-    const searchParams = await props.searchParams;
-    const allProducts = await getProducts({});
-    const filteredProducts = await getProducts(searchParams);
-
-    return (
+export default async function Prebuilds({ searchParams } : { searchParams: any }) {
+	const allProducts = await getProducts({});
+	const filteredProducts = await getProducts(searchParams);
+	
+	return (
 		<main className="my-4">
 			<section className="text-center">
 				<h1 className="text-4xl font-bold">Pre-built Computers</h1>

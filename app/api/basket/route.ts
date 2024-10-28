@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react";
 
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
-	const cookieStore = await cookies();
+	const cookieStore = cookies();
 	
     const userId = searchParams.get("userId")
 	const cookieValues = cookieStore.get("productBasket")?.value;

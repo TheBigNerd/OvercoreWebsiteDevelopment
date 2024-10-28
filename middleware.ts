@@ -42,7 +42,7 @@ export default auth(async (req) => {
         return Response.redirect(new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl))
     }
 
-    if (isAdminRoute && (await role) !== "ADMIN") {
+    if (isAdminRoute && await role !== "ADMIN") {
         return Response.redirect(new URL("/auth/login", nextUrl))
     }
 

@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formatters";
-import { useActionState, useState } from "react";
+import { useState } from "react";
 import { addPSU, updatePSU } from "./psuAdd";
-import { useFormStatus } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { PSU } from "@prisma/client";
 import Image from "next/image";
 
 export function PSUForm({ PSU }: {PSU?: PSU | null}) {
-    const [error, action] = useActionState(PSU == null ? addPSU : updatePSU.bind(null, PSU.id), {});
+    const [error, action] = useFormState(PSU == null ? addPSU : updatePSU.bind(null, PSU.id), {});
     const [priceInPence, setPriceInPence] = useState<number | undefined>(PSU?.priceInPence)
     const [Wattage, setWattage] = useState<number | undefined>(PSU?.wattage)
     const [modular, setModular] = useState<boolean | undefined>(PSU?.modular)
