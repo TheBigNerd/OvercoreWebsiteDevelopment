@@ -18,6 +18,7 @@ export type Motherboard = {
 };
 
 export type CPU = {
+  integratedCooler: boolean;
   id: string;
   title: string;
   image: string;
@@ -109,6 +110,7 @@ export async function getCustomParts(): Promise<CustomParts> {
     wattage: cpuItem.Wattage,
     socketType: cpuItem.Socket,
     description: cpuItem.description,
+    integratedCooler : cpuItem.IntegratedCooler,
   }));
 
   const gpus = (await prisma.gpu.findMany()).map(gpuItem => ({

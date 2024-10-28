@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { fetchCustomParts } from '../data/customPartsService';
-import { CustomParts} from '../data/customParts';
+import { CPU, CustomParts} from '../data/customParts';
 import nookies, { parseCookies } from 'nookies'; 
 
 
@@ -25,6 +25,7 @@ const CustomPartsDisplay: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: string | string[]}>({});
   const [selectedSocketType, setSelectedSocketType] = useState<string | null>(null);
+  const [excludeSpecificCooler, setExcludeSpecificCooler] = useState<boolean>(false);
   
   const handleExportToCookie = (selected: any) => {
     nookies.set(null, 'customProduct', JSON.stringify(selected), {
@@ -34,14 +35,14 @@ const CustomPartsDisplay: React.FC = () => {
   };
 
 
+  const integratedCoolerId = '5bf9e210-3991-4c39-83b3-87b48988928b'; // Replace with the actual cooler ID
+
 
   useEffect(() => {
     async function loadCustomParts() {
       try {
         const data = await fetchCustomParts();
         setCustomParts(data);
-  
-        // Log the 'customProduct' cookie data
         const cookies = parseCookies();
         const cookieValue = cookies['customProduct'];
         if (cookieValue) {
@@ -105,7 +106,16 @@ const CustomPartsDisplay: React.FC = () => {
 	  } else {
       if (type === 'cpus' && socketType) {
         setSelectedSocketType(socketType);
-
+        if (customParts && customParts['cpus']?.find((cpu: CPU) => cpu.id === id && cpu.integratedCooler=== true)) {
+          console.log('Integrated cooler selected');
+          setExcludeSpecificCooler(false);
+          console.log(excludeSpecificCooler);
+        }
+        else {
+          console.log('Integrated cooler not selected');
+          setExcludeSpecificCooler(true);
+          console.log(excludeSpecificCooler);
+        }
         // Check if the selected CPU's socket type matches the motherboard's socket type
         const selectedMotherboard = customParts && customParts['motherboards']?.find((item: { id: string; }) => item.id === currentSelected['motherboards']);
         if (selectedMotherboard && selectedMotherboard.socketType !== socketType) {
@@ -217,8 +227,10 @@ const CustomPartsDisplay: React.FC = () => {
   const filteredMotherboards = selectedSocketType
     ? customParts?.motherboards?.filter(mb => mb.socketType === selectedSocketType)
     : customParts?.motherboards;
-
-    
+    console.log(excludeSpecificCooler);
+    const filteredCpuCoolers = excludeSpecificCooler
+    ? customParts?.cpuCoolers?.filter(cooler => cooler.id !== integratedCoolerId)
+    : customParts?.cpuCoolers;
 
     const renderItemsList = (type: string, selectedItem: any) => {
       if (selectedItem) {
@@ -241,7 +253,7 @@ const CustomPartsDisplay: React.FC = () => {
           <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
           {customParts?.cases && renderPartItems('cases', customParts.cases)}
           {customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
-          {customParts?.cpuCoolers && renderPartItems('cpuCoolers', customParts.cpuCoolers)}
+          {filteredCpuCoolers && renderPartItems('cpuCoolers', filteredCpuCoolers)}
           {customParts?.gpus && renderPartItems('gpus', customParts.gpus)}
           {filteredMotherboards && renderPartItems('motherboards', filteredMotherboards)}
           {customParts?.memory && renderPartItems('memory', customParts.memory)}
