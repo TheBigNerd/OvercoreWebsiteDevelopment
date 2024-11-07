@@ -14,7 +14,9 @@ export const publicRoutes = [
     "/error",
     "/favourites",
     "/basket",
-    "/business"
+    "/business",
+    "/checkout",
+    "/stripe/purchase success"
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings
@@ -43,4 +45,9 @@ export const DEFAULT_LOGIN_REDIRECT = "/settings"
 export const adminRoutes = [
     "/admin",
     "/admin/products",
+]
+
+export const checkoutRoutes = [
+    "/checkout",
+    "/stripe/purchase success"
 ]

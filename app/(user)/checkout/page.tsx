@@ -2,6 +2,7 @@
 import Stripe from "stripe"
 import { CheckoutForm } from "./_checkoutcomponents/CheckoutForm"
 import { useEffect, useState } from "react"
+import nookies from 'nookies';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
@@ -14,6 +15,7 @@ export default function CheckoutPage() {
         if (storedProducts) {
             const parsedProduct = JSON.parse(storedProducts);
             setProduct(parsedProduct);
+            nookies.destroy(null, 'proceedToCheckout', { path: '/' });
             fetch(`/api/checkout`, {
                 method: 'POST',
                 headers: {

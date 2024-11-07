@@ -5,6 +5,7 @@ import BasketObject from "../components/basketObject";
 import type { Product } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import nookies from 'nookies';
 
 const BasketContainer = () => {
   const [basketProducts, setBasketProducts] = useState<Product[]>([]);
@@ -41,6 +42,7 @@ const BasketContainer = () => {
 
   const handleProceedToCheckout = () => {
     localStorage.setItem("basket", JSON.stringify(basketProducts));
+    nookies.set(null, 'proceedToCheckout', 'true', { path: '/' });
     router.push("/checkout");
   }
 

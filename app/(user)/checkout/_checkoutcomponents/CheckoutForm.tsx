@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { formatCurrency } from "@/lib/formatters"
 import { FormEvent, useState } from "react"
 import type { Product } from "@prisma/client";
+import nookies from 'nookies';
 
 type CheckoutFormProps = {
     products: Product[]
@@ -54,7 +55,7 @@ function Form({ priceInPence }: { priceInPence: number }) {
                 setErrorMessage("An unknown error occurred")
             }
         }).then(() => {
-
+            nookies.set(null, 'proceedToPurchaseSuccess', 'true', { path: '/'});
         }).finally(() => {
             setIsLoading(false)
         })

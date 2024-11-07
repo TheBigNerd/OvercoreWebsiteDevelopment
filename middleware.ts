@@ -8,6 +8,7 @@ import {
     publicRoutes
 } from "@/routes"
 import { CurrentRole } from "./lib/auth";
+import { NextResponse } from "next/server";
 
 const { auth } = NextAuth(authConfig)
 
@@ -19,6 +20,8 @@ export default auth(async (req) => {
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
     const isAuthRoute = authRoutes.includes(nextUrl.pathname)
     const isAdminRoute = adminRoutes.includes(nextUrl.pathname)
+    const isCheckoutPage = nextUrl.pathname === '/checkout';
+    const isPurchaseSuccessPage = nextUrl.pathname === '/stripe/purchase-success';
 
     if (isApiAuthRoute) {
         return;
@@ -45,6 +48,22 @@ export default auth(async (req) => {
     if (isAdminRoute && await role !== "ADMIN") {
         return Response.redirect(new URL("/auth/login", nextUrl))
     }
+
+    if (isCheckoutPage) {
+        const proceedToCheckout = req.cookies.get('proceedToCheckout');
+        if (!proceedToCheckout) {
+            return NextResponse.redirect(new URL('/', nextUrl));
+        }
+    }
+
+    if (isPurchaseSuccessPage) {
+        const proceedToPurchaseSuccess = req.cookies.get('proceedToPurchaseSuccess');
+        if (!proceedToPurchaseSuccess) {
+            return NextResponse.redirect(new URL('/', nextUrl));
+        }
+    }
+
+
 
     return;
 })
