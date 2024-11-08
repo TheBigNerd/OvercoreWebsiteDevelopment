@@ -24,7 +24,11 @@ export const publicRoutes = [
     "/pre-builds/view/872a71ed-811d-4fae-9955-ae3d6b366baf",
     "/pre-builds/view/1aaad063-47d7-4aad-8e1f-4da68a984106",    
     "/pre-builds/view/348c1f4d-3703-4bd3-a880-755d86d2c4da",
-    "/pre-builds/view/76d67cd3-8ac9-4bbb-9aa3-4bd9c50950e2"
+    "/pre-builds/view/76d67cd3-8ac9-4bbb-9aa3-4bd9c50950e2",
+    "/pre-builds/view/47110084-8fd8-478b-a526-78e162da4309",
+
+    "/api/basket",
+    
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings

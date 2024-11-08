@@ -13,8 +13,8 @@ export async function GET(req: NextRequest) {
 	const basket = [];
 	
 	// Check user first
-	if (userId) {
-		const user = await prisma.user.findUnique({ where: { id: userId } });
+	if (userId !== "undefined" && userId !== "null") {
+        const user = await prisma.user.findUnique({ where: { id: userId || undefined } });
 		
 		const userProductIds = user?.basket;
 		
@@ -30,6 +30,7 @@ export async function GET(req: NextRequest) {
             where: {
                 id: {
                     in: cookieValues.split(",")
+
                 }
             }
         });
@@ -47,12 +48,12 @@ export async function DELETE(req: NextRequest) {
     const userId = searchParams.get("userId");
     const productId = searchParams.get("productId");
 
-    if (!userId || !productId) {
+    if (!userId && !productId) {
         return new Response("Missing userId or productId", { status: 400 });
     }
 
     // Check if user exists
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+    const user = await prisma.user.findUnique({ where: { id: userId || undefined } });
     if (!user) {
         return new Response("User not found", { status: 404 });
     }
@@ -62,7 +63,7 @@ export async function DELETE(req: NextRequest) {
 
     // Update user's basket in the database
     await prisma.user.update({
-        where: { id: userId },
+        where: { id: userId || undefined },
         data: { basket: updatedBasket },
     });
 
@@ -78,14 +79,23 @@ export async function POST(req: NextRequest) {
         return new Response("Missing userId and productId", { status: 400 });
     }
 
-    if (!userId) {
-        //we need to add the product to cookies
+    if (!userId || userId === "undefined" || userId === "null") {
+
+        const cookiename = "productBasket";
+        const cookie = cookies().get(cookiename);
+        const cookieValue = cookie ? cookie.value : "";
+                const cookieBasket = cookie ? cookie.value.split(",") : [];
+        if (cookieBasket.includes(productId)) {
+            return new Response("Product already in basket", { status: 200 });
+        }
+        const updatedCookie = cookieValue ? `${cookieValue},${productId}` : productId;
+        cookies().set(cookiename, updatedCookie);
         return new Response("Cookies added to basket", { status: 200 });
     }
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-        return new Response("User not found", { status: 404 });
+        return new Response("User not found", { status: 405 });
     }
 
     const updatedBasket = [...user.basket, productId];

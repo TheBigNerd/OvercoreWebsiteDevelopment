@@ -17,11 +17,9 @@ const BasketContainer = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "authenticated") {
       fetch(`/api/basket?userId=${userId}`)
         .then(res => res.json())
         .then(data => setBasketProducts(data.body));
-    }
   }, [status, userId]);
 
   useEffect(() => {
