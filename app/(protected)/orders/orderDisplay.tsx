@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import OrdersContainer from "./OrdersContainer";
 import { useSession } from "next-auth/react";
 import { Order } from "@prisma/client";
+import { AdminNavBar } from "../_components/Adminnavbar";
 
 export default function OrderDisplay() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -18,6 +19,10 @@ export default function OrderDisplay() {
   }, [status, userId]);
 
   return (
+    <>
+    <div className="py-3">
+    <AdminNavBar/>
+    </div>
     <div className="min-h-screen flex flex-col justify-start py-16">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">Your Orders</h1>
@@ -46,5 +51,6 @@ export default function OrderDisplay() {
               </button>
         </div>
     </div>
+    </>
   );
 }
