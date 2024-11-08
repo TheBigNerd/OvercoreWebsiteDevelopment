@@ -53,6 +53,9 @@ const SettingsPage = () => {
 
     return (
         <>
+        <div className="py-4">
+        <AdminNavBar/>
+        </div>
         <Card className="bg-slate-100 w-[600px]">
             <CardHeader>
                 <p className="text-2xl font-semibold text-center">
