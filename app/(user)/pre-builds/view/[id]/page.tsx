@@ -12,6 +12,7 @@ import AddToBasketButton from "@/app/(user)/pre-builds/_components/addToBasketBu
 import AddToFavourites from "../../_components/addToFavourites";
 import Image from "next/image";
 
+/* ? Using generateStaticParams here will ALWAYS cause a 500 error, for some reason.
 export async function generateStaticParams() {
 	const products = await prisma.product.findMany();
 	
@@ -19,6 +20,7 @@ export async function generateStaticParams() {
 		params: { id: product.id }
 	}))
 }
+ */
 
 export default async function ProductPage({ params } : { params: { id: string }}) {
 	const product = await getProduct(params.id);
