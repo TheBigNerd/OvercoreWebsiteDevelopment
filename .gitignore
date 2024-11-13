@@ -16,6 +16,18 @@
 # production
 /build
 /public/products
+/public/case
+/public/cpu
+/public/cpuCooler
+/public/gpu
+/public/memory
+/public/motherboard
+/public/psu
+/public/storage
+robots.txt
+sitemap.xml
+sitemap-0.xml
+next-sitemap.config.js
 
 # misc
 .DS_Store
