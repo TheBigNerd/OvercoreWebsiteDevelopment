@@ -3,11 +3,13 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const AddToFavourites = ({ productId }: { productId: string }) => {
     const [loading , setLoading] = useState(false);
     const { data } = useSession();
     const userId = data?.user.id;
+    const router = useRouter();
 
     const AddToFavourites = async () => {
         setLoading(true)
@@ -18,7 +20,9 @@ const AddToFavourites = ({ productId }: { productId: string }) => {
 			})
 			if (response.ok) {
 				console.log('Product added to favourites');
-			}
+			} else if (response.status === 405) {
+                router.push("/auth/login")
+            }
 		} catch (error) {
 			console.error('Failed to add product to favourites', error);
 		}   finally {

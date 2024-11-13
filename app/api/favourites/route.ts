@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/dist/server/api-utils";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -55,9 +56,13 @@ export async function POST(req: NextRequest) {
         return new Response("Missing userId and productId", { status: 400 });
     }
 
+    if (userId == null || userId == undefined) {
+        return new Response("User ID is required", { status: 400 });
+    }
+
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-        return new Response("User not found", { status: 404 });
+        return new Response("User not found", { status: 405 });
     }
 
     const updatedFavourites = [...user.favourites, productId];
@@ -67,6 +72,6 @@ export async function POST(req: NextRequest) {
         data: { favourites: updatedFavourites },
     });
 
-    return new Response("Product added to User favourites", { status: 200 });
+    return new Response(`Product added to User favourites ${userId}`, { status: 200 });
 
 }

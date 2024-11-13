@@ -12,6 +12,8 @@ import { FormError } from "./form-error"
 import { FormSuccess } from "./form-success"
 import { reset } from "./actions/reset"
 import { useState, useTransition } from "react"
+import Link from "next/link"
+import { House } from "lucide-react"
 
 export const ResetForm = () => {
     const [error, setError] = useState<string | undefined>("")
@@ -38,6 +40,10 @@ export const ResetForm = () => {
     }
 
     return(
+        <div className="relative">
+        <Link href="/" className="absolute top-4 left-3 text-xs">
+        <House />
+        </Link>
         <CardWrapper headerLabel="Forgot your password?" backButtonLabel="Back to Login" backButtonHref="/auth/login">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -64,5 +70,6 @@ export const ResetForm = () => {
                 </form>
             </Form>
         </CardWrapper>
+        </div>
     )
 }

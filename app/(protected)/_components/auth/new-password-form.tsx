@@ -13,6 +13,8 @@ import { FormError } from "./form-error"
 import { FormSuccess } from "./form-success"
 import { newPassword } from "./actions/new-password"
 import { useState, useTransition } from "react"
+import Link from "next/link"
+import { House } from "lucide-react"
 
 export const NewPasswordForm = () => {
     const searchParams = useSearchParams();
@@ -42,6 +44,10 @@ export const NewPasswordForm = () => {
     }
 
     return(
+        <div className="relative">
+        <Link href="/" className="absolute top-4 left-3 text-xs">
+        <House />
+        </Link>
         <CardWrapper headerLabel="Enter a new password" backButtonLabel="Back to Login" backButtonHref="/auth/login">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -68,5 +74,6 @@ export const NewPasswordForm = () => {
                 </form>
             </Form>
         </CardWrapper>
+    </div>
     )
 }

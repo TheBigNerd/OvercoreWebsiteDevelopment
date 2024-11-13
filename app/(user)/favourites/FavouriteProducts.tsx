@@ -9,6 +9,7 @@ export default function FavouriteProducts() {
     const [favouriteProducts, setFavouriteProducts] = useState<Product[]>([]);
     const { data, status } = useSession();
     const userId = data?.user.id;
+    console.log(userId);
     
     useEffect(() => {
         if (status === "authenticated") {
@@ -21,12 +22,20 @@ export default function FavouriteProducts() {
     const removeProduct = (productId: string) => {
         setFavouriteProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
     };
-    
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            { favouriteProducts.map(product => (
-                <FavouritelLook key={ product.id } product={ product } onDelete={ removeProduct }/>
-        )) }
-    </div>
-    )
+
+    if (userId == undefined || userId == null) {
+        return (
+            <div className="text-center text-lg text-gray-600">
+                Please sign in to view your favorite products.
+            </div>
+        );
+    } else {
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                { favouriteProducts.map(product => (
+                    <FavouritelLook key={ product.id } product={ product } onDelete={ removeProduct }/>
+            )) }
+        </div>
+        )
+    }
 }

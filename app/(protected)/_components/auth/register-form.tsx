@@ -12,6 +12,8 @@ import { FormError } from "./form-error"
 import { FormSuccess } from "./form-success"
 import { useState, useTransition } from "react"
 import { register } from "./actions/register"
+import Link from "next/link"
+import { House } from "lucide-react"
 
 export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("")
@@ -39,6 +41,10 @@ export const RegisterForm = () => {
     }
 
     return(
+        <div className="relative">
+        <Link href="/" className="absolute top-4 left-3 text-xs">
+        <House />
+        </Link>
         <CardWrapper headerLabel="Create an account" backButtonLabel="Already have an account? Login" backButtonHref="/auth/login" showSocial>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -104,5 +110,6 @@ export const RegisterForm = () => {
                 </form>
             </Form>
         </CardWrapper>
+    </div>
     )
 }

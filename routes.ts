@@ -28,6 +28,10 @@ export const publicRoutes = [
     "/pre-builds/view/47110084-8fd8-478b-a526-78e162da4309",
 
     "/api/basket",
+    "/api/favourites",
+    "/api/checkout",
+    "/api/orders",
+
     
 ];
 /**

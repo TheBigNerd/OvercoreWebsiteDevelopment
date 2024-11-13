@@ -9,6 +9,8 @@ import { useState } from "react"
 import { newVerification } from "./actions/new-verification"
 import { FormError } from "./form-error"
 import { FormSuccess } from "./form-success"
+import Link from "next/link"
+import { House } from "lucide-react"
 
 export const NewVerificationForm = () => {
     const [error, setError] = useState<string | undefined>()
@@ -34,6 +36,10 @@ export const NewVerificationForm = () => {
         onSubmit()
     }, [onSubmit])
     return(
+        <div className="relative">
+        <Link href="/" className="absolute top-4 left-3 text-xs">
+        <House />
+        </Link>
         <CardWrapper headerLabel="Confirming your email" backButtonLabel="Back to login" backButtonHref="/auth/login">
             <div className="flex items-center w-full justify-center">
                 {!success && !error && (
@@ -43,6 +49,7 @@ export const NewVerificationForm = () => {
                 <FormError message={error} />)}
             </div>
         </CardWrapper>
+        </div>
     )
 
 }

@@ -12,15 +12,6 @@ const Favorites = async () => {
           </p>
           
           <FavouriteProducts />
-
-          <div className="mt-12 text-center">
-            <p className="text-gray-700 text-lg">
-              Ready to purchase your favorite items?
-            </p>
-            <button className="mt-4 bg-slate-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-slate-400">
-              Add to Basket
-            </button>
-          </div>
         </div>
       </div>
     </>
