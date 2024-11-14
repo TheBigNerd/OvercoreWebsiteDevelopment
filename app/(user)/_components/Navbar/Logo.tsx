@@ -24,7 +24,7 @@ const Logo = () => {
 
   const changeNavButton = () => {
     if (window.scrollY >= 400 && window.innerWidth < 768) {
-      setShowButton(true);
+      setShowButton(false);
     } else {
       setShowButton(false);
     }
@@ -52,7 +52,7 @@ const Logo = () => {
           display: showButton ? "block" : "none",
         }}
       >
-        <Button />
+        <button />
       </div>
     </>
   );

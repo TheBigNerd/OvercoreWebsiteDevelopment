@@ -49,13 +49,21 @@ export async function DELETE(req: NextRequest) {
     const productId = searchParams.get("productId");
 
     if (!userId && !productId) {
-        return new Response("Missing userId or productId", { status: 400 });
+        return new Response("Missing userId or productId", { status: 404 });
     }
 
     // Check if user exists
     const user = await prisma.user.findUnique({ where: { id: userId || undefined } });
     if (!user) {
-        return new Response("User not found", { status: 404 });
+        const cookieStore = cookies();
+        const cookieName = "productBasket";
+        const cookie = cookieStore.get(cookieName);
+        if (cookie) {
+            const cookieBasket = cookie.value.split(",");
+            const updatedCookieBasket = cookieBasket.filter((id: string) => id !== productId);
+            cookieStore.set(cookieName, updatedCookieBasket.join(","));
+        }
+        return new Response("User not found deleted from cookie store", { status: 400 });
     }
 
     // Remove product from user's basket

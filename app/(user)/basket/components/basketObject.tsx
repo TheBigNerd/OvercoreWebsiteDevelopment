@@ -43,6 +43,9 @@ const BasketObject = ({ id, productName, priceInPence, imagePath, brand, cpuMode
                 console.log('Product removed from basket');
                 removeCookieId(id);
                 refreshBasket();
+            } else if (response.status === 400) {
+                refreshBasket();
+                console.error('Failed to delete product from basket', 'Missing userId or productId');
             }
         } catch (error) {
             console.error('Failed to delete product from basket', error);
