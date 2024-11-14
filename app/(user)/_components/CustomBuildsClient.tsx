@@ -3,21 +3,34 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { fetchCustomParts } from '../data/customPartsService';
-import { CPU, CustomParts} from '../data/customParts';
-import nookies, { parseCookies } from 'nookies'; 
+import { CPU, CustomParts } from '../data/customParts';
+import nookies, { parseCookies } from 'nookies';
+import { Tooltip } from 'react-tooltip';
+import { BadgeInfo } from 'lucide-react';
 
-
-const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }> = ({ item, isSelected, onClick }) => (
-  <div
-  className={`part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${isSelected ? 'border-blue-500' : ''} w-72 h- flex flex-col justify-between`}
-    onClick={onClick}
-  >
-    <img src={item.image} alt={item.title} className="w-32 h-32 object-cover mb-4 rounded"/>
-    <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-    <h3 className="text-black">{item.description}</h3>
-    <p className="text-gray-400 mb-1">Price: £{(item.priceInPence / 100).toFixed(2)}</p>
-  </div>
-);
+const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }> = ({ item, isSelected, onClick }) => {
+  return (
+    <div
+      className={`part-item border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${isSelected ? 'border-blue-500' : ''} w-72 h- flex flex-col justify-between relative`}
+      onClick={onClick}
+    >
+      <img src={item.image} alt={item.title} className="w-32 h-32 object-cover mb-4 rounded"/>
+      <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+      <div className="absolute top-2 right-2">
+        <span data-tooltip-id={`tooltip-${item.id}`} data-tooltip-content={item.description} className="text-gray-900 cursor-pointer">
+          <BadgeInfo />
+        </span>
+        <Tooltip
+          id={`tooltip-${item.id}`}
+          place="bottom"
+          className="max-w-xs break-words bg-opacity-90 z-50"
+          style={{ backgroundColor: 'black', color: 'white' }}
+        />
+      </div>
+      <p className="text-gray-400 mb-1">Price: £{(item.priceInPence / 100).toFixed(2)}</p>
+    </div>
+  );
+};
 
 const CustomPartsDisplay: React.FC = () => {
   const [customParts, setCustomParts] = useState<CustomParts | null>(null);

@@ -73,7 +73,7 @@ export async function updatePSU(id: string, prevState: unknown, formData: FormDa
 
     const validationEntries = {
         ...formEntries,
-        IntegratedGraphics: formEntries.IntegratedGraphics === "on",
+        modular: formEntries.modular === "on",
     };
 
     const result = editPSUSchema.safeParse(validationEntries)
@@ -104,5 +104,5 @@ export async function updatePSU(id: string, prevState: unknown, formData: FormDa
         description: data.description
     }})
 
-    redirect("/admin/customcomponents/cpu")
+    redirect("/admin/customcomponents/psu")
 }
