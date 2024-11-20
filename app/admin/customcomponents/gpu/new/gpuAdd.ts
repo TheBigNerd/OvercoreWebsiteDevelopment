@@ -78,7 +78,7 @@ export async function updateGPU(id: string, prevState: unknown, formData: FormDa
     }
 
     const data = result.data
-    const gpu = await prisma.cPU.findUnique({where: {id}});
+    const gpu = await prisma.gpu.findUnique({where: {id}});
 
     if (gpu == null) {
         return notFound()
