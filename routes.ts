@@ -2,6 +2,9 @@
  * An Array of routes accessible to the public, these do not require authentication
  * @type {string[]}
  */
+export const checkout = [
+    "/checkout",
+]
 export const publicRoutes = [
     "/",
     "/auth/new-verification",
@@ -31,8 +34,6 @@ export const publicRoutes = [
     "/api/favourites",
     "/api/checkout",
     "/api/orders",
-
-    
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings

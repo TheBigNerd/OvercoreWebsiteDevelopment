@@ -39,9 +39,11 @@ const BasketContainer = () => {
   }, [basketProducts]);
 
   const handleProceedToCheckout = () => {
-    localStorage.setItem("basket", JSON.stringify(basketProducts));
-    nookies.set(null, 'proceedToCheckout', 'true', { path: '/' });
-    router.push("/checkout");
+    if (basketProducts.length > 0) {
+      localStorage.setItem("basket", JSON.stringify(basketProducts));
+      nookies.set(null, 'proceedToCheckout', 'true', { path: '/' });
+      router.push("/checkout");
+    }
   }
 
   return (

@@ -9,6 +9,7 @@ import { formatCurrency } from "@/lib/formatters"
 import { FormEvent, useState } from "react"
 import type { Product } from "@prisma/client";
 import nookies from 'nookies';
+import { useSession } from "next-auth/react"
 
 type CheckoutFormProps = {
     products: Product[]
@@ -18,6 +19,8 @@ type CheckoutFormProps = {
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string)
 
 export function CheckoutForm({ products, clientSecret }: CheckoutFormProps) {
+    const {data, status} = useSession();
+    const userId = data?.user.id;
     const additionalPriceInPence = 2499;
     const totalPriceInPence = products.reduce((total, product) => total + product.priceInPence + additionalPriceInPence, 0);
     console.log(totalPriceInPence)

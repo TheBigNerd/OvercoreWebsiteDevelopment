@@ -34,6 +34,19 @@ export default auth(async (req) => {
         return;
     }
 
+    if (isCheckoutPage) {
+        if (!isLoggedIn) {
+            let callbackUrl = nextUrl.pathname;
+            if (nextUrl.search) {
+                callbackUrl += nextUrl.search;
+            }
+    
+            const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+    
+            return Response.redirect(new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl))
+        }
+    }
+
     if (!isLoggedIn && !isPublicRoute) {
         let callbackUrl = nextUrl.pathname;
         if (nextUrl.search) {
