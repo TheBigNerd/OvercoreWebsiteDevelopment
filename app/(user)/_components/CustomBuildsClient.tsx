@@ -206,7 +206,7 @@ const CustomPartsDisplay: React.FC = () => {
     };
 
     calculateTotalWattage();
-  }, [selectedItems, customParts]);
+  }, [selectedItems, customParts, price]);
   
   const isSelected = (type: string, id: string) => {
     if (type === 'storage' && Array.isArray(selectedItems[type])) {
