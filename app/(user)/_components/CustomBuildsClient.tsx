@@ -92,7 +92,7 @@ const CustomPartsDisplay: React.FC = () => {
   const handleItemClick = (type: string, id: string, itemPrice: number, socketType?: string) => {
 	  const currentSelected = selectedItems;
       if (Array.isArray(currentSelected[type]) ? currentSelected[type].includes(id) : currentSelected[type] === id) {
-      if (type !== 'storage'){
+      if (type !== 'storage' && type !== 'cpus') {
 		  delete currentSelected[type];}
       else if (type === 'storage' && currentSelected['storage'].includes(id)) {
         const updatedStorage = Array.isArray(currentSelected['storage'])
@@ -108,6 +108,10 @@ const CustomPartsDisplay: React.FC = () => {
           ...prevItemPrices,
           totalStoragePrice,
         }));
+      }
+      else if (type === 'cpus' && currentSelected['cpus'] === id) {
+        delete currentSelected['cpus'];
+        setSelectedSocketType(null);
       }
 
 
@@ -237,10 +241,11 @@ const CustomPartsDisplay: React.FC = () => {
   };
 
 
-  const filteredMotherboards = selectedSocketType
-    ? customParts?.motherboards?.filter(mb => mb.socketType === selectedSocketType)
-    : customParts?.motherboards;
-    console.log(excludeSpecificCooler);
+  const filteredMotherboards = customParts?.motherboards?.filter(mb => 
+    selectedSocketType ? mb.socketType === selectedSocketType : true
+);
+
+    console.log(selectedSocketType);
     const filteredCpuCoolers = excludeSpecificCooler
     ? customParts?.cpuCoolers?.filter(cooler => cooler.id !== integratedCoolerId)
     : customParts?.cpuCoolers;
