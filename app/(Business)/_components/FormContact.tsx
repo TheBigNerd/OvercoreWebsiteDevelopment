@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useState } from 'react';
-import { addContactForm } from '../contact/addContactForm';
+import { addContactForm } from '../b2b/ContactUs/addContactForm';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -24,39 +24,9 @@ const FormContact: React.FC = () => {
 
   return (
     <div>
-      {/* Hero Banner Section */}
-      <div className="relative w-full h-64">
-        <img
-          src="/images/ContactBG.jpeg"
-          alt="Background"
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <h1 className="text-4xl text-white font-bold">Contact Us</h1>
-        </div>
-      </div>
-
-      {/* Contact Section */}
-      <div className="container mx-auto py-12 px-4 flex flex-wrap justify-between">
-        {/* Support Information and Live Chat Section */}
-        <div className="w-full md:w-1/3 mb-8 px-5">
-          <h2 className="text-2xl font-bold mb-4">Support Information</h2>
-          <p>Hours of Support: 24 Hours (Response within 8 hours)</p>
-          <p>Phone: (+44) 7552 776284</p>
-          <p>Email: farhan@overcore.co.uk</p>
-
-          {/* Divider Line */}
-          <hr className="w-96 my-8 border-gray-300" />
-
-          {/* Live Chat Information */}
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-4">Live Chat Information</h2>
-            <p>Our live chat feature will be available soon. Stay tuned!</p>
-          </div>
-        </div>
 
         {/* Contact Form Section */}
-        <div className="w-full md:w-2/3 px-8">
+        <div className="w-full md:w-2/3 px-8 ">
           <h2 className="text-2xl font-bold mb-8 text-center">Get in Touch</h2>
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
             <div className="flex space-x-4">
@@ -122,7 +92,7 @@ const FormContact: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+
   );
 };
 
