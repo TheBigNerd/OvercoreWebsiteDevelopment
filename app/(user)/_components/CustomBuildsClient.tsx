@@ -1,4 +1,3 @@
-// _components/CustomPartsDisplay.tsx
 "use client"
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -39,7 +38,8 @@ const CustomPartsDisplay: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: string | string[]}>({});
   const [selectedSocketType, setSelectedSocketType] = useState<string | null>(null);
   const [excludeSpecificCooler, setExcludeSpecificCooler] = useState<boolean>(false);
-  
+  const [showMore, setShowMore] = useState<{ [key: string]: boolean }>({});
+
   const handleExportToCookie = (selected: any) => {
     nookies.set(null, 'customProduct', JSON.stringify(selected), {
       maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -47,9 +47,7 @@ const CustomPartsDisplay: React.FC = () => {
     });
   };
 
-
   const integratedCoolerId = '5bf9e210-3991-4c39-83b3-87b48988928b'; // Replace with the actual cooler ID
-
 
   useEffect(() => {
     async function loadCustomParts() {
@@ -82,23 +80,19 @@ const CustomPartsDisplay: React.FC = () => {
     loadCustomParts();
   }, []);
 
-
-
-
   const [price, setPrice] = useState(0);
   const [itemPrices, setItemPrices] = useState<{ [key: string]: number }>({});
   const [totalWattage, setTotalWattage] = useState(0);
   
   const handleItemClick = (type: string, id: string, itemPrice: number, socketType?: string) => {
-	  const currentSelected = selectedItems;
-      if (Array.isArray(currentSelected[type]) ? currentSelected[type].includes(id) : currentSelected[type] === id) {
+    const currentSelected = selectedItems;
+    if (Array.isArray(currentSelected[type]) ? currentSelected[type].includes(id) : currentSelected[type] === id) {
       if (type !== 'storage' && type !== 'cpus') {
-		  delete currentSelected[type];}
-      else if (type === 'storage' && currentSelected['storage'].includes(id)) {
+        delete currentSelected[type];
+      } else if (type === 'storage' && currentSelected['storage'].includes(id)) {
         const updatedStorage = Array.isArray(currentSelected['storage'])
           ? currentSelected['storage'].filter((storageId: string) => storageId !== id)
           : [];
-          console.log(updatedStorage);
         currentSelected['storage'] = updatedStorage;
         const totalStoragePrice = updatedStorage.reduce((acc: number, storageId: string) => {
           const storageItem = customParts?.storage?.find(item => item.id === storageId);
@@ -108,44 +102,31 @@ const CustomPartsDisplay: React.FC = () => {
           ...prevItemPrices,
           totalStoragePrice,
         }));
-      }
-      else if (type === 'cpus' && currentSelected['cpus'] === id) {
+      } else if (type === 'cpus' && currentSelected['cpus'] === id) {
         delete currentSelected['cpus'];
         setSelectedSocketType(null);
       }
-
-
-		  
-		  setItemPrices((prevItemPrices) => {
-			  const { [type]: __, ...restPrices } = prevItemPrices;
-			  return restPrices;
-		  });
-	  } else {
+      setItemPrices((prevItemPrices) => {
+        const { [type]: __, ...restPrices } = prevItemPrices;
+        return restPrices;
+      });
+    } else {
       if (type === 'cpus' && socketType) {
         setSelectedSocketType(socketType);
-        if (customParts && customParts['cpus']?.find((cpu: CPU) => cpu.id === id && cpu.integratedCooler=== true)) {
-          console.log('Integrated cooler selected');
+        if (customParts && customParts['cpus']?.find((cpu: CPU) => cpu.id === id && cpu.integratedCooler === true)) {
           setExcludeSpecificCooler(false);
-          console.log(excludeSpecificCooler);
-        }
-        else {
-          console.log('Integrated cooler not selected');
+        } else {
           setExcludeSpecificCooler(true);
-          console.log(excludeSpecificCooler);
         }
-        // Check if the selected CPU's socket type matches the motherboard's socket type
         const selectedMotherboard = customParts && customParts['motherboards']?.find((item: { id: string; }) => item.id === currentSelected['motherboards']);
         if (selectedMotherboard && selectedMotherboard.socketType !== socketType) {
-          // Remove the motherboard from selected items if the socket types don't match
           delete currentSelected['motherboards'];
-
           setItemPrices((prevItemPrices) => {
             const { motherboards: __, ...restPrices } = prevItemPrices;
             return restPrices;
           });
         }
       }
-
       if (type === 'storage') {
         const updatedStorage = Array.isArray(currentSelected['storage'])
           ? [...currentSelected[type], id]
@@ -155,36 +136,30 @@ const CustomPartsDisplay: React.FC = () => {
           const storageItem = customParts?.storage?.find(item => item.id === storageId);
           return acc + (storageItem ? storageItem.priceInPence : 0);
         }, 0);
-        
-
         setItemPrices((prevItemPrices) => ({
           ...prevItemPrices,
           totalStoragePrice,
         }));
-        console.log(updatedStorage);
         setSelectedItems(currentSelected);
         handleExportToCookie(currentSelected);
         return currentSelected;
       }
-
       currentSelected[type] = id;
-
       setItemPrices((prevItemPrices) => ({
         ...prevItemPrices,
         [type]: itemPrice,
       }));
     }
-	  setSelectedItems(currentSelected);
-	  handleExportToCookie(currentSelected);
+    setSelectedItems(currentSelected);
+    handleExportToCookie(currentSelected);
   };
   
   useEffect(() => {
-    // Initialize itemPrices with the prices of the initially selected items
     const initialItemPrices: { [key: string]: number } = {};
     Object.keys(selectedItems).forEach(type => {
       const selectedItem = customParts && customParts[type as keyof CustomParts]?.find((item: { id: string; }) => item.id === selectedItems[type]);
       if (selectedItem) {
-        initialItemPrices[type] = selectedItem.priceInPence; // Assuming each item has a 'price' property
+        initialItemPrices[type] = selectedItem.priceInPence;
       }
     });
     setItemPrices(initialItemPrices);
@@ -208,7 +183,6 @@ const CustomPartsDisplay: React.FC = () => {
       });
       setTotalWattage(wattage);
     };
-
     calculateTotalWattage();
   }, [selectedItems, customParts, price]);
   
@@ -221,91 +195,124 @@ const CustomPartsDisplay: React.FC = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   
-  const renderPartItems = (type: string, items: any[]) => (
-    <div className="flex flex-wrap gap-4 ">
-      {items.map((item) => (
-        <PartItem
-          key={item.id}
-          item={item}
-          isSelected={isSelected(type, item.id)}
-          onClick={() => handleItemClick(type, item.id, item.priceInPence, item.socketType)}
-        />
-      ))}
-    </div>
-  );
-
+  const renderPartItems = (type: string, items: any[]) => {
+    const visibleItems = showMore[type] ? items : items.slice(0, 6);
+    return (
+      <div className="relative flex flex-wrap mb-8 pb-14" style={{ maxWidth: '900px', margin: '0 auto' }}>
+        {visibleItems.map((item) => (
+          <div key={item.id} className="w-full sm:w-1/2 lg:w-1/3 py-2" style={{ boxSizing: 'border-box' }}>
+            <PartItem
+              item={item}
+              isSelected={isSelected(type, item.id)}
+              onClick={() => handleItemClick(type, item.id, item.priceInPence, item.socketType)}
+            />
+          </div>
+        ))}
+        {items.length > 6 && (
+          <div
+            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white cursor-pointer px-4 py-2 rounded -mt-4"
+            onClick={() => setShowMore((prev) => ({ ...prev, [type]: !prev[type] }))}
+          >
+            {showMore[type] ? 'Show Less' : 'Show More'}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const filterPsusByWattage = (psus: any[], totalWattage: number) => {
-    const filteredPsus = psus.filter(psu => psu.wattage > totalWattage +150);
+    const filteredPsus = psus.filter(psu => psu.wattage > totalWattage + 150);
     return filteredPsus;
   };
 
-
   const filteredMotherboards = customParts?.motherboards?.filter(mb => 
     selectedSocketType ? mb.socketType === selectedSocketType : true
-);
+  );
 
-    console.log(selectedSocketType);
-    const filteredCpuCoolers = excludeSpecificCooler
+  const filteredCpuCoolers = excludeSpecificCooler
     ? customParts?.cpuCoolers?.filter(cooler => cooler.id !== integratedCoolerId)
     : customParts?.cpuCoolers;
 
-    const renderItemsList = (type: string, selectedItem: any) => {
-      if (selectedItem) {
-        if (type === 'storage' && Array.isArray(selectedItems[type])) {
-          return selectedItems[type].map((storageId: string) => {
-        const storageItem = customParts?.storage?.find(item => item.id === storageId);
-        return storageItem ? <li key={storageItem.id}>{storageItem.title}</li> : null;
-          });
-        } else {
-          return <li key={selectedItem.id}>{selectedItem}</li>;
-        }
+  const renderItemsList = (type: string, selectedItem: any) => {
+    if (selectedItem) {
+      if (type === 'storage' && Array.isArray(selectedItems[type])) {
+        return selectedItems[type].map((storageId: string) => {
+          const storageItem = customParts?.storage?.find(item => item.id === storageId);
+          return storageItem ? <li key={storageItem.id}>{storageItem.title}</li> : null;
+        });
       } else {
-        return <li style={{ color: 'red' }}>Not selected</li>;
+        return <li key={selectedItem.id}>{selectedItem}</li>;
       }
-    };
-    
-    return (
-      <div className="p-4 flex">
-        <div className="flex-1 space-y-8">
-          <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
+    } else {
+      return <li style={{ color: 'red' }}>Not selected</li>;
+    }
+  };
+  
+  return (
+    <div className="p-10 flex flex-col lg:flex-row justify-center">
+      <div className="flex-1 space-y-8" style={{ maxWidth: '950px' }}>
+        <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
+        <div className="border p-4 mb-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">Cases</h2>
           {customParts?.cases && renderPartItems('cases', customParts.cases)}
+        </div>
+        <div className="border p-4 mb-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">CPU</h2>
           {customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
+        </div>
+        <div className="border p-4 mb-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">CPU Cooler</h2>
           {filteredCpuCoolers && renderPartItems('cpuCoolers', filteredCpuCoolers)}
+        </div>
+        <div className="border p-4 mb-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">Graphics Card</h2>
           {customParts?.gpus && renderPartItems('gpus', customParts.gpus)}
+        </div>
+        <div className="border p-4 mb-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">Motherboard</h2>
           {filteredMotherboards && renderPartItems('motherboards', filteredMotherboards)}
+        </div>
+        <div className="border p-4 mb-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">Memory</h2>
           {customParts?.memory && renderPartItems('memory', customParts.memory)}
+        </div>
+        <div className="border p-4 mb-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">Storage</h2>
           {customParts?.storage && renderPartItems('storage', customParts.storage)}
+        </div>
+        <div className="border p-4 mb-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">Power Supply</h2>
           {customParts?.psu && renderPartItems('psu', filterPsusByWattage(customParts.psu, totalWattage))}
         </div>
-        <div className="flex-none ml-4 p-4 border border-gray-300 rounded-lg w-1/3">
-          <img 
-            src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image || '/case/_af57a160-471f-4f26-ba6f-e516a168aab3.jfif'}  
-            alt="Selected Case Picture" 
-            className="w-full h-auto object-cover"
-          />
-          <ul>
-            {customParts && Object.keys(customParts).map(partType => {
-              const selectedItem = customParts[partType as keyof CustomParts]?.find(item => isSelected(partType, item.id));
-              return (
-                <li key={partType}>
-                  <h2 className="font-bold">{partType}</h2>
-                  <ul>
-                    {renderItemsList(partType, selectedItem?.title)}
-                  </ul>
-                </li>
-              );
-            })}
-            <li>Your Price: £{(price / 100).toFixed(2)}</li>
-          </ul>
-          <Button 
-            className="mt-4 px-4 py-2 bg-slate-700 text-white rounded"
-          >
-          Buy Now
-          </Button>
-        </div>
       </div>
-    );
-  }
-    
-    export default CustomPartsDisplay;
+      <div className="flex-none mt-4 lg:mt-0 lg:ml-4 p-4 border border-gray-300 rounded-lg w-full lg:w-1/3">
+        <img 
+          src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image || '/case/_af57a160-471f-4f26-ba6f-e516a168aab3.jfif'}  
+          alt="Selected Case Picture" 
+          className="w-full h-auto object-cover"
+        />
+        <ul>
+          {customParts && Object.keys(customParts).map(partType => {
+            const selectedItem = customParts[partType as keyof CustomParts]?.find(item => isSelected(partType, item.id));
+            return (
+              <li key={partType}>
+                <h2 className="font-bold">{partType}</h2>
+                <ul>
+                  {renderItemsList(partType, selectedItem?.title)}
+                </ul>
+              </li>
+            );
+          })}
+          <li>Your Price: £{(price / 100).toFixed(2)}</li>
+        </ul>
+        <Button 
+          className="mt-4 px-4 py-2 bg-slate-700 text-white rounded"
+        >
+          Buy Now
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default CustomPartsDisplay;
