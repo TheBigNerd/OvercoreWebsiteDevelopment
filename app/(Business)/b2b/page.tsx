@@ -1,5 +1,8 @@
+import HeroBanner from '../_components/herobanner';
 export default function Page() {
     return(
-        <p>Big BUSINESS HOMEPAGES WOOOOOOOOOW</p>
+              <div className=''>
+                <HeroBanner />
+              </div>
     )
 }
