@@ -35,7 +35,8 @@ export const publicRoutes = [
     "/api/checkout",
     "/api/orders",
     "/LandingPage",
-    "/b2b"
+    "/b2b",
+    "/b2b/ContactUs"
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings
