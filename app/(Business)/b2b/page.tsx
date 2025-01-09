@@ -1,5 +1,5 @@
 export default function Page() {
     return(
-        <p>New Business Page</p>
+        <p>Big BUSINESS HOMEPAGES WOOOOOOOOOW</p>
     )
 }
