@@ -13,30 +13,8 @@ const Button = () => {
 
 export default Button;
 
-const Basket = () => {
-  return (
-      <Image
-        src="/images/cart.png"
-        alt="Basket"
-        width={35}
-        height={15}
-        className="rounded-lg"
-      />
-  );
-};
 
-export {Basket};
 
-const Favourites = () => {
-  return (
-      <Image
-        src="/images/heart.png"
-        alt="Favourites"
-        width={35}
-        height={15}
-        className="rounded-lg"
-      />
-  );
-};
 
-export {Favourites};
+
+

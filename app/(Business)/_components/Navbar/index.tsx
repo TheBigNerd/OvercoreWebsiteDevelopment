@@ -3,11 +3,9 @@
 import React, { useState } from "react";
 import HoverableLink from "./HoverableLink";
 import Logo from "./Logo";
-import { Basket, Favourites } from "./button";
-import { Button } from "@/components/ui/button";
-import { LoginButton } from "@/app/(protected)/_components/auth/login-button";
 import Image from 'next/image';
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,21 +42,11 @@ const Navbar = () => {
           <div className="flex items-center space-x-6">
             <div className="w-px h-6 bg-white mx-4 hidden md:block"></div>
             <div className="flex items-center space-x-1 text-white group">
-              <HoverableLink href="/favourites" icon={<Favourites />}>
-                <span className="hidden sm:inline">Favourites</span>
-              </HoverableLink>
-            </div>
-            <div className="flex items-center space-x-1 text-white">
-              <HoverableLink href="/basket" icon={<Basket />}>
-                <span className="hidden sm:inline">Basket</span>
-              </HoverableLink>
-            </div>
-            <div className="flex items-center space-x-1 text-white group">
-              <LoginButton asChild>
-                <Button className="hover:scale-110 transform transition-transform duration-300">
-                  Sign In
-                </Button>
-              </LoginButton>
+            <Link href={"app.b2b"}>
+              <span className="inline-block bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                Contact Us
+              </span>
+            </Link>
             </div>
           </div>
           <button
@@ -78,22 +66,7 @@ const Navbar = () => {
           </ul>
         </div>
       )}
-      <div className="w-full bg-gray-300 py-2">
-        <div className="container mx-auto px-4">
-          <div className="hidden sm:flex flex-wrap justify-between text-gray-800">
-            <li className="flex items-center space-x-2">
-              <Image src="/navbar/delivery.png" alt="Delivery" width={25} height={40} />
-              <p className="font-bold">2 Week Delivery</p>
-            </li>
-            <li className="flex items-center space-x-2">
-              <Image src="/navbar/customerservice.png" alt="CustomerService" width={25} height={40} />
-              <p className="font-bold">24/7 Customer Support</p>
-            </li>
-            <li className="flex items-center space-x-2">
-              <Image src="/navbar/business.png" alt="Business" width={25} height={40} />
-              <p className="font-bold">Business Aligned</p>
-            </li>
-          </div>
+      
           <div className="sm:hidden relative flex items-center justify-center">
             <button onClick={handlePrevSlide} className="absolute left-0">
               &lt;
@@ -109,8 +82,7 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      
   );
 };
 
