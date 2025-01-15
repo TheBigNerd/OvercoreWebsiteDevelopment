@@ -1,7 +1,7 @@
-import CategoryCardContainer from './_components/categorycardcontainer';
-import HeroBanner from './_components/herobanner';
-import HomeCarousel from './_components/HomeCarousel/HomeCarousel';
-import TopBanner from './_components/TopBanner';
+import CategoryCardContainer from '../_components/categorycardcontainer';
+import HeroBanner from '../_components/herobanner';
+import HomeCarousel from '../_components/HomeCarousel/HomeCarousel';
+import TopBanner from '../_components/TopBanner';
 
 export default function Home() {
   return (
