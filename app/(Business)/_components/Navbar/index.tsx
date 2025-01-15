@@ -28,13 +28,13 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full bg-gray-900 sticky top-0 z-50">
+    <div className="w-full bg-white sticky top-0 z-50">
       <div className="container mx-auto px-4 py-2.5">
         <div className="flex justify-between items-center">
           <div className="transform transition-transform duration-300 hover:scale-110">
             <Logo />
           </div>
-          <ul className="hidden md:flex space-x-4 lg:space-x-32 text-white">
+          <ul className="hidden md:flex space-x-4 lg:space-x-32 ">
             <HoverableLink href="/pre-builds">Gaming Systems</HoverableLink>
             <HoverableLink href="/custom-builds">Build Your Own</HoverableLink>
             <HoverableLink href="/contact">Contact Us</HoverableLink>
