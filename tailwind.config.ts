@@ -55,7 +55,23 @@ const config = {
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
-  			}
+  			},
+'tall-poppy': {
+        '50': '#fef2f2',
+        '100': '#fee2e2',
+        '200': '#fecaca',
+        '300': '#fda4a4',
+        '400': '#f97070',
+        '500': '#f14242',
+        '600': '#de2424',
+        '700': '#b71a1a',
+        '800': '#9a1a1a',
+        '900': '#801c1c',
+        '950': '#460909',
+    },
+    
+    
+    
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

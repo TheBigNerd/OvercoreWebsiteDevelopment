@@ -24,8 +24,6 @@ const FormContact: React.FC = () => {
 
   return (
     <div>
-
-        {/* Contact Form Section */}
         <div className="w-full md:w-2/3 px-8 ">
           <h2 className="text-2xl font-bold mb-8 text-center">Get in Touch</h2>
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
