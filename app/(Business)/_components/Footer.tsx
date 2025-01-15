@@ -27,7 +27,7 @@ export default function Footer() {
   
         {/* Copyright Text */}
         <p className="text-gray-400 text-sm mt-4">
-          Overcore © 2024
+          Overcore © 2025. All rights reserved.
         </p>
       </footer>
     );
