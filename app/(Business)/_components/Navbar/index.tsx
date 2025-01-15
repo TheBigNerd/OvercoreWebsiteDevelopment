@@ -43,7 +43,7 @@ const Navbar = () => {
             <div className="w-px h-6 bg-white mx-4 hidden md:block"></div>
             <div className="flex items-center space-x-1 text-white group">
             <Link href={"/b2b/ContactUs"}>
-              <span className="inline-block bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+              <span className="inline-block bg-tall-poppy-600 hover:bg-tall-poppy-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
                 Contact Us
               </span>
             </Link>
