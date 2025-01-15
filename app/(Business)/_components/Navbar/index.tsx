@@ -66,21 +66,6 @@ const Navbar = () => {
           </ul>
         </div>
       )}
-      
-          <div className="sm:hidden relative flex items-center justify-center">
-            <button onClick={handlePrevSlide} className="absolute left-0">
-              &lt;
-            </button>
-            <ul className="flex flex-wrap justify-center text-gray-800">
-              <li className="flex items-center space-x-2">
-                <Image src={slides[currentSlide].src} alt={slides[currentSlide].alt} width={25} height={40} />
-                <p className="font-bold">{slides[currentSlide].text}</p>
-              </li>
-            </ul>
-            <button onClick={handleNextSlide} className="absolute right-0">
-              &gt;
-            </button>
-          </div>
         </div>
       
   );
