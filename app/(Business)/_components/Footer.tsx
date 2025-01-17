@@ -18,11 +18,11 @@ export default function Footer() {
         </div>
         {/* Navigation Links */}
         <div className="flex justify-center space-x-8 text-gray-300 text-sm">
-          <a href="#" className="hover:text-orange-400">Home</a>
-          <a href="#" className="hover:text-orange-400">Services</a>
-          <a href="/about-us" className="hover:text-orange-400">About</a>
-          <a href="#" className="hover:text-orange-400">Terms</a>
-          <a href="#" className="hover:text-orange-400">Privacy Policy</a>
+          <a href="#" className="hover:text-tall-poppy-600">Home</a>
+          <a href="#" className="hover:text-tall-poppy-600">Services</a>
+          <a href="/about-us" className="hover:text-tall-poppy-600">About</a>
+          <a href="#" className="hover:text-tall-poppy-600">Terms</a>
+          <a href="#" className="hover:text-tall-poppy-600">Privacy Policy</a>
         </div>
   
         {/* Copyright Text */}
