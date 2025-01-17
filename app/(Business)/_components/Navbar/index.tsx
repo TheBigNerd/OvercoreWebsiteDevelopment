@@ -34,7 +34,7 @@ const Navbar = () => {
           <div className="transform transition-transform duration-300 hover:scale-110">
             <Logo />
           </div>
-          <ul className="hidden md:flex space-x-4 lg:space-x-32 text-white">
+          <ul className="hidden md:flex space-x-4 lg:space-x-32 ">
             <HoverableLink href="/b2b/SaaS">Software Services</HoverableLink>
             <HoverableLink href="/b2b/Network">Network Solutions</HoverableLink>
             <HoverableLink href="/b2b/Hardware">Custom Hardware</HoverableLink>
@@ -59,10 +59,10 @@ const Navbar = () => {
       </div>
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900">
-          <ul className="flex flex-col space-y-4 p-4 text-white">
-            <HoverableLink href="/pre-builds">Gaming Systems</HoverableLink>
-            <HoverableLink href="/custom-builds">Build Your Own</HoverableLink>
-            <HoverableLink href="/contact">Contact Us</HoverableLink>
+          <ul className="flex flex-col space-y-4 p-4">
+            <HoverableLink href="/pre-builds">Software Services</HoverableLink>
+            <HoverableLink href="/custom-builds">Network Solutions</HoverableLink>
+            <HoverableLink href="/contact">Custom Hardware</HoverableLink>
           </ul>
         </div>
       )}
