@@ -35,9 +35,9 @@ const Navbar = () => {
             <Logo />
           </div>
           <ul className="hidden md:flex space-x-4 lg:space-x-32 text-white">
-            <HoverableLink href="/pre-builds">Gaming Systems</HoverableLink>
-            <HoverableLink href="/custom-builds">Build Your Own</HoverableLink>
-            <HoverableLink href="/contact">Contact Us</HoverableLink>
+            <HoverableLink href="/b2b/SaaS">Software Services</HoverableLink>
+            <HoverableLink href="/b2b/Network">Network Solutions</HoverableLink>
+            <HoverableLink href="/b2b/Hardware">Custom Hardware</HoverableLink>
           </ul>
           <div className="flex items-center space-x-6">
             <div className="w-px h-6 bg-white mx-4 hidden md:block"></div>
