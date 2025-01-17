@@ -33,7 +33,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ src, alt, text, link, isHov
           quality={100}
         />
       </div>
-      <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 px-4 text-lg md:text-xl lg:text-2xl font-mono sm:bottom-[25%] sm:w-[75%] sm:left-0 sm:py-7 sm:px-10">
+      <div className="absolute top-1/4 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 px-4 text-lg md:text-xl lg:text-2xl font-mono sm:bottom-[] sm:w-[75%] sm:left-0 sm:py-7 sm:px-10">
         <p className="text-lg md:text-xl lg:text-2xl">{text}</p>
       </div>
     </Link>
