@@ -5,7 +5,7 @@ import fetchFeaturedProducts from './fetchFeaturedProducts';
 export default async function HomeCarousel() {
 	let featuredProducts = await fetchFeaturedProducts();
 	return (
-		<Carousel className='relative mx-auto' style={{ width: '70%' }}>
+		<Carousel className='relative mx-auto' style={{ width: '95%' }}>
 			<CarouselContent className="flex pb-4 mx-16">
 				{ featuredProducts.map(product => (
 					<CarouselItem key={ product.id } className="flex-none w-1/1">

@@ -12,7 +12,7 @@ export default function Home() {
       <div className=''>
         <HeroBanner />
       </div>
-      <div className="container mx-auto px-4 py-8">
+      <div className="px-4 py-8 max-h-[400px] overflow-hidden ">
         <CategoryCardContainer />
       </div>
       <div className="m-4">
