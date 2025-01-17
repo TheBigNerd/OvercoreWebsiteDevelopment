@@ -38,6 +38,7 @@ export const publicRoutes = [
     "/b2b",
     "/b2b/ContactUs",
     "/store",
+    "/privacy",
 ];
 /**
  * An Array of routes used for authentication, these are routes redirect users to /settings
