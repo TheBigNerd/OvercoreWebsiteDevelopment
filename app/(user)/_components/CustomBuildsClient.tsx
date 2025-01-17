@@ -1,11 +1,12 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { fetchCustomParts } from '../data/customPartsService';
 import { CPU, CustomParts } from '../data/customParts';
 import nookies, { parseCookies } from 'nookies';
 import { Tooltip } from 'react-tooltip';
 import { BadgeInfo, ChevronDown, ChevronUp } from 'lucide-react';
+import { cpus } from 'os';
 
 
 const PartItem: React.FC<{ item: any, isSelected: boolean, onClick: () => void }> = ({ item, isSelected, onClick }) => {
@@ -270,6 +271,7 @@ const CustomPartsDisplay: React.FC = () => {
 
   return (
     <div className="p-10 flex flex-col lg:flex-row justify-center">
+      <div className='overflow-y-auto max-h-screen flex-1'>
       <div className="flex-1 space-y-8" style={{ maxWidth: '950px' }}>
         <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
         <div className="border p-4 mb-4 rounded-lg">
@@ -305,21 +307,35 @@ const CustomPartsDisplay: React.FC = () => {
           {visibleSections.psu && customParts?.psu && renderPartItems('psu', filterPsusByWattage(customParts.psu, totalWattage))}
         </div>
       </div>
+      </div>
       <div className="flex-none mt-4 lg:mt-0 lg:ml-4 p-4 border border-gray-300 rounded-lg w-full lg:w-1/3">
         <img 
           src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image || '/case/_af57a160-471f-4f26-ba6f-e516a168aab3.jfif'}  
           alt="Selected Case Picture" 
-          className="w-full h-auto object-cover"
+          className="w-auto h-48 object-cover"
         />
         <ul>
-          {customParts && Object.keys(customParts).map(partType => {
+        {customParts && Object.keys(customParts).map(partType => {
             const selectedItem = customParts[partType as keyof CustomParts]?.find(item => isSelected(partType, item.id));
+            const partTitles: { [key: string]: string } = {
+              cpuCoolers: 'CPU Cooler: ',
+              motherboards: 'Motherboard: ',
+              gpus: 'Graphics Card: ',
+              psu: 'Power Supply: ',
+              cases: 'Case: ',
+              cpus: 'CPU: ',
+              memory: 'Memory: ',
+              storage: 'Storage: ',
+              
+            };
             return (
               <li key={partType}>
-                <h2 className="font-bold">{partType}</h2>
+                <h2 className="font-bold">{partTitles[partType] || partType}</h2>
+                <div className="ml-4">
                 <ul>
                   {renderItemsList(partType, selectedItem?.title)}
                 </ul>
+                </div>
               </li>
             );
           })}
