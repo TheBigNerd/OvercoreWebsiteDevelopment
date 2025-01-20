@@ -202,7 +202,7 @@ const CustomPartsDisplay: React.FC = () => {
     return (
       <div className="relative flex flex-wrap mb-8 pb-14" style={{ maxWidth: '900px', margin: '0 auto' }}>
         {visibleItems.map((item) => (
-          <div key={item.id} className="w-full sm:w-1/2 lg:w-1/3 py-2" style={{ boxSizing: 'border-box' }}>
+          <div key={item.id} className="w-full sm:w-1/2 lg:w-1/3 p-2 box-border">
             <PartItem
               item={item}
               isSelected={isSelected(type, item.id)}
@@ -249,7 +249,6 @@ const CustomPartsDisplay: React.FC = () => {
       return <li style={{ color: 'red' }}>Not selected</li>;
     }
   };
-  
 
   interface VisibleSections {
     cases: boolean;
@@ -314,31 +313,51 @@ const CustomPartsDisplay: React.FC = () => {
           alt="Selected Case Picture" 
           className="w-auto h-48 object-cover"
         />
+        <div className="flex flex-col lg:flex-row">
+          <ul className="flex-1 mb-4 lg:mb-0 lg:mr-4">
+            {customParts && ['cases', 'motherboards', 'cpus', 'gpus'].map(partType => {
+              const selectedItem = customParts[partType as keyof CustomParts]?.find(item => isSelected(partType, item.id));
+              const partTitles: { [key: string]: string } = {
+                cases: 'Case: ',
+                motherboards: 'Motherboard: ',
+                cpus: 'CPU: ',
+                gpus: 'Graphics Card: ',
+              };
+              return (
+                <li key={partType}>
+                  <h2 className="font-bold">{partTitles[partType]}</h2>
+                  <div className="ml-4">
+                    <ul>
+                      {renderItemsList(partType, selectedItem?.title)}
+                    </ul>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <ul className="flex-1">
+            {customParts && ['cpuCoolers', 'memory', 'storage', 'psu'].map(partType => {
+              const selectedItem = customParts[partType as keyof CustomParts]?.find(item => isSelected(partType, item.id));
+              const partTitles: { [key: string]: string } = {
+                cpuCoolers: 'CPU Cooler: ',
+                memory: 'Memory: ',
+                storage: 'Storage: ',
+                psu: 'Power Supply: ',
+              };
+              return (
+                <li key={partType}>
+                  <h2 className="font-bold">{partTitles[partType]}</h2>
+                  <div className="ml-4">
+                    <ul>
+                      {renderItemsList(partType, selectedItem?.title)}
+                    </ul>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
         <ul>
-        {customParts && Object.keys(customParts).map(partType => {
-            const selectedItem = customParts[partType as keyof CustomParts]?.find(item => isSelected(partType, item.id));
-            const partTitles: { [key: string]: string } = {
-              cpuCoolers: 'CPU Cooler: ',
-              motherboards: 'Motherboard: ',
-              gpus: 'Graphics Card: ',
-              psu: 'Power Supply: ',
-              cases: 'Case: ',
-              cpus: 'CPU: ',
-              memory: 'Memory: ',
-              storage: 'Storage: ',
-              
-            };
-            return (
-              <li key={partType}>
-                <h2 className="font-bold">{partTitles[partType] || partType}</h2>
-                <div className="ml-4">
-                <ul>
-                  {renderItemsList(partType, selectedItem?.title)}
-                </ul>
-                </div>
-              </li>
-            );
-          })}
           <li>Your Price: £{(price / 100).toFixed(2)}</li>
         </ul>
         <Button 
