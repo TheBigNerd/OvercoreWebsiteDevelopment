@@ -9,10 +9,10 @@ export default function AllProducts({ all, filtered } : { all: Product[], filter
 
     return (
         <div className="flex flex-col lg:flex-row">
-            <div className="lg:w-1/4 p-4 bg-gray-200 rounded mb-4 lg:mb-0">
+            <div className="lg:w-1/5 p-4 bg-gray-200 rounded mb-4 lg:mb-0">
                 <FiltersMenu products={all} />
             </div>
-            <div className="lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 content-start">
+            <div className="lg:w-3/4 grid grid-cols-[repeat(auto-fill,minmax(280px,280px))] gap-10 justify-start place-items-start px-5">
                 {productsToDisplay.map(product => (
                     <ProductCard key={product.id} product={product} />
                 ))}
