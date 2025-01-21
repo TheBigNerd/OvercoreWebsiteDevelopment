@@ -200,9 +200,9 @@ const CustomPartsDisplay: React.FC = () => {
   const renderPartItems = (type: string, items: any[]) => {
     const visibleItems = showMore[type] ? items : items.slice(0, 6);
     return (
-      <div className="relative flex flex-wrap mb-8 pb-14" style={{ maxWidth: '900px', margin: '0 auto' }}>
+      <div className="relative grid justify-start grid-cols-[repeat(auto-fill,minmax(275px,1fr))] gap-2 place-items-center">
         {visibleItems.map((item) => (
-          <div key={item.id} className="w-full sm:w-1/2 lg:w-1/3 p-2 box-border">
+          <div key={item.id} className="p-2 box-border">
             <PartItem
               item={item}
               isSelected={isSelected(type, item.id)}
