@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import HoverableLink from "./HoverableLink";
@@ -32,12 +32,13 @@ const Navbar = () => {
   return (
     <div className="w-full bg-gray-300 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-2.5">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-center items-center">
           <div className="transform transition-transform duration-300 hover:scale-110">
             <Logo />
           </div>
-          <div className="flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-6">
             <div className="flex items-center space-x-1 text-black group">
+              {/* Add additional navbar links or components here */}
             </div>
           </div>
           <button
@@ -50,9 +51,9 @@ const Navbar = () => {
       </div>
       {isMenuOpen && (
         <div className="md:hidden bg-gray-300">
+          {/* Add menu items here for smaller screens */}
         </div>
       )}
-      
     </div>
   );
 };
