@@ -22,7 +22,7 @@ export default function Footer() {
           <a href="#" className="hover:text-tall-poppy-600">Services</a>
           <a href="/about-us" className="hover:text-tall-poppy-600">About</a>
           <a href="#" className="hover:text-tall-poppy-600">Terms</a>
-          <a href="#" className="hover:text-tall-poppy-600">Privacy Policy</a>
+          <a href="/privacy" className="hover:text-tall-poppy-600">Privacy Policy</a>
         </div>
   
         {/* Copyright Text */}
