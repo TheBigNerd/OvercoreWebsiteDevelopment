@@ -200,22 +200,26 @@ const CustomPartsDisplay: React.FC = () => {
   const renderPartItems = (type: string, items: any[]) => {
     const visibleItems = showMore[type] ? items : items.slice(0, 6);
     return (
-      <div className="relative grid justify-start grid-cols-[repeat(auto-fill,minmax(275px,1fr))] gap-2 place-items-center">
-        {visibleItems.map((item) => (
-          <div key={item.id} className="p-2 box-border">
-            <PartItem
-              item={item}
-              isSelected={isSelected(type, item.id)}
-              onClick={() => handleItemClick(type, item.id, item.priceInPence, item.socketType)}
-            />
-          </div>
-        ))}
+      <div className="relative pb-16">
+        <div className="grid justify-start grid-cols-[repeat(auto-fill,minmax(275px,1fr))] gap-2 place-items-center">
+          {visibleItems.map((item) => (
+            <div key={item.id} className="p-2 box-border">
+              <PartItem
+                item={item}
+                isSelected={isSelected(type, item.id)}
+                onClick={() => handleItemClick(type, item.id, item.priceInPence, item.socketType)}
+              />
+            </div>
+          ))}
+        </div>
         {items.length > 6 && (
-          <div
-            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white cursor-pointer px-4 py-2 rounded -mt-4"
-            onClick={() => setShowMore((prev) => ({ ...prev, [type]: !prev[type] }))}
-          >
-            {showMore[type] ? 'Show Less' : 'Show More'}
+          <div className="absolute bottom-0 left-0 w-full flex justify-center p-2">
+            <div
+              className="bg-black bg-opacity-50 text-white cursor-pointer px-4 py-2 rounded"
+              onClick={() => setShowMore((prev) => ({ ...prev, [type]: !prev[type] }))}
+            >
+              {showMore[type] ? 'Show Less' : 'Show More'}
+            </div>
           </div>
         )}
       </div>
