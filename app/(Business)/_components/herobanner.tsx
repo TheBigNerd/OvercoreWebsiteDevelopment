@@ -4,9 +4,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 const images = [
-  { src: '/images/orange_desktop.jpg', text: 'Software made simple', link: '/pre-builds' },
-  { src: '/images/image2.jpg', text: 'Network Infrastructure Solutions', link: '/business' },
-  { src: '/images/image3.jpg', text: 'Give us a custom request', link: '/contact' },
+  { src: '/images/coding.jpeg', text: 'Software made simple', link: '/pre-builds' },
+  { src: '/images/ServerRack.jpeg', text: 'Network Infrastructure', link: '/business' },
+  { src: '/images/TTAAS.jpeg', text: 'Tech Team as a Service', link: '/contact' },
 ];
 
 export default function HeroBanner() {
@@ -54,10 +54,10 @@ export default function HeroBanner() {
             index === currentIndex ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
         >
-          <div className="absolute inset-0 bg-black opacity-20"></div>
+          <div className="absolute inset-0 bg-black opacity-50"></div>
           <img src={image.src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
             <div className="absolute left-2 top-1/2 text-white max-w-xs md:left-10 md:top-[40%] ml-[20%] md:max-w-3xl">
-            <h2 className="font-extrabold text-xl md:text-3xl lg:text-6xl uppercase drop-shadow-xl mb-4">{image.text}</h2>
+            <h2 className="font-extrabold text-2xl md:text-4xl lg:text-7xl uppercase drop-shadow-xl mb-4">{image.text}</h2>
 
             <Link href={image.link}>
               <span className="inline-block bg-tall-poppy-600 hover:bg-tall-poppy-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">

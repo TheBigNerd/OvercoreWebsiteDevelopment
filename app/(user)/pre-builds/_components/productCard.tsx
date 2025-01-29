@@ -14,24 +14,22 @@ const ProductCard = ({ product }: { product: Product }) => {
                            className="rounded-lg aspect-square object-contain"/>
                 </div>
             )}
-            <div className="">
+            <div className="flex flex-col flex-1">
                 <CardHeader>
-                    <CardTitle className="text-xl font-semibold">{product.name}</CardTitle>
-                    <CardDescription className="text-lg font-bold">{formatCurrency(product.priceInPence / 100)}</CardDescription>
+                    <CardTitle className="text-xl font-semibold line-clamp-4 h-[5.5rem]">{product.name}</CardTitle>
+                    <CardDescription className="text-red-600 text-lg font-bold mt-2">{formatCurrency(product.priceInPence / 100)}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p className="italic text-base">{product.tagline}</p>
+                    <p className="italic text-base line-clamp-2 overflow-hidden">{product.tagline}</p>
                 </CardContent>
-                <CardFooter className="w-full">
+                <CardFooter className="mt-auto w-full">
                     <Link href={`/pre-builds/view/${product.id}`}>
                         <Button className="w-full mt-4" size="lg">See More</Button>
                     </Link>
                 </CardFooter>
             </div>
         </Card>
-    );                    <Link href={`/pre-builds/view/${product.id}`}>
-    <Button className="w-full mt-4" size="lg">See More</Button>
-</Link>
+    );
 };
 
 export default ProductCard;
