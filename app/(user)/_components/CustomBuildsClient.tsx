@@ -311,11 +311,11 @@ const CustomPartsDisplay: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex-none mt-4 lg:mt-0 lg:ml-4 p-4 border border-gray-300 rounded-lg w-full lg:w-1/4" style={{ marginRight: '15%' }}>
+      <div className="flex-none mt-4 lg:mt-0 lg:ml-4 border border-gray-300 rounded-lg w-full lg:w-1/4 self-start" style={{ marginRight: '10%' }}>
         <img 
           src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image || '/case/_af57a160-471f-4f26-ba6f-e516a168aab3.jfif'}  
           alt="Selected Case Picture" 
-          className="w-auto h-1/3 object-cover"
+          className="w-2/5 object-cover justify-center"
         />
         <div className="flex flex-col lg:flex-row">
           <ul className="flex-1 mb-4 lg:mb-0 lg:mr-4">
