@@ -273,49 +273,49 @@ const CustomPartsDisplay: React.FC = () => {
   };
 
   return (
-    <div className="p-10 flex flex-col lg:flex-row justify-center">
-      <div className='overflow-y-auto max-h-screen flex-1'>
-      <div className="flex-1 space-y-8" style={{ maxWidth: '950px' }}>
-        <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
-        <div className="border p-4 mb-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('cases')}>Cases {visibleSections.cases ? <ChevronUp /> : <ChevronDown />}</h2>
-        {visibleSections.cases && customParts?.cases && renderPartItems('cases', customParts.cases)}
-      </div>
-        <div className="border p-4 mb-4 rounded-lg">
-          <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('cpus')}>CPU {visibleSections.cpus ? <ChevronUp /> : <ChevronDown />}</h2>
-          {visibleSections.cpus && customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
-        </div>
-        <div className="border p-4 mb-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('cpuCoolers')}>CPU Cooler {visibleSections.cpuCoolers ? <ChevronUp /> : <ChevronDown />}</h2>
-          {visibleSections.cpuCoolers &&filteredCpuCoolers && renderPartItems('cpuCoolers', filteredCpuCoolers)}
-        </div>
-        <div className="border p-4 mb-4 rounded-lg">
-          <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('gpus')}>GPU {visibleSections.gpus ? <ChevronUp /> : <ChevronDown />}</h2>
+    <div className="p-10 flex flex-col lg:flex-row justify-center mx-auto">
+      <div className='overflow-y-auto max-h-screen flex-1' style={{ maxHeight: 'auto' }}>
+        <div className="flex-1 space-y-8" style={{ maxWidth: '1200px', marginLeft: 'auto' }}>
+          <h1 className="text-2xl font-bold mb-4">Custom Parts</h1>
+          <div className="border p-4 mb-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('cases')}>Cases {visibleSections.cases ? <ChevronUp /> : <ChevronDown />}</h2>
+            {visibleSections.cases && customParts?.cases && renderPartItems('cases', customParts.cases)}
+          </div>
+          <div className="border p-4 mb-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('cpus')}>CPU {visibleSections.cpus ? <ChevronUp /> : <ChevronDown />}</h2>
+            {visibleSections.cpus && customParts?.cpus && renderPartItems('cpus', customParts.cpus)}
+          </div>
+          <div className="border p-4 mb-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('cpuCoolers')}>CPU Cooler {visibleSections.cpuCoolers ? <ChevronUp /> : <ChevronDown />}</h2>
+            {visibleSections.cpuCoolers &&filteredCpuCoolers && renderPartItems('cpuCoolers', filteredCpuCoolers)}
+          </div>
+          <div className="border p-4 mb-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('gpus')}>GPU {visibleSections.gpus ? <ChevronUp /> : <ChevronDown />}</h2>
             {visibleSections.gpus && customParts?.gpus && renderPartItems('gpus', customParts.gpus)}
-        </div>
-        <div className="border p-4 mb-4 rounded-lg">
-          <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('motherboards')}>Motherboard {visibleSections.motherboards ? <ChevronUp /> : <ChevronDown />}</h2>
-          {visibleSections.motherboards && filteredMotherboards && renderPartItems('motherboards', filteredMotherboards)}
-        </div>
-        <div className="border p-4 mb-4 rounded-lg">
-          <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('memory')}> Memory {visibleSections.memory ? <ChevronUp /> : <ChevronDown />}</h2>
-          {visibleSections.memory &&customParts?.memory && renderPartItems('memory', customParts.memory)}
-        </div>
-        <div className="border p-4 mb-4 rounded-lg">
-          <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('storage')}>Storage {visibleSections.storage ? <ChevronUp /> : <ChevronDown />}</h2>
-          {visibleSections.storage && customParts?.storage && renderPartItems('storage', customParts.storage)}
-        </div>
-        <div className="border p-4 mb-4 rounded-lg">
-          <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('psu')}>Power Supply {visibleSections.psu ? <ChevronUp /> : <ChevronDown />}</h2>
-          {visibleSections.psu && customParts?.psu && renderPartItems('psu', filterPsusByWattage(customParts.psu, totalWattage))}
+          </div>
+          <div className="border p-4 mb-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('motherboards')}>Motherboard {visibleSections.motherboards ? <ChevronUp /> : <ChevronDown />}</h2>
+            {visibleSections.motherboards && filteredMotherboards && renderPartItems('motherboards', filteredMotherboards)}
+          </div>
+          <div className="border p-4 mb-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('memory')}> Memory {visibleSections.memory ? <ChevronUp /> : <ChevronDown />}</h2>
+            {visibleSections.memory &&customParts?.memory && renderPartItems('memory', customParts.memory)}
+          </div>
+          <div className="border p-4 mb-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('storage')}>Storage {visibleSections.storage ? <ChevronUp /> : <ChevronDown />}</h2>
+            {visibleSections.storage && customParts?.storage && renderPartItems('storage', customParts.storage)}
+          </div>
+          <div className="border p-4 mb-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-2" onClick={() => toggleSectionVisibility('psu')}>Power Supply {visibleSections.psu ? <ChevronUp /> : <ChevronDown />}</h2>
+            {visibleSections.psu && customParts?.psu && renderPartItems('psu', filterPsusByWattage(customParts.psu, totalWattage))}
+          </div>
         </div>
       </div>
-      </div>
-      <div className="flex-none mt-4 lg:mt-0 lg:ml-4 p-4 border border-gray-300 rounded-lg w-full lg:w-1/3">
+      <div className="flex-none mt-4 lg:mt-0 lg:ml-4 p-4 border border-gray-300 rounded-lg w-full lg:w-1/4" style={{ marginRight: '15%' }}>
         <img 
           src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image || '/case/_af57a160-471f-4f26-ba6f-e516a168aab3.jfif'}  
           alt="Selected Case Picture" 
-          className="w-auto h-48 object-cover"
+          className="w-auto h-1/3 object-cover"
         />
         <div className="flex flex-col lg:flex-row">
           <ul className="flex-1 mb-4 lg:mb-0 lg:mr-4">
