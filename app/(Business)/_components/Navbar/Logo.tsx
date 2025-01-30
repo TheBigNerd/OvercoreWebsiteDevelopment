@@ -36,7 +36,7 @@ const Logo = () => {
 
   return (
     <>
-      <Link href="/b2b" style={{ display: showButton ? "none" : "block" }}>
+      <Link href="/business" style={{ display: showButton ? "none" : "block" }}>
         <Image
           src="/images/logo_red.png"
           alt="Logo"

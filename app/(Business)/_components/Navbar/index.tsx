@@ -6,7 +6,6 @@ import Logo from "./Logo";
 import Image from 'next/image';
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { PhoneCall } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,21 +35,20 @@ const Navbar = () => {
             <Logo />
           </div>
           <ul className="hidden md:flex space-x-4 lg:space-x-32 ">
-            <HoverableLink href="/b2b/SaaS">Software Services</HoverableLink>
-            <HoverableLink href="/b2b/Network">Network Solutions</HoverableLink>
-            <HoverableLink href="/b2b/Hardware">Custom Hardware</HoverableLink>
-            <HoverableLink href="/b2b/Hardware">Technical Support</HoverableLink>
+            <HoverableLink href="/business/software">Software Services</HoverableLink>
+            <HoverableLink href="/business/Network">Network Solutions</HoverableLink>
+            <HoverableLink href="/business/Hardware">Custom Hardware</HoverableLink>
+            <HoverableLink href="/business/Hardware">Technical Support</HoverableLink>
           </ul>
-          <div className="flex flex-col items-center space-y-1 text-white group">
+          <div className="flex items-center space-x-6">
+            <div className="w-px h-6 bg-white mx-4 hidden md:block"></div>
+            <div className="flex items-center space-x-1 text-white group">
             <Link href={"/b2b/ContactUs"}>
-              <span className="inline-block bg-tall-poppy-600 hover:bg-tall-poppy-800 text-white font-bold py-2 px-4 rounded-full transition duration-300 mb-1">
+              <span className="inline-block bg-tall-poppy-600 hover:bg-tall-poppy-800 text-white font-bold py-2 px-4 rounded-full transition duration-300">
                 Contact Us
               </span>
             </Link>
-            <span className="text-black inline-flex items-center space-x-1">
-              <PhoneCall height={20} />
-              <span>07552 776284</span>
-            </span>
+            </div>
           </div>
           <button
             className="md:hidden text-white"

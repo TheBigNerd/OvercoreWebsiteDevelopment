@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useState } from 'react';
-import { addContactForm } from '../b2b/ContactUs/addContactForm';
+import { addContactForm } from '../business/ContactUs/addContactForm';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
