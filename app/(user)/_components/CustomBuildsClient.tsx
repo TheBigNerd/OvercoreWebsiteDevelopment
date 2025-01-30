@@ -311,13 +311,13 @@ const CustomPartsDisplay: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex-none mt-4 lg:mt-0 lg:ml-4 border border-gray-300 rounded-lg w-full lg:w-1/4 self-start" style={{ marginRight: '10%' }}>
+      <div className="flex-none mt-4 lg:mt-0 lg:ml-4 border border-gray-300 rounded-lg w-full lg:w-1/4 self-start ml-2" style={{ marginRight: '10%' }}>
         <img 
           src={customParts?.cases?.find(item => item.id === selectedItems['cases'])?.image || '/case/_af57a160-471f-4f26-ba6f-e516a168aab3.jfif'}  
           alt="Selected Case Picture" 
-          className="w-2/5 object-cover justify-center"
+          className="w-2/5 object-cover justify-center ml-2"
         />
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row ml-2">
           <ul className="flex-1 mb-4 lg:mb-0 lg:mr-4">
             {customParts && ['cases', 'motherboards', 'cpus', 'gpus'].map(partType => {
               const selectedItem = customParts[partType as keyof CustomParts]?.find(item => isSelected(partType, item.id));
@@ -362,10 +362,10 @@ const CustomPartsDisplay: React.FC = () => {
           </ul>
         </div>
         <ul>
-          <li>Your Price: £{(price / 100).toFixed(2)}</li>
+          <li className='ml-2'>Your Price: £{(price / 100).toFixed(2)}</li>
         </ul>
         <Button 
-          className="mt-4 px-4 py-2 bg-slate-700 text-white rounded"
+          className="mt-4 px-4 py-2 bg-slate-700 text-white rounded ml-2 mb-2"
         >
           Buy Now
         </Button>
