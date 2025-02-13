@@ -22,7 +22,7 @@ const CategoryCardContainer: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row justify-evenly space-y-4 md:space-y-0 md:space-x-4">
+    <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4 w-full sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[88%] mx-auto">
       {cards.map((card, index) => (
         <CategoryCard
           key={index}
