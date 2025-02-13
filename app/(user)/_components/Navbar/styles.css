@@ -1,0 +1,4 @@
+.custom-width {
+  width: 50px;
+  max-width: 50px; /* Adjust the max-width as needed */
+}
