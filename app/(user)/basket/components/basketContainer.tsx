@@ -1,11 +1,14 @@
 "use client"
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState, useLayoutEffect } from "react";
 import BasketObject from "../components/basketObject";
-import type { Product } from "@prisma/client";
+import type { Product} from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import nookies from 'nookies';
+import BasketCustomObject from "./basketCustomObject";
+import { getCookieIdsCustom } from "./handleData";
+
 
 const BasketContainer = () => {
   const [basketProducts, setBasketProducts] = useState<Product[]>([]);
@@ -15,11 +18,15 @@ const BasketContainer = () => {
   const [Subtotal, setSubTotal] = useState<number>(0);
   const userId = data?.user.id;
   const router = useRouter();
+  const viewcustom = true;
+  const [componentData, setComponentData] = useState<{ [key: string]: any }>({});
 
   useEffect(() => {
+    if (status === "authenticated" && userId) {
       fetch(`/api/basket?userId=${userId}`)
         .then(res => res.json())
         .then(data => setBasketProducts(data.body));
+    }
   }, [status, userId]);
 
   useEffect(() => {
@@ -46,35 +53,118 @@ const BasketContainer = () => {
     }
   }
 
+
+useEffect(() => {
+  const cookieData = getCookieIdsCustom();
+  if (!cookieData) return;
+
+  const parsedCookie = typeof cookieData === 'string' ? JSON.parse(cookieData) : cookieData;
+  const allIds: string[] = [];
+  const allkeys: string[] = [];
+  const partTitles: { [key: string]: string } = {
+    cases: 'case',
+    motherboards: 'motherboard',
+    cpus: 'CPU',
+    gpus: 'gpu',
+    cpuCoolers: 'cpuCooler',
+    memory: 'memory',
+    storage: 'storage',
+    psu: 'psu',
+  };
+
+  // Remove or handle duplicates, e.g. keep only the last 'storage' ID:
+  Object.entries(parsedCookie).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      if (key === 'storage') {
+        // keep only last storage ID
+        const totalStorage = value
+        console.log("Total Storage:", value);
+        const lastStorageId = value[value.length - 1];
+        allIds.push(lastStorageId);
+        allkeys.push(key);
+      } else {
+        allIds.push(...value);
+        allkeys.push(key);
+      }
+    } else if (typeof value === "string") {
+      allIds.push(value);
+      allkeys.push(key);
+    }
+  });
+
+  for (let i = 0; i < allIds.length; i++) {
+    fetch(`/api/components?id=${allIds[i]}&ctype=${partTitles[allkeys[i]]}`)
+      .then(res => res.json())
+      .then(data => {
+        setComponentData(prev => ({
+          ...prev,
+          [partTitles[allkeys[i]]]: data,
+        }));
+      });
+  }
+  console.log("Component Data:", componentData); // Single log for debugging
+}, []);
+
+const caseId = componentData;
+console.log("Case ID:", caseId);
+
   return (
     <>
       <div className="md:w-1/2 bg-white shadow-md rounded p-4">
-        {basketProducts && basketProducts.length > 0 ? (
-          basketProducts.map(product => (
-            <BasketObject
-              key={product.id}
-              id={product.id}
-              productName={product.name}
-              priceInPence={product.priceInPence}
-              imagePath={product.imagePath[0]}
-              brand={product.brand}
-              cpuModel={product.cpuModel}
-              gpuModel={product.gpuModel}
-              memorySize={product.memorySize}
-              memoryType={product.memoryType}
-              caseSize={product.caseSize}
-              colour={product.colour}
-              storageType={product.storageType}
-              totalStorage={product.totalStorage}
-              connectivity={product.connectivity}
-              coolingMethod={product.coolingMethod}
-              refreshBasket={() => {
+        {basketProducts && basketProducts.length > 0 || viewcustom == true  ? (
+          <>
+            {basketProducts.map(product => (
+              <BasketObject
+                key={product.id}
+                id={product.id}
+                productName={product.name}
+                priceInPence={product.priceInPence}
+                imagePath={product.imagePath[0]}
+                brand={product.brand}
+                cpuModel={product.cpuModel}
+                gpuModel={product.gpuModel}
+                memorySize={product.memorySize}
+                memoryType={product.memoryType}
+                caseSize={product.caseSize}
+                colour={product.colour}
+                storageType={product.storageType}
+                totalStorage={product.totalStorage}
+                connectivity={product.connectivity}
+                coolingMethod={product.coolingMethod}
+                refreshBasket={() => {
+                    fetch(`/api/basket?userId=${userId}`)
+                    .then(res => res.json())
+                    .then(data => setBasketProducts(data.body));
+                  }}
+
+                  />
+                ))}
+                
+                <BasketCustomObject
+                  priceInPence={1000}
+                  imagePath={componentData['case']?.body?.imagePath}
+                  cpuModel={componentData['CPU']?.body?.title}
+                  gpuModel={componentData['gpu']?.body?.title}
+                  memorySize={`${componentData['memory']?.body?.capacity} GB`}
+                  memoryType={componentData['memory']?.body?.title}
+                  caseSize={
+                  componentData['case']?.body?.XLATX ? 'XLATX' :
+                  componentData['case']?.body?.EATX ? 'EATX' :
+                  componentData['case']?.body?.ATX ? 'ATX' :
+                  componentData['case']?.body?.MicroATX ? 'MicroATX' :
+                  componentData['case']?.body?.MiniITX ? 'MiniITX' : ''
+                  }
+                  storageType={componentData['storage']?.body?.title}
+                  totalStorage=""
+                  connectivity=""
+                  coolingMethod=""
+                  refreshBasket={() => {
                 fetch(`/api/basket?userId=${userId}`)
                   .then(res => res.json())
                   .then(data => setBasketProducts(data.body));
               }}
             />
-          ))
+          </>
         ) : (
           <p>No items in the basket</p>
         )}

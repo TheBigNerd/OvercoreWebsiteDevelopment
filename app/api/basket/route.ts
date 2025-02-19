@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { getSession } from "next-auth/react";
 
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
